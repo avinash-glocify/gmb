@@ -7,7 +7,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-end flex-wrap">
               <p class="card-title mb-3">Projects</p>
-                  <a href="{{route('import-project')}}" class="btn btn-primary mb-3">Import Project</a>
+                  <a href="{{route('import-project')}}" class="btn btn-success mb-3">Import Project</a>
             </div>
             @if(Session::has('success'))
               <div class="d-flex justify-content-between align-items-end flex-wrap">
@@ -32,7 +32,7 @@
                         <td>Test</td>
                         <td>Design</td>
                         <td>
-                          <a  href="javascript:void(0);" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn">View</a>
+                          <a  href="javascript:void(0);" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw">View</a>
                         </td>
                       </tr>
                       <tr>
@@ -40,7 +40,7 @@
                         <td>Test</td>
                         <td>Design</td>
                         <td>
-                          <a  href="javascript:void(0);" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn">View</a>
+                          <a  href="javascript:void(0);" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw">View</a>
                         </td>
                       </tr>
                       <tr>
@@ -48,7 +48,7 @@
                         <td>Test</td>
                         <td>Design</td>
                         <td>
-                          <a  href="javascript:void(0);" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn">View</a>
+                          <a  href="javascript:void(0);" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw">View</a>
                         </td>
                       </tr>
                     </tbody>

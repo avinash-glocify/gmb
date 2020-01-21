@@ -7,7 +7,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-end flex-wrap">
               <p class="card-title mb-3">Users</p>
-                  <a href="{{route('create-user')}}" class="btn btn-primary mb-3">Create</a>
+                  <a href="{{route('create-user')}}" class="btn btn-success mb-3">Create</a>
             </div>
             @if(Session::has('success'))
               <div class="d-flex justify-content-between align-items-end flex-wrap">
