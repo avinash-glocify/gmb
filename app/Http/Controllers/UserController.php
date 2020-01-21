@@ -31,4 +31,14 @@ class UserController extends Controller
         ]);
         return redirect()->route('users-list')->with(['success' => 'User SuccessFully Added']);
     }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+
+        if($user) {
+          $user->delete();
+          return response(['success' => 'User deleted successfully']);
+        }
+    }
 }

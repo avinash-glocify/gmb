@@ -6,8 +6,8 @@
       <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-end flex-wrap">
-              <p class="card-title mb-3">Users</p>
-                  <a href="{{route('create-user')}}" class="btn btn-primary mb-3">Create</a>
+              <p class="card-title mb-3">Projects</p>
+                  <a href="{{route('import-project')}}" class="btn btn-primary mb-3">Import Project</a>
             </div>
             @if(Session::has('success'))
               <div class="d-flex justify-content-between align-items-end flex-wrap">
@@ -21,28 +21,36 @@
                     <thead>
                       <tr>
                           <th>#</th>
-                          <th>First Name</th>
-                          <th>Last Name</th>
-                          <th>Email</th>
+                          <th>Project Name</th>
+                          <th>Project Type</th>
                           <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @forelse($users as $key => $user)
                       <tr>
-                        <td>{{++$key}}</td>
-                        <td>{{$user->first_name}}</td>
-                        <td>{{$user->last_name}}</td>
-                        <td>{{$user->email}}</td>
+                        <td>1</td>
+                        <td>Test</td>
+                        <td>Design</td>
                         <td>
-                          <a  href="javascript:void(0);" data-url="{{ route('delete-user', [$user->id]) }}" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn">Delete</a>
+                          <a  href="javascript:void(0);" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn">View</a>
                         </td>
                       </tr>
-                      @empty
                       <tr>
-                        <td colspan="5" class="text-center"><strong>No Data Found</strong></td>
+                        <td>2</td>
+                        <td>Test</td>
+                        <td>Design</td>
+                        <td>
+                          <a  href="javascript:void(0);" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn">View</a>
+                        </td>
                       </tr>
-                      @endforelse
+                      <tr>
+                        <td>2</td>
+                        <td>Test</td>
+                        <td>Design</td>
+                        <td>
+                          <a  href="javascript:void(0);" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn">View</a>
+                        </td>
+                      </tr>
                     </tbody>
                 </table>
           </div>

@@ -12,5 +12,11 @@
         <span class="menu-title">Users</span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('project-list')}}">
+        <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+        <span class="menu-title">Project</span>
+      </a>
+    </li>
   </ul>
 </nav>

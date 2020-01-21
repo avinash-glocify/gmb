@@ -19,7 +19,14 @@ Auth::routes();
 
 Route::middleware('auth')->group(function() {
   Route::get('/dashboard', 'DashboardController@index');
-  Route::get('/users', 'UserController@index')->name('users-list');
-  Route::get('/users/create', 'UserController@create')->name('create-user');
-  Route::post('/users/store', 'UserController@store')->name('store-user');
+  Route::prefix('users')->group(function () {
+    Route::get('/', 'UserController@index')->name('users-list');
+    Route::get('/create', 'UserController@create')->name('create-user');
+    Route::post('/store', 'UserController@store')->name('store-user');
+    Route::get('/delete/{id}', 'UserController@destroy')->name('delete-user');
+  });
+  Route::prefix('project')->group(function () {
+    Route::get('/', 'ProjectController@index')->name('project-list');
+    Route::get('/import', 'ProjectController@import')->name('import-project');
+  });
 });
