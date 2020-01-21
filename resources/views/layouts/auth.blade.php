@@ -20,6 +20,11 @@
   <link href="{{ asset('vendors/mdi/css/materialdesignicons.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  <style>
+  .invalid-feedback {
+    display: block;
+  }
+  </style>
 </head>
 <body>
   <div id="app">

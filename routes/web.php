@@ -19,4 +19,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function() {
   Route::get('/dashboard', 'DashboardController@index');
+  Route::get('/users', 'UserController@index')->name('users-list');
+  Route::get('/users/create', 'UserController@create')->name('create-user');
+  Route::post('/users/store', 'UserController@store')->name('store-user');
 });

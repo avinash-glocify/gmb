@@ -7,7 +7,7 @@
         <div class="d-flex align-items-end flex-wrap">
           <div class="mr-md-3 mr-xl-5">
             <h2>Welcome back,</h2>
-            <p class="mb-md-0">Your analytics dashboard template.</p>
+            <p class="mb-md-0">Your analytics dashboard.</p>
           </div>
         </div>
       </div>
