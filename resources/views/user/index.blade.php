@@ -2,12 +2,22 @@
 @section('content')
 <div class="content-wrapper">
   <div class="row">
+    <div class="col-md-12 grid-margin">
+      <div class="d-flex justify-content-between flex-wrap">
+        <div class="d-flex align-items-end flex-wrap">
+          <div class="mr-md-3 mr-xl-5">
+            <h2>Users</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-            <div class="d-flex justify-content-between align-items-end flex-wrap">
-              <p class="card-title mb-3">Users</p>
-                  <a href="{{route('create-user')}}" class="btn btn-success mb-3">Create</a>
+            <div class="">
+                  <a href="{{route('create-user')}}" class="btn btn-success mb-3 float-right">Create User</a>
             </div>
             @if(Session::has('success'))
               <div class="d-flex justify-content-between align-items-end flex-wrap">

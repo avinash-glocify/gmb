@@ -25,4 +25,28 @@ $(document).ready(function() {
       });
     });
   });
+
+    var simpleEditor = new SimpleTableCellEditor("simpleEditableTable");
+    simpleEditor.SetEditableClass("editMe");
+
+    $('#simpleEditableTable').on("cell:edited", function (event) {
+      const newValue = event.newValue;
+      const project_id = event.element.getAttribute('data-id');
+      const column = event.element.getAttribute('data-name');
+
+      const url = '/project/update'
+
+      $.ajax({
+        type: "get",
+        url: url,
+        data: {
+          value: newValue,
+          id: project_id,
+          column: column
+        },
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    });
 });

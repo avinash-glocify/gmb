@@ -29,5 +29,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/', 'ProjectController@index')->name('project-list');
     Route::get('/import', 'ProjectController@import')->name('import-project');
     Route::post('/store', 'ProjectController@store')->name('store-project');
+    Route::get('/detail/{id}', 'ProjectController@show')->name('project-detail');
+    Route::get('/update', 'ProjectController@updateProjectDetail')->name('update-project-detail');
   });
 });

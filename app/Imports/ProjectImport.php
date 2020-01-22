@@ -3,20 +3,24 @@
 namespace App\Imports;
 
 use App\Project;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+use Maatwebsite\Excel\Concerns\WithConditionalSheets;
 
-class ProjectImport implements ToModel
+class ProjectImport implements WithMultipleSheets
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function model(array $row)
+     use WithConditionalSheets;
+
+     protected $params;
+
+      public function __construct($params)
+      {
+          $this->params = $params;
+      }
+
+    public function conditionalSheets(): array
     {
-        return $row;
-        return new Project([
-            //
-        ]);
+        return [
+            'Prep' => new FirstSheetImport($this->params)
+        ];
     }
 }
