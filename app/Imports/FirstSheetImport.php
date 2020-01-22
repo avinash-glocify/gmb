@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\toArray;
 use App\Models\Project;
 use App\Models\ProjectDetail;
 
-class FirstSheetImport implements toArray
+class FirstSheetImport implements ToArray
 {
   public $params;
 
