@@ -152,6 +152,10 @@ strong {
 small {
   font-size: 80%;
 }
+.mdb-select .dropdown-menu {
+  z-index: 99999;
+  top:500px;
+}
 
 sub,
 sup {
@@ -11355,4 +11359,3 @@ a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
-

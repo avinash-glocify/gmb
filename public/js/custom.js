@@ -46,7 +46,50 @@ $(document).ready(function() {
         },
         success: function (data) {
           console.log(data);
+        },
+        error: function(data) {
+          if(data.responseJSON.errors.email || data.responseJSON.errors.recovery_mail) {
+            event.element.innerText=event.oldValue
+            var text = data.responseJSON.errors.email
+            if(data.responseJSON.errors.recovery_mail) {
+              text = data.responseJSON.errors.recovery_mail;
+            }
+            swal({
+              title: "Email Error",
+              text: text,
+              icon: "warning",
+            });
+          }
         }
+      });
+    });
+    $('#createProject').click(function() {
+      url = '/project/destroy/session'
+      $.ajax({
+        type: "get",
+        url: url,
+        success: function (data) {
+          window.location.href="/project/create";
+        },
+      });
+    });
+
+    $('#projectName').focusout(function(event) {
+      url = '/project/name'
+      const newString = event.target.value.replace(/\s+/g,'');
+
+      if(newString == '') {
+        return false;
+      }
+      $.ajax({
+        type: "get",
+        url: url,
+        data: {
+          name : newString
+        },
+        success: function (data) {
+          console.log(data);
+        },
       });
     });
 });

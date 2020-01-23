@@ -23,9 +23,21 @@ class ProjectImportRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-          'file' => 'required',
-          'name' => 'required|string|max:255|unique:projects',
-        ];
+        $rules = ['file' => 'required'];
+
+        if($this->type == "mail") {
+          $rules['name'] = 'required|string|max:255|unique:projects';
+        }
+        return $rules;
+    }
+
+    public function getValidatorInstance()
+    {
+
+        if ($this->session()->has('projectName')) {
+          $this->merge(['name' => $this->session()->get('projectName')]);
+        }
+
+        return parent::getValidatorInstance();
     }
 }

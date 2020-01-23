@@ -15,10 +15,18 @@ class CreateProjectDetailsTable extends Migration
     {
         Schema::create('project_details', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('phone_number')->nullable();
             $table->integer('project_id');
-            $table->string('mail')->nullable();
+            $table->string('email')->unique();
             $table->string('recovery_mail')->nullable();
             $table->string('password')->nullable();
+            $table->string('street_address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('state')->nullable();
+            $table->string('state_abrevation')->nullable();
             $table->timestamps();
         });
     }

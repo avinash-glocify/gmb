@@ -11,16 +11,18 @@ class ProjectImport implements WithMultipleSheets
      use WithConditionalSheets;
 
      protected $params;
+     protected $type;
 
-      public function __construct($params)
+      public function __construct($params, $type = 'mail')
       {
           $this->params = $params;
+          $this->type   = $type;
       }
 
     public function conditionalSheets(): array
     {
         return [
-            'Prep' => new FirstSheetImport($this->params)
+            'Prep' => new FirstSheetImport($this->params, $this->type)
         ];
     }
 }
