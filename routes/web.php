@@ -26,14 +26,13 @@ Route::middleware('auth')->group(function() {
     Route::get('/delete/{id}', 'UserController@destroy')->name('delete-user');
   });
   Route::prefix('project')->group(function () {
-    Route::get('/', 'ProjectController@index')->name('project-list');
     Route::get('/create', 'ProjectController@create')->name('project-create');
-    Route::get('/import', 'ProjectController@import')->name('import-project');
     Route::post('/store', 'ProjectController@store')->name('store-project');
-    Route::get('/name', 'ProjectController@changeName')->name('change-project-name');
-    Route::get('/detail/{id}', 'ProjectController@show')->name('project-detail');
+    Route::post('/name', 'ProjectController@storeName')->name('create-project-name');
+    Route::get('/setup/{id}', 'ProjectController@show')->name('project-setup');
     Route::get('/update', 'ProjectController@updateProjectDetail')->name('update-project-detail');
     Route::post('/assign/email', 'ProjectController@assignEmails')->name('project-assign-email');
-    Route::get('/destroy/session', 'ProjectController@destroProjectSession')->name('project-destroy-session');
+    Route::get('/download/email', 'ProjectController@downloadEmailSample')->name('project-download-email');
+    Route::get('/download/address', 'ProjectController@downloadAddressSample')->name('project-download-address');
   });
 });

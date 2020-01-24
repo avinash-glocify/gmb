@@ -63,33 +63,4 @@ $(document).ready(function() {
         }
       });
     });
-    $('#createProject').click(function() {
-      url = '/project/destroy/session'
-      $.ajax({
-        type: "get",
-        url: url,
-        success: function (data) {
-          window.location.href="/project/create";
-        },
-      });
-    });
-
-    $('#projectName').focusout(function(event) {
-      url = '/project/name'
-      const newString = event.target.value.replace(/\s+/g,'');
-
-      if(newString == '') {
-        return false;
-      }
-      $.ajax({
-        type: "get",
-        url: url,
-        data: {
-          name : newString
-        },
-        success: function (data) {
-          console.log(data);
-        },
-      });
-    });
 });

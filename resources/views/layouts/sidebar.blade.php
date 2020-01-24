@@ -21,10 +21,10 @@
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="javascript:void(0);" id="createProject">Create New</a></li>
-          @foreach($projects as $key => $project)
-              <li class="nav-item"> <a class="nav-link" href="javascript:void(0);">{{ $project->name }}</a></li>
-          @endforeach
+          <li class="nav-item"> <a class="nav-link" href="{{ route('project-create') }}" id="createProject">Create New</a></li>
+            @foreach($projects as $key => $project)
+                <li class="nav-item"> <a class="nav-link" href="{{ route('project-setup', [$project->id])}}">{{ $project->name }}</a></li>
+            @endforeach
         </ul>
       </div>
     </li>

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Imports\ProjectImport;
+use App\Imports\AddressImport;
+use App\Imports\EmailImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\ProjectImportRequest;
+use Illuminate\Support\Facades\Response;
 
 use App\Models\Project;
 use App\Models\ProjectDetail;
@@ -13,81 +16,70 @@ use Auth;
 
 class ProjectController extends Controller
 {
-    public function index()
-    {
-        $projects = Project::where('user_id', Auth::user()->id)->get();
-
-        return view('project.index', compact('projects'));
-    }
-
-    public function import()
-    {
-        return view('project.import');
-    }
 
     public function create(Request $request)
     {
-        $data = [];
-        $projectName =  'Project#'.rand(9999, 11111111);
+        return view('project.create');
+    }
 
-        if (!$request->session()->has('projectName') && !$request->session()->has('project_id')) {
-          $request->session()->put('step', 1);
-          $existingName = Project::where('name', $projectName)->first();
-          if($existingName) {
-            $projectName.= rand(11, 9999);
+    public function store(Request $request)
+    {
+        $rules = [];
+        if($request->type == 'email') {
+          $import = new EmailImport($request->project_id);
+          $rules  = ['email_file' => 'required'];
+        } else {
+          $import = new AddressImport($request->project_id);
+          $rules  = ['address_file' => 'required'];
+        }
+        $request->validate($rules);
+
+        if($request->type == 'email') {
+          Excel::import($import, request()->file('email_file'));
+        } else {
+          Excel::import($import, request()->file('address_file'));
+        }
+        $message = ['error' => "Data Already Existed"];
+
+        if(Session()->has('success')) {
+          Session()->put('step, 2');
+          $message = ['success' => "Data Imported Successfully"];
+          Session()->forget('success');
+        }
+        return redirect()->route('project-setup', [$request->project_id])->with($message);
+    }
+
+    public function show(Request $request, $id)
+    {
+        $project                  = Project::findOrFail($id);
+        $projectDetail            = $project->projectDetails();
+        $projectDetailWithNumbers = clone $projectDetail;
+        $projectDetailCount       = clone $projectDetail;
+
+        if($projectDetailCount->count()) {
+          Session()->put('step', 2);
+        } else {
+          if(Session()->has('step')){
+            Session()->forget('step');
           }
-          $request->session()->put('projectName', $projectName);
         }
 
-        if($request->session()->has('project_id')) {
-          $request->session()->put('step', 2);
-          $id = $request->session()->get('project_id');
-          $data['projectDetails'] = ProjectDetail::where('project_id', $id)->get();
-        }
-        $data['projectName']  = $request->session()->get('projectName');
+        $data['projectDetails']          = $projectDetail->get();
+        $data['project']                 = $project;
+        $data['projectWithPhoneNumbers'] = $projectDetailWithNumbers
+                                              ->whereNotNull('phone_number')
+                                              ->paginate(100);
 
-        return view('project.create', $data);
-    }
-
-    public function store(ProjectImportRequest $request)
-    {
-        $import = new ProjectImport($request->name ?? '', $request->type);
-        $import->onlySheets('Prep');
-        $data   = Excel::import($import, request()->file('file'));
-
-        $message = "Emails Imported Successfully";
-
-        if($request->type != 'mail') {
-          $message = "Address Imported Successfully";
-        }
-        return redirect()->route('project-create')->with('success', $message);
-    }
-
-    public function show($id)
-    {
-        $projects = Project::findOrFail($id)->projectDetails()->paginate(100);
-        return view('project.view', compact('projects'));
+        return view('project.view', $data);
     }
 
     public function updateProjectDetail(Request $request)
     {
-        if (in_array($request->column, ['email', 'recovery_mail'])) {
-          if ($request->column == 'email') {
-            $request->request->add(['email' => $request->value]);
-            $rules = ['email' => 'required|email|unique:project_details'];
-          } else {
-            $request->request->add(['recovery_mail' => $request->value]);
-            $rules = ['recovery_mail' => 'required|email'];
-          }
-
-          $request->validate($rules);
-        }
-
         $projectDetail  = ProjectDetail::findOrFail($request->id);
 
-        $validColumns = ['email', 'recovery_mail', 'password'];
+        $validColumns = ['recovery_mail','password','first_name','last_name','street_address','city','zip', 'state','state_abrevation'];
 
-         if (in_array($request->column, $columns)) {
+         if (in_array($request->column, $validColumns)) {
            $projectDetail->update([
              "{$request->column}"  => $request->value
            ]);
@@ -103,34 +95,54 @@ class ProjectController extends Controller
         $rules = [
           'first_name'    => 'required',
           'last_name'     => 'required',
-          'phone_number'  => 'required|unique:project_details',
+          'phone_number'  => 'required',
           'emails'        => 'required|array|max:5',
         ];
         $request->validate($rules);
-        return redirect()->back();
+        $project = Project::findOrFail($request->project_id);
+
+        foreach ($request->emails as $key => $email) {
+          $projectDetail =  ProjectDetail::where('email', $email)->first();
+
+          if($projectDetail) {
+              $projectDetail->update([
+                'first_name'   => $request->first_name,
+                'last_name'    => $request->last_name,
+                'phone_number' => $request->phone_number,
+              ]);
+          }
+        }
+        return redirect()
+              ->route('project-setup', [$project->id])
+              ->with(['success' => 'Phone Number Added Successfully', 'editTab' => true]);
     }
 
-    public function changeName(Request $request)
+    public function storeName(Request $request)
     {
-        if(Session()->has('projectName')) {
-          Session()->put('projectName', $request->name);
-        }
-        return response(['success' => 'session destroyed']);
+        $rules = ['name'  => 'required|unique:projects'];
+        $request->validate($rules);
+
+        $project = Project::create([
+          'name'    => $request->name,
+          'user_id' => Auth::user()->id,
+        ]);
+
+        return redirect()
+                ->route('project-setup', [$project->id])
+                ->with(['success' => 'Project Created Successfully']);
     }
 
-    public function destroProjectSession()
+    public function downloadEmailSample(Request $request)
     {
-        if(Session()->has('projectName')) {
-          Session()->forget('projectName');
-        }
+        $file= public_path(). "\sampleFiles\\email.xlsx";
+        $headers = array('Content-Type: application/xlsx');
+        return Response::download($file, 'email.xlsx', $headers);
+    }
 
-        if(Session()->has('project_id')) {
-          Session()->forget('project_id');
-        }
-
-        if(Session()->has('step')) {
-          Session()->forget('step');
-        }
-        return response(['success' => 'session destroyed']);
+    public function downloadAddressSample(Request $request)
+    {
+        $file= public_path(). "\sampleFiles\address.xlsx";
+        $headers = array('Content-Type: application/xlsx');
+        return Response::download($file, 'address.xlsx', $headers);
     }
 }
