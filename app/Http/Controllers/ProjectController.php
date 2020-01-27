@@ -110,7 +110,6 @@ class ProjectController extends Controller
             'emails'        => ['required','max:5'],
             'phone_number'  => [
                 'required',
-                'size:10',
                 'numeric',
                 function ($attribute, $value, $fail) {
                   $phoneCount = ProjectDetail::where('phone_number', $value)->count();
@@ -123,7 +122,7 @@ class ProjectController extends Controller
 
         if($validator->fails()) {
           Session()->put('tab', 2);
-          return redirect()->back()->withErrors($validator->errors());
+          return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
         $project = Project::findOrFail($request->project_id);
