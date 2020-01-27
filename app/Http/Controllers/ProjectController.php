@@ -43,7 +43,6 @@ class ProjectController extends Controller
         $message = ['error' => "Data Already Existed"];
 
         if(Session()->has('success')) {
-            Session()->put('tab', 2);
           $message = ['success' => "Data Imported Successfully"];
           Session()->forget('success');
         }
@@ -52,35 +51,62 @@ class ProjectController extends Controller
 
     public function show(Request $request, $id)
     {
-        $project                  = Project::findOrFail($id);
-        $projectDetail            = $project->projectDetails();
-        $projectDetailWithNumbers = clone $projectDetail;
-        $projectDetailEmails      = clone $projectDetail;
-        $projectDetails           = $projectDetail->get();
-        $projectDetailWithNumbers = $projectDetailWithNumbers
-                                              ->whereNotNull('phone_number')
-                                              ->orderBy('id', 'desc')
-                                              ->paginate(100);
-        $projectDetailEmails       = $projectDetailEmails
-                                              ->whereNull('phone_number')
-                                              ->get();
+        $project               = Project::findOrFail($id);
+        $projectDetail         = $project->projectDetails();
+        $projectDetailEmails   = $projectDetail
+                                        ->whereNotNull('phone_number')
+                                        ->get();
 
-        if($projectDetails->count()) {
+        if(Session()->has('step')) {
+          Session()->forget('step');
+        }
+
+        if($project->projectDetails()->count()) {
           Session()->put('step.first', 'completed');
-          if($projectDetailWithNumbers->count()) {
-              Session()->put('step.two', 'completed');
+          if($projectDetailEmails->count()) {
+            Session()->put('step.two', 'completed');
           }
-        } else {
-          if(Session()->has('step')){
-            Session()->forget('step');
-          }
-          Session()->put('tab', 1);
+        }
+        $data['project']                 = $project;
+        $data['projectWithPhoneNumbers'] = false;
+        $data['projectDetailEmails']     = false;
+
+        return view('project.view', $data);
+    }
+
+    public function ceateSetup(Request $request, $id)
+    {
+        $project                  = Project::findOrFail($id);
+        $projectDetailEmails      = $project->projectDetails()
+                                            ->whereNull('phone_number')
+                                            ->get();
+
+        if($project->projectDetails()->count()) {
+          Session()->put('step.first', 'completed');
         }
 
         $data['project']                 = $project;
-        $data['projectDetails']          = $projectDetails;
-        $data['projectWithPhoneNumbers'] = $projectDetailWithNumbers;
         $data['projectDetailEmails']     = $projectDetailEmails;
+        $data['projectWithPhoneNumbers'] = false;
+
+        return view('project.view', $data);
+    }
+
+    public function editSetup(Request $request, $id)
+    {
+        $project                  = Project::findOrFail($id);
+        $projectDetailWithNumbers = $project->projectDetails()
+                                              ->whereNotNull('phone_number')
+                                              ->orderBy('id', 'desc')
+                                              ->paginate(100);
+
+        if($projectDetailWithNumbers->count()) {
+          Session()->put('step.two', 'completed');
+        }
+
+        $data['project']                 = $project;
+        $data['projectDetailEmails']     = false;
+        $data['projectWithPhoneNumbers'] = $projectDetailWithNumbers;
 
         return view('project.view', $data);
     }
@@ -121,7 +147,6 @@ class ProjectController extends Controller
         ]);
 
         if($validator->fails()) {
-          Session()->put('tab', 2);
           return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
@@ -136,11 +161,11 @@ class ProjectController extends Controller
                 'last_name'    => $request->last_name,
                 'phone_number' => $request->phone_number,
               ]);
+              Session()->put('step.two', 'completed');
           }
-          Session()->put('tab', 3);
         }
         return redirect()
-              ->route('project-setup', [$project->id])
+              ->route('project-setup-edit', [$project->id])
               ->with(['success' => 'Phone Number Added Successfully']);
     }
 
@@ -153,7 +178,7 @@ class ProjectController extends Controller
           'name'    => $request->name,
           'user_id' => Auth::user()->id,
         ]);
-        Session()->put('tab', 1);
+
         return redirect()
                 ->route('project-setup', [$project->id])
                 ->with(['success' => 'Project Created Successfully']);

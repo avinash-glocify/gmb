@@ -35,13 +35,14 @@ class AddressImport implements ToCollection, WithHeadingRow
           if($projectDetail) {
             if($projectDetail->project_id == $project->id) {
               $projectDetail->update($data);
+              Session()->put('success', true);
             }
           } else {
             $data['email']      = $row['gmail'];
             $data['project_id'] = $project->id;
             $projectDetail      = ProjectDetail::create($data);
+            Session()->put('success', true);
           }
-          Session()->put('success', true);
         }
       }
     }
