@@ -97,7 +97,7 @@ class ProjectController extends Controller
         $project                  = Project::findOrFail($id);
         $projectDetailWithNumbers = $project->projectDetails()
                                               ->whereNotNull('phone_number')
-                                              ->orderBy('id', 'desc')
+                                              ->orderBy('phone_number', 'desc')
                                               ->paginate(100);
 
         if($projectDetailWithNumbers->count()) {
@@ -197,4 +197,5 @@ class ProjectController extends Controller
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'address.xlsx', $headers);
     }
+
 }

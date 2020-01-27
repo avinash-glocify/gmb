@@ -1,4 +1,9 @@
 @php $tableColumns = ['Email','Password','Recover Mail','First Name','Last Name','Phone Number','Street','City','State','Zip', 'State Code', 'Status', 'Payment Status'] @endphp
+@php
+  $statusColumns = ['Verified', 'Hard Pending', 'Soft Pending', 'Post Card', 'Suspended', 'Skipped'];
+  $paymentStatusColumns = ['In Progress', 'Active Needs Payment', 'Rejected'];
+@endphp
+
 <div class="row">
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
@@ -7,7 +12,7 @@
             <tr>
               <th>#</th>
               @foreach($tableColumns as $column)
-              <th @if(in_array($column, ['First Name', 'Last Name', 'Street'])) colspan="3" @endif>{{ $column }}</th>
+              <th @if(in_array($column, ['First Name', 'Last Name', 'Street', 'Status'])) colspan="3" @endif>{{ $column }}</th>
               @endforeach
             </tr>
               @foreach($projectWithPhoneNumbers as $key => $project)
@@ -24,8 +29,26 @@
                 <td class="editMe" data-id="{{ $project->id }}" data-name="state">{{ $project->state }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="zip">{{ $project->zip }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="state_abrevation">{{ $project->state_abrevation }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="status">{{ $project->status }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="payment_status">{{ $project->payment_status }}</td>
+                <td data-id="{{ $project->id }}" data-name="status" colspan="3">
+                  <div class="form-group" style="width:170px">
+                    <select class="form-control" id="statusProject" data-id="{{ $project->id }}" data-name="status" onchange="updatePayementStatus(event)">
+                      <option value="">Select Status</option>
+                      @foreach($statusColumns as $status)
+                        <option value="{{ $status }}" @if($project->status === $status) Selected @endif >{{ $status }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </td>
+                <td  data-id="{{ $project->id }}" data-name="payment_status" >
+                  <div class="form-group" style="width:170px">
+                    <select class="form-control" id="statusProject" data-name="payment_status" data-id="{{ $project->id }}" onchange="updatePayementStatus(event)">
+                      <option value="">Select Status</option>
+                      @foreach($paymentStatusColumns as $status)
+                        <option @if($project->payment_status === $status) Selected @endif value="{{ $status }}">{{ $status }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </td>
               </tr>
               @endforeach
             </table>

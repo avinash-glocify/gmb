@@ -34,13 +34,19 @@ $(document).ready(function() {
       const project_id = event.element.getAttribute('data-id');
       const column = event.element.getAttribute('data-name');
 
-      const url = '/project/update'
+      updateProjectDetail(project_id, column, newValue)
 
+    });
+});
+
+  function updateProjectDetail(project_id, column, value)
+  {
+      const url = '/project/update';
       $.ajax({
         type: "get",
         url: url,
         data: {
-          value: newValue,
+          value: value,
           id: project_id,
           column: column
         },
@@ -62,5 +68,12 @@ $(document).ready(function() {
           }
         }
       });
-    });
-});
+  }
+function updatePayementStatus(event) {
+  const project_id = event.target.getAttribute('data-id');
+  const column = event.target.getAttribute('data-name');
+  const value = event.target.value;
+  if(value != '') {
+    updateProjectDetail(project_id, column, value)
+  }
+}

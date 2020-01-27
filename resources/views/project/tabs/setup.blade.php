@@ -4,7 +4,7 @@
       <div class="card-body">
         <div class="">
           <div class="card-header">
-            <h5 class="text-center">Import Emails</h5>
+            <h5 class="text-center">Emails</h5>
           </div>
               <a href="{{route('project-download-email')}}" class=" mb-3 float-right">Download Sample</a>
         </div>
@@ -31,7 +31,7 @@
       <div class="card-body">
         <div class="">
           <div class="card-header">
-            <h5 class="text-center">Import Address</h5>
+            <h5 class="text-center">Addresses and Phone Numbers</h5>
           </div>
               <a href="{{route('project-download-address')}}" class="mb-3 float-right">Download Sample</a>
         </div>

@@ -36,5 +36,6 @@ Route::middleware('auth')->group(function() {
     Route::post('/assign/email', 'ProjectController@assignEmails')->name('project-assign-email');
     Route::get('/download/email', 'ProjectController@downloadEmailSample')->name('project-download-email');
     Route::get('/download/address', 'ProjectController@downloadAddressSample')->name('project-download-address');
+    Route::get('/project/status', 'ProjectController@projectStatus')->name('project-status');
   });
 });
