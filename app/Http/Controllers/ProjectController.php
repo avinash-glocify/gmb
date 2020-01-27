@@ -9,6 +9,7 @@ use App\Imports\EmailImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\ProjectImportRequest;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Project;
 use App\Models\ProjectDetail;
@@ -42,7 +43,7 @@ class ProjectController extends Controller
         $message = ['error' => "Data Already Existed"];
 
         if(Session()->has('success')) {
-          Session()->put('step, 2');
+            Session()->put('tab', 2);
           $message = ['success' => "Data Imported Successfully"];
           Session()->forget('success');
         }
@@ -54,21 +55,32 @@ class ProjectController extends Controller
         $project                  = Project::findOrFail($id);
         $projectDetail            = $project->projectDetails();
         $projectDetailWithNumbers = clone $projectDetail;
-        $projectDetailCount       = clone $projectDetail;
+        $projectDetailEmails      = clone $projectDetail;
+        $projectDetails           = $projectDetail->get();
+        $projectDetailWithNumbers = $projectDetailWithNumbers
+                                              ->whereNotNull('phone_number')
+                                              ->orderBy('id', 'desc')
+                                              ->paginate(100);
+        $projectDetailEmails       = $projectDetailEmails
+                                              ->whereNull('phone_number')
+                                              ->get();
 
-        if($projectDetailCount->count()) {
-          Session()->put('step', 2);
+        if($projectDetails->count()) {
+          Session()->put('step.first', 'completed');
+          if($projectDetailWithNumbers->count()) {
+              Session()->put('step.two', 'completed');
+          }
         } else {
           if(Session()->has('step')){
             Session()->forget('step');
           }
+          Session()->put('tab', 1);
         }
 
-        $data['projectDetails']          = $projectDetail->get();
         $data['project']                 = $project;
-        $data['projectWithPhoneNumbers'] = $projectDetailWithNumbers
-                                              ->whereNotNull('phone_number')
-                                              ->paginate(100);
+        $data['projectDetails']          = $projectDetails;
+        $data['projectWithPhoneNumbers'] = $projectDetailWithNumbers;
+        $data['projectDetailEmails']     = $projectDetailEmails;
 
         return view('project.view', $data);
     }
@@ -92,13 +104,26 @@ class ProjectController extends Controller
 
     public function assignEmails(Request $request)
     {
-        $rules = [
-          'first_name'    => 'required',
-          'last_name'     => 'required',
-          'phone_number'  => 'required',
-          'emails'        => 'required|array|max:5',
-        ];
-        $request->validate($rules);
+        $validator = Validator::make($request->all(), [
+            'first_name'    => ['required'],
+            'last_name'     => ['required'],
+            'emails'        => ['required','max:5'],
+            'phone_number'  => [
+                'required',
+                function ($attribute, $value, $fail) {
+                  $phoneCount = ProjectDetail::where('phone_number', $value)->count();
+                    if ($phoneCount == 5) {
+                        $fail('phone number can not be assign to more than 5 e-mails');
+                    }
+                },
+            ],
+        ]);
+
+        if($validator->fails()) {
+          Session()->put('tab', 2);
+          return redirect()->back()->withErrors($validator->errors());
+        }
+
         $project = Project::findOrFail($request->project_id);
 
         foreach ($request->emails as $key => $email) {
@@ -111,10 +136,11 @@ class ProjectController extends Controller
                 'phone_number' => $request->phone_number,
               ]);
           }
+          Session()->put('tab', 3);
         }
         return redirect()
               ->route('project-setup', [$project->id])
-              ->with(['success' => 'Phone Number Added Successfully', 'editTab' => true]);
+              ->with(['success' => 'Phone Number Added Successfully']);
     }
 
     public function storeName(Request $request)
@@ -126,7 +152,7 @@ class ProjectController extends Controller
           'name'    => $request->name,
           'user_id' => Auth::user()->id,
         ]);
-
+        Session()->put('tab', 1);
         return redirect()
                 ->route('project-setup', [$project->id])
                 ->with(['success' => 'Project Created Successfully']);
@@ -134,14 +160,14 @@ class ProjectController extends Controller
 
     public function downloadEmailSample(Request $request)
     {
-        $file= public_path(). "\sampleFiles\\email.xlsx";
+        $file= public_path(). "/sampleFiles/email.xlsx";
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'email.xlsx', $headers);
     }
 
     public function downloadAddressSample(Request $request)
     {
-        $file= public_path(). "\sampleFiles\address.xlsx";
+        $file= public_path(). "/sampleFiles/address.xlsx";
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'address.xlsx', $headers);
     }

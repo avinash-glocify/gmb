@@ -36,7 +36,7 @@
           <div class="form-group">
             <label for="exampleSelectGender">Emails</label>
               <select class="mdb-select form-control md-form selectpicker @error('emails') is-invalid @enderror" multiple data-live-search="true" name="emails[]">
-                @foreach($projectDetails as $key => $projectDetail)
+                @foreach($projectDetailEmails as $key => $projectDetail)
                   <option value="{{ $projectDetail->email }}">{{ $projectDetail->email }}</option>
                 @endforeach
               </select>
