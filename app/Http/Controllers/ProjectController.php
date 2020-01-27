@@ -89,7 +89,7 @@ class ProjectController extends Controller
     {
         $projectDetail  = ProjectDetail::findOrFail($request->id);
 
-        $validColumns = ['recovery_mail','password','first_name','last_name','street_address','city','zip', 'state','state_abrevation'];
+        $validColumns = ['recovery_mail','password','first_name','last_name','street_address','city','zip', 'state','state_abrevation', 'status', 'payment_status'];
 
          if (in_array($request->column, $validColumns)) {
            $projectDetail->update([
@@ -110,6 +110,8 @@ class ProjectController extends Controller
             'emails'        => ['required','max:5'],
             'phone_number'  => [
                 'required',
+                'size:10',
+                'numeric',
                 function ($attribute, $value, $fail) {
                   $phoneCount = ProjectDetail::where('phone_number', $value)->count();
                     if ($phoneCount == 5) {

@@ -27,6 +27,8 @@ class CreateProjectDetailsTable extends Migration
             $table->string('zip')->nullable();
             $table->string('state')->nullable();
             $table->string('state_abrevation')->nullable();
+            $table->string('status')->nullable();
+            $table->string('payment_status')->nullable();
             $table->timestamps();
         });
     }

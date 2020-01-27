@@ -16,7 +16,7 @@
             @enderror
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Last Name</label>
+            <label for="exampleInputUsername2">Last Name</label>
             <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="exampleInputUsername2" value="{{old('last_name')}}" name="last_name" placeholder="Last Name">
             @error('last_name')
                 <span class="invalid-feedback ml-1 mt-1" role="alert">
@@ -25,7 +25,7 @@
             @enderror
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Phone Number</label>
+            <label for="exampleInputphoneNumber">Phone Number</label>
             <input type="text" class="form-control @error('phone_number') is-invalid @enderror" id="exampleInputphoneNumber" value="{{old('phone_number')}}" name="phone_number" placeholder="Phone Number">
             @error('phone_number')
                 <span class="invalid-feedback ml-1 mt-1" role="alert">
@@ -34,8 +34,8 @@
             @enderror
           </div>
           <div class="form-group">
-            <label for="exampleSelectGender">Emails</label>
-              <select class="mdb-select form-control md-form selectpicker @error('emails') is-invalid @enderror" multiple data-live-search="true" name="emails[]">
+            <label for="exampleInputEmail">Emails</label>
+              <select class="mdb-select form-control md-form selectpicker @error('emails') is-invalid @enderror" id="exampleInputEmail" multiple data-live-search="true" name="emails[]">
                 @foreach($projectDetailEmails as $key => $projectDetail)
                   <option value="{{ $projectDetail->email }}">{{ $projectDetail->email }}</option>
                 @endforeach
