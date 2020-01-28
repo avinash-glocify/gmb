@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Project;
 use App\Models\ProjectDetail;
 use App\Models\BussinessType;
+use App\Models\Category;
 use Auth;
 use Carbon\Carbon;
 
@@ -207,4 +208,37 @@ class ProjectController extends Controller
         return Response::download($file, 'address.xlsx', $headers);
     }
 
+    public function createBussiness()
+    {
+        return view('project.bussiness');
+    }
+
+    public function createCategory()
+    {
+        return view('project.category');
+    }
+
+    public function storeBussiness(Request $request)
+    {
+        $rules = [
+          'name' => 'required|min:3|unique:bussiness_types'
+        ];
+
+        $request->validate($rules);
+
+        BussinessType::create(['name' => $request->name]);
+        return back()->with(['success' => 'Bussiness Type Added Successfully']);
+    }
+
+    public function storeCategory(Request $request)
+    {
+        $rules = [
+          'name' => 'required|min:3|unique:categories'
+        ];
+
+        $request->validate($rules);
+        Category::create(['name' => $request->name]);
+        return back()->with(['success' => 'Category Added Successfully']);
+
+    }
 }

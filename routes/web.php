@@ -34,8 +34,17 @@ Route::middleware('auth')->group(function() {
     Route::get('/edit/{id}', 'ProjectController@editSetup')->name('project-setup-edit');
     Route::get('/update', 'ProjectController@updateProjectDetail')->name('update-project-detail');
     Route::post('/assign/email', 'ProjectController@assignEmails')->name('project-assign-email');
-    Route::get('/download/email', 'ProjectController@downloadEmailSample')->name('project-download-email');
-    Route::get('/download/address', 'ProjectController@downloadAddressSample')->name('project-download-address');
-    Route::get('/project/status', 'ProjectController@projectStatus')->name('project-status');
+    Route::prefix('download')->group(function () {
+      Route::get('/email', 'ProjectController@downloadEmailSample')->name('project-download-email');
+      Route::get('/address', 'ProjectController@downloadAddressSample')->name('project-download-address');
+    });
+  });
+  Route::prefix('bussiness')->group(function () {
+    Route::get('/create', 'ProjectController@createBussiness')->name('create-bussiness');
+    Route::post('/create', 'ProjectController@storeBussiness')->name('store-bussiness');
+  });
+  Route::prefix('category')->group(function () {
+    Route::get('/create', 'ProjectController@createCategory')->name('create-category');
+    Route::post('/create', 'ProjectController@storeCategory')->name('store-category');
   });
 });

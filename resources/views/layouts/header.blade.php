@@ -10,7 +10,7 @@
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
     <ul class="navbar-nav navbar-nav-right">
-      <li class="nav-item nav-profile dropdown">
+      <!-- <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
           <img src="/images/faces/face5.jpg" alt="profile"/>
           <span class="nav-profile-name">{{ Auth::user()->full_name }}</span>
@@ -27,7 +27,7 @@
               @csrf
           </form>
         </div>
-      </li>
+      </li> -->
     </ul>
     <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
       <span class="mdi mdi-menu"></span>
