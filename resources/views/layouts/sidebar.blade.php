@@ -49,7 +49,7 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" data-target="#setting" aria-expanded="false" aria-controls="setting">
+      <a class="nav-link" data-toggle="collapse" href="#setting" aria-expanded="false" aria-controls="setting">
         <i class="mdi mdi-settings menu-icon"></i>
         <span class="menu-title">Settings</span>
         <i class="menu-arrow"></i>
