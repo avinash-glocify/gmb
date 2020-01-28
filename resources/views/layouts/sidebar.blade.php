@@ -1,4 +1,4 @@
-@php $projects =\App\Models\Project::where('user_id', \Auth::user()->id)->get(); @endphp
+@php $projects =\App\Models\Project::get(); @endphp
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item">

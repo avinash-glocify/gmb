@@ -51,7 +51,12 @@ $(document).ready(function() {
           column: column
         },
         success: function (data) {
-          console.log(data);
+          if(column == 'bussiness_id') {
+            const projectDetails = data.data;
+            const elementValue = `gmb_listing_name_${project_id}`
+            const element = document.querySelectorAll(`[data-name="${elementValue}"]`)[0];
+            element.innerText = projectDetails.gmb_listing_name;
+          }
         },
         error: function(data) {
           if(data.responseJSON.errors.email || data.responseJSON.errors.recovery_mail) {

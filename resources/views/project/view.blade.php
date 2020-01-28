@@ -3,17 +3,6 @@
 @php $tab = Request::segment(2);  @endphp
 <div class="content-wrapper">
   <div class="row">
-    <div class="col-md-12 grid-margin">
-      <div class="d-flex justify-content-between flex-wrap">
-        <div class="d-flex align-items-end flex-wrap">
-          <div class="mr-md-3 mr-xl-5">
-            <h2>Project Setup</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body dashboard-tabs p-0">
@@ -22,10 +11,10 @@
               <a class="nav-link  @if($tab == 'setup') active @endif" id="overview-tab"  href="{{ route('project-setup', $project->id) }}"role="tab" aria-controls="overview" aria-selected="true">SET UP</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link @if($tab == 'create') active @endif" id="create-tab" @if(Session()->get('step.first') == 'completed') href="{{ route('project-setup-create', $project->id) }}" @else href="#create"  @endif  role="tab" aria-controls="create" aria-selected="false">CREATE</a>
+              <a class="nav-link @if($tab == 'create') active @endif" id="create-tab" @if($projectWithEmail->count()) href="{{ route('project-setup-create', $project->id) }}" @else href="#create"  @endif  role="tab" aria-controls="create" aria-selected="false">CREATE</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link @if($tab == 'edit') active @endif" @if(Session()->get('step.two') == 'completed')  href="{{ route('project-setup-edit', $project->id) }}" @else href="#edit" @endif id="edit-tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false">EDIT</a>
+              <a class="nav-link @if($tab == 'edit') active @endif" @if($projectWithNumbers->count()) href="{{ route('project-setup-edit', $project->id) }}" @else href="#edit" @endif id="edit-tab" role="tab" aria-controls="edit" aria-selected="false">EDIT</a>
             </li>
           </ul>
         </div>
@@ -36,9 +25,9 @@
     <div class="col-md-12 grid-margin">
         <div class="tab-content py-0 px-0">
             <div class="">
-              @if($projectWithPhoneNumbers)
+              @if($tab == 'edit')
                 @include('project.tabs.edit')
-              @elseif($projectDetailEmails)
+              @elseif($tab == 'create')
                 @include('project.tabs.create')
               @else
                 @include('project.tabs.setup')

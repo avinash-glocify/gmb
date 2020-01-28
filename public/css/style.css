@@ -9966,6 +9966,7 @@ pre code {
   padding: 1.25rem 0.9375rem;
   vertical-align: top;
   border-top: 1px solid #f3f3f3;
+  min-width: 100px !important;
 }
 
 .table thead th {
@@ -20353,9 +20354,7 @@ code {
 
 select.form-control, .dataTables_wrapper select {
   padding: .4375rem .75rem;
-  border: 0;
   outline: 1px solid #f3f3f3;
-  color: #c9c8c8;
 }
 
 select.form-control:focus, .dataTables_wrapper select:focus {

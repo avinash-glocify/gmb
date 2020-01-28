@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\Project;
 use App\Models\ProjectDetail;
+use App\Models\BussinessType;
 use Auth;
+use Carbon\Carbon;
 
 class ProjectController extends Controller
 {
@@ -49,79 +51,76 @@ class ProjectController extends Controller
         return redirect()->route('project-setup', [$request->project_id])->with($message);
     }
 
-    public function show(Request $request, $id)
+    public function show($id)
     {
-        $project               = Project::findOrFail($id);
-        $projectDetail         = $project->projectDetails();
-        $projectDetailEmails   = $projectDetail
-                                        ->whereNotNull('phone_number')
-                                        ->get();
-
-        if(Session()->has('step')) {
-          Session()->forget('step');
-        }
-
-        if($project->projectDetails()->count()) {
-          Session()->put('step.first', 'completed');
-          if($projectDetailEmails->count()) {
-            Session()->put('step.two', 'completed');
-          }
-        }
-        $data['project']                 = $project;
-        $data['projectWithPhoneNumbers'] = false;
-        $data['projectDetailEmails']     = false;
+        $project = Project::findOrFail($id);
+        $data    = $this->getProjectDetailData($id);
 
         return view('project.view', $data);
     }
 
     public function ceateSetup(Request $request, $id)
     {
-        $project                  = Project::findOrFail($id);
-        $projectDetailEmails      = $project->projectDetails()
-                                            ->whereNull('phone_number')
-                                            ->get();
+        $project = Project::findOrFail($id);
+        $data    = $this->getProjectDetailData($id);
 
-        if($project->projectDetails()->count()) {
-          Session()->put('step.first', 'completed');
+        if(!$data['projectWithEmail']->count()) {
+          return redirect()->route('project-setup', [$project->id]);
         }
-
-        $data['project']                 = $project;
-        $data['projectDetailEmails']     = $projectDetailEmails;
-        $data['projectWithPhoneNumbers'] = false;
 
         return view('project.view', $data);
     }
 
     public function editSetup(Request $request, $id)
     {
-        $project                  = Project::findOrFail($id);
-        $projectDetailWithNumbers = $project->projectDetails()
-                                              ->whereNotNull('phone_number')
-                                              ->orderBy('phone_number', 'desc')
-                                              ->paginate(100);
+        $project = Project::findOrFail($id);
+        $data    = $this->getProjectDetailData($id);
 
-        if($projectDetailWithNumbers->count()) {
-          Session()->put('step.two', 'completed');
+        if(!$data['projectWithNumbers']->count()) {
+          return redirect()->route('project-setup', [$project->id]);
         }
-
-        $data['project']                 = $project;
-        $data['projectDetailEmails']     = false;
-        $data['projectWithPhoneNumbers'] = $projectDetailWithNumbers;
 
         return view('project.view', $data);
     }
+
+    public function getProjectDetailData($id)
+    {
+        $project             = Project::findOrFail($id);
+        $projectDetail       = $project->projectDetails();
+        $projectWithNumbers  = clone $projectDetail;
+        $projectDetail       = $projectDetail->get();
+        $projectWithNumbers  = $projectWithNumbers
+                                      ->whereNotNull('phone_number')
+                                      ->orderBy('phone_number', 'desc')
+                                      ->paginate(100);
+
+        $data =  [
+          'project'            => $project,
+          'projectWithEmail'   => $projectDetail,
+          'projectWithNumbers' => $projectWithNumbers,
+        ];
+
+        return $data;
+    }
+
 
     public function updateProjectDetail(Request $request)
     {
         $projectDetail  = ProjectDetail::findOrFail($request->id);
 
-        $validColumns = ['recovery_mail','password','first_name','last_name','street_address','city','zip', 'state','state_abrevation', 'status', 'payment_status'];
+        $validColumns = ['recovery_mail','password','first_name','last_name','street_address','city','zip', 'state','state_abrevation', 'status', 'payment_status', 'bussiness_id', 'category_id'];
 
          if (in_array($request->column, $validColumns)) {
-           $projectDetail->update([
-             "{$request->column}"  => $request->value
-           ]);
-           return response(['success' => 'Project Updated successfully']);
+           $data = ["{$request->column}"  => $request->value];
+
+           if($request->column == 'bussiness_id') {
+             $bussinessType            = BussinessType::findOrFail($request->value);
+             $name                     = $projectDetail->first_name.' '.$projectDetail->last_name.' '.$bussinessType->name;
+             $data['gmb_listing_name'] = $name;
+           }
+
+           $projectDetail->update($data);
+           return response(['data' => $projectDetail, 'success' => 'Project Updated successfully']);
          }
 
          return response(['error' => 'Something went wrong']);
@@ -131,9 +130,18 @@ class ProjectController extends Controller
     public function assignEmails(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name'    => ['required'],
-            'last_name'     => ['required'],
-            'emails'        => ['required','max:5'],
+            'first_name'   => ['required'],
+            'last_name'    => ['required'],
+            'emails'       => [
+                'required',
+                'max:5',
+                  function ($attribute, $value, $fail) {
+                    $emailCount = ProjectDetail::whereNotNull('phone_number')->pluck('email')->toArray();
+                    if(array_intersect($value, $emailCount)) {
+                      $fail('phone number Already associated With these e-mails');
+                    }
+                  }
+                ],
             'phone_number'  => [
                 'required',
                 'numeric',
@@ -157,11 +165,12 @@ class ProjectController extends Controller
 
           if($projectDetail) {
               $projectDetail->update([
-                'first_name'   => $request->first_name,
-                'last_name'    => $request->last_name,
-                'phone_number' => $request->phone_number,
+                'first_name'       => $request->first_name,
+                'last_name'        => $request->last_name,
+                'phone_number'     => $request->phone_number,
+                'gmb_listing_name' => $request->first_name. ' '. $request->last_name,
+                'creation_date'    => Carbon::now()
               ]);
-              Session()->put('step.two', 'completed');
           }
         }
         return redirect()

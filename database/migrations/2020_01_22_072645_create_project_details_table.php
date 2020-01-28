@@ -26,9 +26,15 @@ class CreateProjectDetailsTable extends Migration
             $table->string('city')->nullable();
             $table->string('zip')->nullable();
             $table->string('state')->nullable();
+            $table->string('country')->nullable();
             $table->string('state_abrevation')->nullable();
             $table->string('status')->nullable();
             $table->string('payment_status')->nullable();
+            $table->string('worker_name')->nullable();
+            $table->string('gmb_listing_name')->nullable();
+            $table->string('bussiness_id')->nullable();
+            $table->string('category_id')->nullable();
+            $table->timestamp('creation_date')->nullable();
             $table->timestamps();
         });
     }
