@@ -20354,7 +20354,7 @@ code {
 
 select.form-control, .dataTables_wrapper select {
   padding: .4375rem .75rem;
-  outline: 1px solid #f3f3f3;
+  outline: 1px solid #191616;
 }
 
 select.form-control:focus, .dataTables_wrapper select:focus {
