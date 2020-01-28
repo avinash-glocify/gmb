@@ -51,7 +51,7 @@
       <a class="nav-link"  href="{{ route('logout') }}"
        onclick="event.preventDefault();
                      document.getElementById('logout-form').submit();">
-      <i class="mdi mdi-logout text-primary menu-icon"></i>Logout</a>
+      <i class="mdi mdi-logout text-primary menu-icon"></i><span class="menu-title">Logout</span></a>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
           @csrf
       </form>
