@@ -5,6 +5,7 @@
     <div class="col-md-8 offset-2  grid-margin">
       <div class="card">
         <div class="card-body">
+          <h4 class="text-center">Add Bussiness Type</h4>
           <form class="forms-sample" method="post" action="{{ route('store-bussiness') }}">
             @csrf
             <div class="form-group">

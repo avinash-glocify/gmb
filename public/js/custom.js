@@ -17,7 +17,7 @@ $(document).ready(function() {
         success: function (data) {
           swal({
             title: "Good job!",
-            text: "User deleted successfully",
+            text: data.success,
             icon: "success",
           });
           window.location.reload();

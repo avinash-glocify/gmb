@@ -5,11 +5,12 @@
     <div class="col-md-8 offset-2  grid-margin">
       <div class="card">
         <div class="card-body">
+        <h4 class="text-center">Add Category</h4>
           <form class="forms-sample" method="post" action="{{ route('store-category') }}">
             @csrf
             <div class="form-group">
-              <label for="exampleInputUsername1">Category Name</label>
-              <input type="text" class="form-control @error('name') is-invalid @enderror" id="projectName" value="{{ old('name')  }}"  name="name" placeholder="Category Name">
+              <label for="categoryName">Category Name</label>
+              <input type="text" class="form-control @error('name') is-invalid @enderror" id="categoryName" value="{{ old('name')  }}"  name="name" placeholder="Category Name">
               @error('name')
                   <span class="invalid-feedback ml-1 mt-1" role="alert">
                       <strong>{{ $message }}</strong>

@@ -42,8 +42,8 @@
       </a>
       <div class="collapse" id="setting">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="{{ route('create-bussiness') }}" id="createProject">Add BussinessType</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('create-category') }}" id="createProject">Add Category</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('bussiness-index') }}" id="createProject">BussinessType</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('category-index') }}" id="createProject">Categories</a></li>
         </ul>
       </div>
     </li>

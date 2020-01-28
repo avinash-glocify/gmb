@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function() {
     Route::post('/store', 'UserController@store')->name('store-user');
     Route::get('/delete/{id}', 'UserController@destroy')->name('delete-user');
   });
+
   Route::prefix('project')->group(function () {
     Route::get('/create', 'ProjectController@create')->name('project-create');
     Route::post('/store', 'ProjectController@store')->name('store-project');
@@ -39,12 +40,18 @@ Route::middleware('auth')->group(function() {
       Route::get('/address', 'ProjectController@downloadAddressSample')->name('project-download-address');
     });
   });
+
   Route::prefix('bussiness')->group(function () {
-    Route::get('/create', 'ProjectController@createBussiness')->name('create-bussiness');
-    Route::post('/create', 'ProjectController@storeBussiness')->name('store-bussiness');
+    Route::get('/', 'BussinessController@index')->name('bussiness-index');
+    Route::get('/create', 'BussinessController@create')->name('create-bussiness');
+    Route::post('/store', 'BussinessController@store')->name('store-bussiness');
+    Route::get('/delete/{id}', 'BussinessController@delete')->name('delete-bussiness-type');
   });
+
   Route::prefix('category')->group(function () {
-    Route::get('/create', 'ProjectController@createCategory')->name('create-category');
-    Route::post('/create', 'ProjectController@storeCategory')->name('store-category');
+    Route::get('/', 'CategoryController@index')->name('category-index');
+    Route::get('/create', 'CategoryController@create')->name('create-category');
+    Route::post('/store', 'CategoryController@store')->name('store-category');
+    Route::get('/delete/{id}', 'CategoryController@delete')->name('delete-category');
   });
 });

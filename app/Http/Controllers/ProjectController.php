@@ -207,38 +207,4 @@ class ProjectController extends Controller
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'address.xlsx', $headers);
     }
-
-    public function createBussiness()
-    {
-        return view('project.bussiness');
-    }
-
-    public function createCategory()
-    {
-        return view('project.category');
-    }
-
-    public function storeBussiness(Request $request)
-    {
-        $rules = [
-          'name' => 'required|min:3|unique:bussiness_types'
-        ];
-
-        $request->validate($rules);
-
-        BussinessType::create(['name' => $request->name]);
-        return back()->with(['success' => 'Bussiness Type Added Successfully']);
-    }
-
-    public function storeCategory(Request $request)
-    {
-        $rules = [
-          'name' => 'required|min:3|unique:categories'
-        ];
-
-        $request->validate($rules);
-        Category::create(['name' => $request->name]);
-        return back()->with(['success' => 'Category Added Successfully']);
-
-    }
 }
