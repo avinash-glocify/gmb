@@ -2,24 +2,10 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#logout" aria-expanded="false" aria-controls="logout">
+      <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="logout">
         <i class="mdi mdi-account menu-icon"></i>
         <span class="menu-title">{{ Auth::user()->full_name }}</span>
-        <i class="menu-arrow"></i>
       </a>
-      <div class="collapse" id="logout">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a class="nav-link"  href="{{ route('logout') }}"
-             onclick="event.preventDefault();
-                           document.getElementById('logout-form').submit();">
-            <i class="mdi mdi-logout text-primary"></i>Logout</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-          </li>
-        </ul>
-      </div>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="/dashboard">
@@ -60,6 +46,15 @@
           <li class="nav-item"> <a class="nav-link" href="{{ route('create-category') }}" id="createProject">Add Category</a></li>
         </ul>
       </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"  href="{{ route('logout') }}"
+       onclick="event.preventDefault();
+                     document.getElementById('logout-form').submit();">
+      <i class="mdi mdi-logout text-primary menu-icon"></i>Logout</a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+          @csrf
+      </form>
     </li>
   </ul>
 </nav>
