@@ -7,7 +7,7 @@
             <h5 class="text-center">Emails</h5>
           </div>
           <div class="card-header mb-2">
-            <h5><span class="text-success"><strong> {{ $projectWithEmail->count() }} </strong></span><strong> UNUSED</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=""> <strong>{{ $projectWithEmail->count() }}</strong></span><strong> USED</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger"> <strong>{{ $projectWithEmail->count() }}</strong></span><strong>DUPLICATE</strong></h5>
+            <h5><span class="text-success"><strong> {{ $projectWithEmail->count() }} </strong></span><strong> UNUSED</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=""> <strong>{{ $projectWithEmail->count() }}</strong></span><strong> USED</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger"> <strong>{{ $projectWithEmail->count() }}</strong></span><strong> DUPLICATE</strong></h5>
           </div>
               <a href="{{route('project-download-email')}}" class=" mb-3 float-right">Download Sample</a>
         </div>
@@ -29,7 +29,7 @@
       </div>
       @if(Session::has('error_mail'))
       <div class="card-footer">
-          <p> {{ Session::get('count') }} Email's allready Existed. Do You want do download them. <a href="{{ Session::get('error_mail') }}">Download</a></p>
+          <p> {{ Session::get('count') }} Email's allready Existed. Do You want to download them. <a href="{{ Session::get('error_mail') }}">Download</a></p>
       </div>
       @endif
     </div>
@@ -64,7 +64,7 @@
       </div>
       @if(Session::has('error_address'))
       <div class="card-footer">
-          <p> {{ Session::get('count') }} Email's allready Existed. Do You want do download them. <a href="{{ Session::get('error_address') }}">Download</a></p>
+          <p> {{ Session::get('count') }} Email's allready Existed. Do You want to download them. <a href="{{ Session::get('error_address') }}">Download</a></p>
       </div>
       @endif
     </div>

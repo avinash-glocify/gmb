@@ -57,11 +57,13 @@ class ProjectController extends Controller
         if(Session()->has('error_mail.link')) {
             $message['error_mail'] = Session()->get('error_mail.link');
             $message['count']      = Session()->get('error_mail.count');
+            Session()->forget('error_mail');
         }
 
         if(Session()->has('address_mail.link')) {
             $message['error_address'] = Session()->get('address_mail.link');
             $message['count']         = Session()->get('address_mail.count');
+            Session()->forget('address_mail');
         }
 
         return redirect()->route('project-setup', [$request->project_id])->with($message);

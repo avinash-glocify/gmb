@@ -38,9 +38,10 @@ class EmailImport implements ToCollection, WithHeadingRow
             ];
             if($existProjectDetail) {
               if($existProjectDetail->project_id == $project->id) {
-              $projectDetail = $existProjectDetail->update($data);
+                $projectDetail = $existProjectDetail->update($data);
+              } else {
+                array_push($existsMails, $row->toArray());
               }
-              array_push($existsMails, $row->toArray());
             } else {
               $data['email']      = $row['gmail'];
               $data['project_id'] = $project->id;
@@ -58,7 +59,7 @@ class EmailImport implements ToCollection, WithHeadingRow
             $folder  = Carbon::now()->format('d-m-Y');
 
             $path    = storage_path('app/public/exportFiles/').$folder;
-            $file    = 'project'.strtotime("now").'.xlsx';
+            $file    = 'email'.strtotime("now").'.xlsx';
             if(!file_exists($path)) {
               mkdir($path);
             }

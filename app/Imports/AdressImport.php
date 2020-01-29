@@ -42,8 +42,9 @@ class AddressImport implements ToCollection, WithHeadingRow
               if($projectDetail->project_id == $project->id) {
                 $projectDetail->update($data);
                 Session()->put('success', true);
+              } else {
+                array_push($existsMails, $row->toArray());
               }
-              array_push($existsMails, $row->toArray());
             } else {
               $data['email']      = $row['gmail'];
               $data['project_id'] = $project->id;
@@ -59,7 +60,7 @@ class AddressImport implements ToCollection, WithHeadingRow
             $folder  = Carbon::now()->format('d-m-Y');
 
             $path    = storage_path('app/public/exportFiles/').$folder;
-            $file    = 'project'.strtotime("now").'.xlsx';
+            $file    = 'addresses and phone numbers'.strtotime("now").'.xlsx';
 
             if(!file_exists($path)) {
               mkdir($path);
