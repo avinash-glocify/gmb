@@ -2,7 +2,19 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="logout">
+      <div class="navbar p-0 d-flex flex-row">
+          <div class="navbar-brand-wrapper d-flex justify-content-center">
+            <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+              <a class="navbar-brand brand-logo" href="#"><img src="/images/logo.svg" alt="logo"/></a>
+              <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="mdi mdi-sort-variant"></span>
+              </button>
+            </div>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('user-profile') }}">
         <i class="mdi mdi-account menu-icon"></i>
         <span class="menu-title">{{ Auth::user()->full_name }}</span>
       </a>

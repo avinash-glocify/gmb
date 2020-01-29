@@ -16,7 +16,8 @@ return [
       'Phone Number',
       'Street','City',
       'State','Zip',
-      'State Code'
+      'State Code',
+      'Action'
   ],
 
   'status' => [

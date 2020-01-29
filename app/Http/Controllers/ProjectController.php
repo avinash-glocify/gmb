@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Imports\ProjectImport;
 use App\Imports\AddressImport;
+use App\Exports\SingleProjectDetailExport;
 use App\Imports\EmailImport;
 use Maatwebsite\Excel\Facades\Excel;
+
 use App\Http\Requests\ProjectImportRequest;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -16,6 +19,7 @@ use App\Models\ProjectDetail;
 use App\Models\BussinessType;
 use App\Models\Category;
 use Auth;
+use Session;
 use Carbon\Carbon;
 
 class ProjectController extends Controller
@@ -49,6 +53,17 @@ class ProjectController extends Controller
           $message = ['success' => "Data Imported Successfully"];
           Session()->forget('success');
         }
+
+        if(Session()->has('error_mail.link')) {
+            $message['error_mail'] = Session()->get('error_mail.link');
+            $message['count']      = Session()->get('error_mail.count');
+        }
+
+        if(Session()->has('address_mail.link')) {
+            $message['error_address'] = Session()->get('address_mail.link');
+            $message['count']         = Session()->get('address_mail.count');
+        }
+
         return redirect()->route('project-setup', [$request->project_id])->with($message);
     }
 
@@ -98,7 +113,7 @@ class ProjectController extends Controller
         $data =  [
           'project'            => $project,
           'projectWithEmail'   => $projectDetail,
-          'projectWithNumbers' => $projectWithNumbers,
+          'projectWithNumbers' => $projectWithNumbers
         ];
 
         return $data;
@@ -196,15 +211,22 @@ class ProjectController extends Controller
 
     public function downloadEmailSample(Request $request)
     {
-        $file= public_path(). "/sampleFiles/email.xlsx";
+        $file= public_path(). "/sampleFiles/Email_Sample.xlsx";
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'email.xlsx', $headers);
     }
 
     public function downloadAddressSample(Request $request)
     {
-        $file= public_path(). "/sampleFiles/address.xlsx";
+        $file= public_path(). "/sampleFiles/Address_Sample.xlsx";
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'address.xlsx', $headers);
+    }
+
+    public function export($id)
+    {
+        $projectDetail  = ProjectDetail::findOrFail($id);
+        $export         = new SingleProjectDetailExport($projectDetail);
+        return Excel::download($export, 'project.xlsx');
     }
 }

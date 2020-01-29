@@ -8,6 +8,12 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
+use App\Exports\ErrorMailsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+use Session;
+use Carbon\Carbon;
+
 class EmailImport implements ToCollection, WithHeadingRow
 {
     protected $projectId;
@@ -21,6 +27,7 @@ class EmailImport implements ToCollection, WithHeadingRow
     {
         $project = Project::findOrFail($this->projectId);
 
+        $existsMails = [];
         foreach ($rows as $key => $row) {
           if(isset($row['gmail'])) {
             $projectDetail      = Null;
@@ -33,6 +40,7 @@ class EmailImport implements ToCollection, WithHeadingRow
               if($existProjectDetail->project_id == $project->id) {
               $projectDetail = $existProjectDetail->update($data);
               }
+              array_push($existsMails, $row->toArray());
             } else {
               $data['email']      = $row['gmail'];
               $data['project_id'] = $project->id;
@@ -43,6 +51,23 @@ class EmailImport implements ToCollection, WithHeadingRow
               Session()->put('success', true);
             }
           }
+        }
+
+        if(count($existsMails)) {
+            $export  = new ErrorMailsExport($existsMails);
+            $folder  = Carbon::now()->format('d-m-Y');
+
+            $path    = storage_path('app/public/exportFiles/').$folder;
+            $file    = 'project'.strtotime("now").'.xlsx';
+            if(!file_exists($path)) {
+              mkdir($path);
+            }
+
+             $filePath = '/exportFiles/'.$folder.'/'.$file;
+             Excel::store($export, $filePath, 'public');
+
+             $downlink  = '/storage/exportFiles/'.$folder.'/'.$file;
+             Session()->put(['error_mail.link' => $downlink, 'error_mail.count' => count($existsMails)]);
         }
       }
 }

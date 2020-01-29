@@ -11,16 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
 
 Auth::routes();
 
 Route::middleware('auth')->group(function() {
+  Route::get('/', 'DashboardController@index');
   Route::get('/dashboard', 'DashboardController@index');
   Route::prefix('users')->group(function () {
     Route::get('/', 'UserController@index')->name('users-list');
+    Route::get('/profile', 'UserController@profile')->name('user-profile');
+    Route::post('/profile', 'UserController@updateProfile')->name('update-profile');
     Route::get('/create', 'UserController@create')->name('create-user');
     Route::post('/store', 'UserController@store')->name('store-user');
     Route::get('/delete/{id}', 'UserController@destroy')->name('delete-user');
@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/create/{id}', 'ProjectController@ceateSetup')->name('project-setup-create');
     Route::get('/edit/{id}', 'ProjectController@editSetup')->name('project-setup-edit');
     Route::get('/update', 'ProjectController@updateProjectDetail')->name('update-project-detail');
+    Route::get('/export/{id}', 'ProjectController@export')->name('project-export');
     Route::post('/assign/email', 'ProjectController@assignEmails')->name('project-assign-email');
     Route::prefix('download')->group(function () {
       Route::get('/email', 'ProjectController@downloadEmailSample')->name('project-download-email');

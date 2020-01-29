@@ -73,6 +73,7 @@
                 <td class="editMe" data-id="{{ $project->id }}" data-name="state">{{ $project->state }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="zip">{{ $project->zip }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="state_abrevation">{{ $project->state_abrevation }}</td>
+                <td><a href="{{ route('project-export', [$project->id])}}" class="btn btn-success" title="Export">Export</a></td>
               </tr>
               @endforeach
             </table>

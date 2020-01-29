@@ -24,7 +24,9 @@
 <body>
   <div id="app">
     <div class="container-scroller">
-      @include('layouts.header')
+      <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <span class="mdi mdi-menu"></span>
+      </button>
       <div class="container-fluid page-body-wrapper">
         @include('layouts.sidebar')
         <div class="main-panel">
@@ -47,7 +49,6 @@
     @if(Session::has('success'))
       <script>
       const text = "{{ Session::get('success') }}";
-      console.log(text);
       swal({
         title: "Good job!",
         text: text,

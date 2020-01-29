@@ -18,4 +18,14 @@ class ProjectDetail extends Model
     {
         return $this->creation_date ?  Carbon::parse($this->creation_date)->format('m-d-Y') : Carbon::now()->format('m-d-Y');
     }
+
+    public function bussinessType()
+    {
+        return $this->belongsTo(\App\Models\BussinessType::class, 'bussiness_id', 'id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(\App\Models\Category::class);
+    }
 }
