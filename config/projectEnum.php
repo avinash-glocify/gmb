@@ -75,5 +75,13 @@ return [
     'In Progress',
     'Active Needs Payment',
     'Rejected'
+  ],
+
+  'paymentTable' => [
+    'Email',
+    'Phone Number',
+    'Payment Status',
+    'First Name',
+    'Last Name',
   ]
 ];

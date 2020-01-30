@@ -19,6 +19,9 @@
             <li class="nav-item">
               <a class="nav-link @if($tab == 'final') active @endif" @if($projectWithVerifyStatus->count()) href="{{ route('project-setup-final-edit', $project->id) }}" @else href="#final" @endif id="final-tab" role="tab" aria-controls="final" aria-selected="false">FINAL</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link @if($tab == 'pay') active @endif" @if($projectWithActiveStatus->count()) href="{{ route('project-setup-pay', $project->id) }}" @else href="#pay" @endif id="pay-tab" role="tab" aria-controls="pay" aria-selected="false">PAY</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -34,6 +37,8 @@
                 @include('project.tabs.create')
               @elseif($tab == 'final')
                 @include('project.tabs.final')
+              @elseif($tab == 'pay')
+                @include('project.tabs.pay')
               @else
                 @include('project.tabs.setup')
               @endif

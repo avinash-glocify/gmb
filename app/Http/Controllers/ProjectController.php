@@ -173,6 +173,18 @@ class ProjectController extends Controller
         return view('project.view', $data);
     }
 
+    public function paySetup(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+        $data    = $this->getProjectDetailData($id);
+
+        if(!$data['projectWithActiveStatus']->count()) {
+          return redirect()->route('project-setup', [$project->id]);
+        }
+
+        return view('project.view', $data);
+    }
+
     public function getProjectDetailData($id)
     {
         $project                = Project::findOrFail($id);
@@ -197,13 +209,18 @@ class ProjectController extends Controller
                                       ->where('status', 'Verified')
                                       ->paginate(100);
 
+        $projectWithActiveStatus    = $project->projectDetails()
+                                      ->where('payment_status', 'Active Needs Payment')
+                                      ->paginate(100);
+
         $data =  [
           'project'                    => $project,
           'projectWithEmail'           => $projectDetail,
           'projectWithNumbers'         => $projectWithNumbers,
           'projectWithoutNumbersCount' => $projectWithoutNumbersCount,
           'projectWithNumbersCount'    => $projectWithNumbersCount,
-          'projectWithVerifyStatus'    => $projectWithVerifyStatus
+          'projectWithVerifyStatus'    => $projectWithVerifyStatus,
+          'projectWithActiveStatus'    => $projectWithActiveStatus
         ];
 
         return $data;
