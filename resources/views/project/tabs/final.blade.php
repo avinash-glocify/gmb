@@ -12,8 +12,8 @@
               @foreach($projectWithVerifyStatus as $key => $project)
               <tr>
                 <td>{{ ++$key }}</td>
-                <td>{{ $project->phone_number }}</td>
                 <td>{{ $project->email }}</td>
+                <td>{{ $project->phone_number }}</td>
                 <td><a href="{{ route('project-export', [$project->id])}}" class="btn btn-success" title="Export">Export</a></td>
               </tr>
               @endforeach
