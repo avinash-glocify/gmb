@@ -328,21 +328,21 @@ class ProjectController extends Controller
 
     public function downloadEmailSample(Request $request)
     {
-        $file= public_path(). "/sampleFiles/Email_Sample.xlsx";
+        $file    = public_path(). "/sampleFiles/Email_Sample.xlsx";
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'email.xlsx', $headers);
     }
 
     public function downloadAddressSample(Request $request)
     {
-        $file= public_path(). "/sampleFiles/Address_Sample.xlsx";
+        $file    = public_path(). "/sampleFiles/Address_Sample.xlsx";
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'address.xlsx', $headers);
     }
 
     public function downloadfinalSample(Request $request)
     {
-        $file= public_path(). "/sampleFiles/final_edit_sample.xlsx";
+        $file    = public_path(). "/sampleFiles/final_edit_sample.xlsx";
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'final.xlsx', $headers);
     }

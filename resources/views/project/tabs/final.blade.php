@@ -42,7 +42,7 @@
                 <td class="editMe" data-id="{{ $project->id }}" data-name="friday_hours">{{ $project->friday_hours }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="saturday_hours">{{ $project->saturday_hours }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="special_hours">{{ $project->special_hours }}</td>
-                <td><div style="width:300px;" data-id="{{ $project->id }}" data-name="from_the_business">{{ $project->from_the_business }}</div></td>
+                <td><div style="width:450px;" data-id="{{ $project->id }}" data-name="from_the_business">{{ $project->from_the_business }}</div></td>
                 <td>{{ $project->logo_photo }}</td>
                 <td>{{ $project->cover_photo }}</td>
                 <td>{{ $project->other_photos }}</td>

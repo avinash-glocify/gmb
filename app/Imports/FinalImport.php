@@ -40,7 +40,7 @@ class FinalImport implements ToCollection, WithHeadingRow
                                   ->first();
             if ($verifiedProject) {
 
-              $data = $this->getMappedData($row);
+              $data           = $this->getMappedData($row);
               $data['email']  = $row['gmail'];
 
               if ($verifiedProject->project_id == $project->id) {
