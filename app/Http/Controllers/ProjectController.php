@@ -36,33 +36,18 @@ class ProjectController extends Controller
         return view('project.create');
     }
 
-    public function store(Request $request)
+    public function importEmails(Request $request)
     {
-        $rules   = [];
         $message = [];
+        $rules   = ['email_file' => 'required'];
 
-        if($request->type == 'email') {
-          $import = new EmailImport($request->project_id);
-          $rules  = ['email_file' => 'required'];
-        } else {
-          $import = new AddressImport($request->project_id);
-          $rules  = ['address_file' => 'required'];
-        }
         $request->validate($rules);
+        $import = new EmailImport($request->project_id);
 
-        if($request->type == 'email') {
-          Excel::import($import, request()->file('email_file'));
-        } else {
-          Excel::import($import, request()->file('address_file'));
-        }
-
+        Excel::import($import, request()->file('email_file'));
 
         if(Session()->has('success')) {
-          if($request->type == 'email') {
-            $message = ['success_email_import'   => " Success. Your all emails were imported"];
-          } else {
-            $message = ['success_address_import' => " Success. Your all Emails and Addresses are imported"];
-          }
+          $message = ['success_email_import'   => " Success. Your all emails were imported"];
           Session()->forget('success');
         } else {
           $message    = ['error_import' => "Data Already Existed"];
@@ -74,6 +59,26 @@ class ProjectController extends Controller
             $message['newEntry']    = Session()->get('error_mail.newEntry');
             unset($message['success_email_import' ?? '']);
             Session()->forget('error_mail');
+        }
+        return redirect()->route('project-setup', [$request->project_id])->with($message);
+    }
+
+    public function importAddress(Request $request)
+    {
+        $message = [];
+        $rules   = ['address_file' => 'required'];
+
+        $request->validate($rules);
+
+        $import = new AddressImport($request->project_id);
+        Excel::import($import, request()->file('address_file'));
+
+
+        if(Session()->has('success')) {
+          $message = ['success_address_import' => " Success. Your all Emails and Addresses are imported"];
+          Session()->forget('success');
+        } else {
+          $message    = ['error_import' => "Data Already Existed"];
         }
 
         if(Session()->has('address_mail.link')) {
@@ -288,6 +293,6 @@ class ProjectController extends Controller
     {
         $projectDetail  = ProjectDetail::findOrFail($id);
         $export         = new SingleProjectDetailExport($projectDetail);
-        return Excel::download($export, 'project.xlsx');
+        return Excel::download($export, 'project.csv', \Maatwebsite\Excel\Excel::CSV);
     }
 }

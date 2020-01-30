@@ -62,14 +62,14 @@ class AddressImport implements ToCollection, WithHeadingRow
             $folder  = Carbon::now()->format('d-m-Y');
 
             $path    = storage_path('app/public/exportFiles/').$folder;
-            $file    = 'addresses and phone numbers'.strtotime("now").'.xlsx';
+            $file    = 'addresses and phone numbers'.Carbon::now()->format('d-m-Y-h-i-s').'.csv';
 
             if(!file_exists($path)) {
               mkdir($path);
             }
 
              $filePath = '/exportFiles/'.$folder.'/'.$file;
-             Excel::store($export, $filePath, 'public');
+             Excel::store($export, $filePath, 'public', \Maatwebsite\Excel\Excel::CSV);
              $downlink  = '/storage/exportFiles/'.$folder.'/'.$file;
 
              Session()->put([

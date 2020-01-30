@@ -14,7 +14,7 @@
           </div>
               <a href="{{route('project-download-email')}}" class=" mb-3 float-right">Download Sample</a>
         </div>
-        <form class="forms-sample" method="post" action="{{ route('store-project') }}" enctype="multipart/form-data">
+        <form class="forms-sample" method="post" action="{{ route('store-project-emails') }}" enctype="multipart/form-data">
           @csrf
           <input type="hidden" name="type" value="email">
           <input type="hidden" name="project_id" value="{{ $project->id }}">
@@ -52,7 +52,7 @@
           </div>
               <a href="{{route('project-download-address')}}" class="mb-3 float-right">Download Sample</a>
         </div>
-        <form class="forms-sample" method="post" action="{{ route('store-project') }}" enctype="multipart/form-data">
+        <form class="forms-sample" method="post" action="{{ route('store-project-address') }}" enctype="multipart/form-data">
           @csrf
           <input type="hidden" name="type" value="address">
           <input type="hidden" name="project_id" value="{{ $project->id }}">
