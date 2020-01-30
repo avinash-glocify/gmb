@@ -36,7 +36,7 @@
           <div class="form-group">
             <label for="exampleInputEmail">Emails</label>
               <select class="mdb-select form-control md-form selectpicker @error('emails') is-invalid @enderror" id="exampleInputEmail" multiple data-live-search="true" name="emails[]">
-                @foreach($projectWithEmail as $key => $projectDetail)
+                @foreach($projectWithoutNumbers as $key => $projectDetail)
                   <option value="{{ $projectDetail->email }}">{{ $projectDetail->email }}</option>
                 @endforeach
               </select>
@@ -46,7 +46,12 @@
                   </span>
               @enderror
           </div>
-          <button type="submit" class="btn btn-primary mr-2">Submit</button>
+          @if(!$projectWithoutNumbers->count())
+            <div class="bg-danger p-3 rounded text-center text-white mb-2" role="alert">
+              <strong>Please import more emails to assign Phone Number.</strong>
+            </div>
+          @endif
+          <button type="submit" class="btn btn-primary mr-2" @if(!$projectWithoutNumbers->count()) disabled @endif>Submit</button>
         </form>
       </div>
     </div>

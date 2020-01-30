@@ -198,9 +198,14 @@ class ProjectController extends Controller
                                       ->paginate(100)
                                       ->groupBy('phone_number');
 
+        $projectWithoutNumbers      = $project->projectDetails()
+                                        ->whereNull('phone_number')
+                                        ->get();
+
         $projectWithNumbersCount    = $project->projectDetails()
                                       ->whereNotNull('phone_number')
                                       ->count();
+
         $projectWithoutNumbersCount = $project->projectDetails()
                                       ->whereNull('phone_number')
                                       ->count();
@@ -218,6 +223,7 @@ class ProjectController extends Controller
           'projectWithEmail'           => $projectDetail,
           'projectWithNumbers'         => $projectWithNumbers,
           'projectWithoutNumbersCount' => $projectWithoutNumbersCount,
+          'projectWithoutNumbers'      => $projectWithoutNumbers,
           'projectWithNumbersCount'    => $projectWithNumbersCount,
           'projectWithVerifyStatus'    => $projectWithVerifyStatus,
           'projectWithActiveStatus'    => $projectWithActiveStatus
