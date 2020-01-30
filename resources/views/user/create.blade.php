@@ -48,10 +48,10 @@
               <label for="exampleInputConfirmPassword1">Confirm Password</label>
               <input type="password" class="form-control" id="exampleInputConfirmPassword1" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Confirm Password">
             </div>
-            <button type="submit" class="btn btn-primary mr-2">
+            <button type="submit" class="btn btn-success mr-2">
                 {{ __('Register') }}
             </button>
-              <a  href="{{ route('users-list') }}"class="btn btn-light">Cancel</a>
+              <a  href="{{ route('users-list') }}"class="btn btn-danger">Cancel</a>
             </form>
           </div>
         </div>

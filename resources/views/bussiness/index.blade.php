@@ -17,7 +17,7 @@
       <div class="card">
         <div class="card-body">
             <div class="">
-                  <a href="{{route('create-bussiness')}}" class="btn btn-success mb-3 float-right">Add Bussiness Type</a>
+                  <a href="{{route('create-bussiness')}}" class="btn btn-md btn-success mb-3 float-right btn-rounded">Add Bussiness Type</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered">

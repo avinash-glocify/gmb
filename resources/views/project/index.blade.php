@@ -17,7 +17,7 @@
       <div class="card">
         <div class="card-body">
             <div class="">
-                  <a href="{{route('project-create')}}" class="btn btn-success mb-3 float-right">Create New Project</a>
+                  <a href="{{route('project-create')}}" class="btn btn-success mb-3 float-right btn-rounded">Create New Project</a>
             </div>
             @if(Session::has('success'))
               <div class="d-flex justify-content-between align-items-end flex-wrap">
@@ -41,7 +41,8 @@
                         <td>{{++$key}}</td>
                         <td>{{$project->name}}</td>
                         <td>
-                          <a  href="javascript:void(0);" data-url="{{ route('delete-project', [$project->id]) }}" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn">Delete</a>
+                          <a  href="{{ route('project-setup', [$project->id]) }}" type="button" class="btn btn-md btn-success btn-rounded btn-fw">View</a>
+                          <a  href="javascript:void(0);" data-url="{{ route('delete-project', [$project->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn">Delete</a>
                         </td>
                       </tr>
                       @empty

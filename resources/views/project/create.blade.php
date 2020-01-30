@@ -28,7 +28,7 @@
                   </span>
               @enderror
             </div>
-            <button type="submit" class="btn btn-success mr-2">Create</button>
+            <button type="submit" class="btn btn-success mr-2 btn-rounded">Create</button>
           </form>
         </div>
       </div>
