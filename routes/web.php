@@ -27,8 +27,10 @@ Route::middleware('auth')->group(function() {
   });
 
   Route::prefix('project')->group(function () {
+    Route::get('/', 'ProjectController@index')->name('project-index');
     Route::get('/create', 'ProjectController@create')->name('project-create');
     Route::post('/store', 'ProjectController@store')->name('store-project');
+    Route::get('/delete/{id}', 'ProjectController@delete')->name('delete-project');
     Route::post('/name', 'ProjectController@storeName')->name('create-project-name');
     Route::get('/setup/{id}', 'ProjectController@show')->name('project-setup');
     Route::get('/create/{id}', 'ProjectController@ceateSetup')->name('project-setup-create');

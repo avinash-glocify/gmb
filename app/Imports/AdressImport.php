@@ -25,6 +25,7 @@ class AddressImport implements ToCollection, WithHeadingRow
     {
         $project     = Project::findOrFail($this->projectId);
         $existsMails = [];
+        $newEntry    = 0;
 
         foreach ($rows as $key => $row) {
           if(isset($row['gmail'])) {
@@ -49,6 +50,7 @@ class AddressImport implements ToCollection, WithHeadingRow
               $data['email']      = $row['gmail'];
               $data['project_id'] = $project->id;
               $projectDetail      = ProjectDetail::create($data);
+              $newEntry++;
               Session()->put('success', true);
             }
           }
@@ -69,7 +71,12 @@ class AddressImport implements ToCollection, WithHeadingRow
              $filePath = '/exportFiles/'.$folder.'/'.$file;
              Excel::store($export, $filePath, 'public');
              $downlink  = '/storage/exportFiles/'.$folder.'/'.$file;
-             Session()->put(['address_mail.link' => $downlink, 'address_mail.count' => count($existsMails)]);
+
+             Session()->put([
+               'address_mail.link'     => $downlink,
+               'address_mail.count'    => count($existsMails),
+               'address_mail.newEntry' => $newEntry
+             ]);
         }
     }
 }

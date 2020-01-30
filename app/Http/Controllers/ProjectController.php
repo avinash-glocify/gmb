@@ -25,6 +25,12 @@ use Carbon\Carbon;
 class ProjectController extends Controller
 {
 
+    public function index(Request $request)
+    {
+        $projects = Project::paginate(20);
+        return view('project.index', compact('projects'));
+    }
+
     public function create(Request $request)
     {
         return view('project.create');
@@ -32,7 +38,9 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $rules = [];
+        $rules   = [];
+        $message = [];
+
         if($request->type == 'email') {
           $import = new EmailImport($request->project_id);
           $rules  = ['email_file' => 'required'];
@@ -47,22 +55,32 @@ class ProjectController extends Controller
         } else {
           Excel::import($import, request()->file('address_file'));
         }
-        $message = ['error' => "Data Already Existed"];
+
 
         if(Session()->has('success')) {
-          $message = ['success' => "Data Imported Successfully"];
+          if($request->type == 'email') {
+            $message = ['success_email_import'   => " Success. Your all emails were imported"];
+          } else {
+            $message = ['success_address_import' => " Success. Your all Emails and Addresses are imported"];
+          }
           Session()->forget('success');
+        } else {
+          $message    = ['error_import' => "Data Already Existed"];
         }
 
         if(Session()->has('error_mail.link')) {
-            $message['error_mail'] = Session()->get('error_mail.link');
-            $message['count']      = Session()->get('error_mail.count');
+            $message['error_mail']  = Session()->get('error_mail.link');
+            $message['count']       = Session()->get('error_mail.count');
+            $message['newEntry']    = Session()->get('error_mail.newEntry');
+            unset($message['success_email_import' ?? '']);
             Session()->forget('error_mail');
         }
 
         if(Session()->has('address_mail.link')) {
             $message['error_address'] = Session()->get('address_mail.link');
             $message['count']         = Session()->get('address_mail.count');
+            $message['newEntry']      = Session()->get('address_mail.newEntry');
+            unset($message['success_address_import' ?? '']);
             Session()->forget('address_mail');
         }
 
@@ -75,6 +93,14 @@ class ProjectController extends Controller
         $data    = $this->getProjectDetailData($id);
 
         return view('project.view', $data);
+    }
+
+    public function delete($id)
+    {
+        $project = Project::with('projectDetails')->findOrFail($id);
+        $project->delete();
+
+        return response(['success' => 'Project deleted successfully']);
     }
 
     public function ceateSetup(Request $request, $id)
@@ -103,19 +129,27 @@ class ProjectController extends Controller
 
     public function getProjectDetailData($id)
     {
-        $project             = Project::findOrFail($id);
-        $projectDetail       = $project->projectDetails();
-        $projectWithNumbers  = clone $projectDetail;
-        $projectDetail       = $projectDetail->get();
-        $projectWithNumbers  = $projectWithNumbers
+        $project                = Project::findOrFail($id);
+        $projectDetail          = $project->projectDetails();
+        $projectWithNumbers     = clone $projectDetail;
+        $projectDetail          = $projectDetail->get();
+        $projectWithNumbers     = $projectWithNumbers
                                       ->whereNotNull('phone_number')
                                       ->orderBy('phone_number', 'desc')
                                       ->paginate(100);
+        $projectWithNumbersCount    = $project->projectDetails()
+                                      ->whereNotNull('phone_number')
+                                      ->count();
+        $projectWithoutNumbersCount = $project->projectDetails()
+                                      ->whereNull('phone_number')
+                                      ->count();
 
         $data =  [
-          'project'            => $project,
-          'projectWithEmail'   => $projectDetail,
-          'projectWithNumbers' => $projectWithNumbers
+          'project'                    => $project,
+          'projectWithEmail'           => $projectDetail,
+          'projectWithNumbers'         => $projectWithNumbers,
+          'projectWithoutNumbersCount' => $projectWithoutNumbersCount,
+          'projectWithNumbersCount'    => $projectWithNumbersCount
         ];
 
         return $data;
