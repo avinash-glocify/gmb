@@ -55,7 +55,6 @@ class ProjectDetail extends Model
             $this->address_line_4,
             $this->address_line_5,
             $this->sub_locality,
-            $this->sub_locality,
             $this->locality,
             $this->administrative_area,
             $this->country_region,
