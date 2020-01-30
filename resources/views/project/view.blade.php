@@ -16,6 +16,9 @@
             <li class="nav-item">
               <a class="nav-link @if($tab == 'edit') active @endif" @if($projectWithNumbers->count()) href="{{ route('project-setup-edit', $project->id) }}" @else href="#edit" @endif id="edit-tab" role="tab" aria-controls="edit" aria-selected="false">EDIT</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link @if($tab == 'final') active @endif" @if($projectWithVerifyStatus->count()) href="{{ route('project-setup-final-edit', $project->id) }}" @else href="#final" @endif id="final-tab" role="tab" aria-controls="final" aria-selected="false">FINAL</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -29,6 +32,8 @@
                 @include('project.tabs.edit')
               @elseif($tab == 'create')
                 @include('project.tabs.create')
+              @elseif($tab == 'final')
+                @include('project.tabs.final')
               @else
                 @include('project.tabs.setup')
               @endif

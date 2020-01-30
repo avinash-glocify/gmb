@@ -2,8 +2,9 @@
 
 return [
   'tableColumns' => [
-      'Status',
       'Payment Status',
+      'Status',
+      'Phone Number',
       'Creation Date',
       'Email',
       'Password',
@@ -13,10 +14,13 @@ return [
       'Category',
       'First Name',
       'Last Name',
-      'Phone Number',
       'Street','City',
       'State','Zip',
-      'State Code',
+      'State Code'
+  ],
+  'finalColumns' => [
+      'Email',
+      'Phone Number',
       'Action'
   ],
 

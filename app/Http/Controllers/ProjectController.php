@@ -127,16 +127,31 @@ class ProjectController extends Controller
         return view('project.view', $data);
     }
 
+    public function finalEditSetup(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+        $data    = $this->getProjectDetailData($id);
+
+        if(!$data['projectWithVerifyStatus']->count()) {
+          return redirect()->route('project-setup', [$project->id]);
+        }
+
+        return view('project.view', $data);
+    }
+
     public function getProjectDetailData($id)
     {
         $project                = Project::findOrFail($id);
         $projectDetail          = $project->projectDetails();
         $projectWithNumbers     = clone $projectDetail;
         $projectDetail          = $projectDetail->get();
+
         $projectWithNumbers     = $projectWithNumbers
                                       ->whereNotNull('phone_number')
                                       ->orderBy('phone_number', 'desc')
-                                      ->paginate(100);
+                                      ->paginate(100)
+                                      ->groupBy('phone_number');
+
         $projectWithNumbersCount    = $project->projectDetails()
                                       ->whereNotNull('phone_number')
                                       ->count();
@@ -144,12 +159,17 @@ class ProjectController extends Controller
                                       ->whereNull('phone_number')
                                       ->count();
 
+        $projectWithVerifyStatus    = $project->projectDetails()
+                                      ->where('status', 'Verified')
+                                      ->paginate(100);
+
         $data =  [
           'project'                    => $project,
           'projectWithEmail'           => $projectDetail,
           'projectWithNumbers'         => $projectWithNumbers,
           'projectWithoutNumbersCount' => $projectWithoutNumbersCount,
-          'projectWithNumbersCount'    => $projectWithNumbersCount
+          'projectWithNumbersCount'    => $projectWithNumbersCount,
+          'projectWithVerifyStatus'    => $projectWithVerifyStatus
         ];
 
         return $data;
@@ -163,12 +183,17 @@ class ProjectController extends Controller
         $validColumns = ['recovery_mail','password','first_name','last_name','street_address','city','zip', 'state','state_abrevation', 'status', 'payment_status', 'bussiness_id', 'category_id'];
 
          if (in_array($request->column, $validColumns)) {
+
            $data = ["{$request->column}"  => $request->value];
 
            if($request->column == 'bussiness_id') {
              $bussinessType            = BussinessType::findOrFail($request->value);
              $name                     = $projectDetail->first_name.' '.$projectDetail->last_name.' '.$bussinessType->name;
              $data['gmb_listing_name'] = $name;
+           }
+
+           if($request->column == 'payment_status') {
+             $projectDetail = ProjectDetail::where('phone_number', $projectDetail->phone_number);
            }
 
            $projectDetail->update($data);

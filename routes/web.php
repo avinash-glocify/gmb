@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/setup/{id}', 'ProjectController@show')->name('project-setup');
     Route::get('/create/{id}', 'ProjectController@ceateSetup')->name('project-setup-create');
     Route::get('/edit/{id}', 'ProjectController@editSetup')->name('project-setup-edit');
+    Route::get('/final/{id}', 'ProjectController@finalEditSetup')->name('project-setup-final-edit');
     Route::get('/update', 'ProjectController@updateProjectDetail')->name('update-project-detail');
     Route::get('/export/{id}', 'ProjectController@export')->name('project-export');
     Route::post('/assign/email', 'ProjectController@assignEmails')->name('project-assign-email');
