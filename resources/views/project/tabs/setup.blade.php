@@ -75,4 +75,39 @@
         @endif
     </div>
   </div>
+  <div class="col-md-5 offset-1  grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="">
+          @if(Session::has('success_final_import'))
+            <p class="alert-success p-3">{{ Session::get('success_final_import') }}</p>
+          @endif
+          <div class="card-header mb-3">
+            <h5 class="text-center">Final Edit</h5>
+          </div>
+              <a href="{{route('project-download-final')}}" class="mb-3 float-right">Download Sample</a>
+        </div>
+        <form class="forms-sample" method="post" action="{{ route('store-project-final-edit') }}" enctype="multipart/form-data">
+          @csrf
+          <input type="hidden" name="type" value="final">
+          <input type="hidden" name="project_id" value="{{ $project->id }}">
+          <div class="form-group">
+            <label for="exampleInputUsername1">Select File</label>
+            <input type="file" class="form-control file-upload-browse btn btn-primary" id="exampleInputUsername1"  name="final_edit_file">
+            @error('address_file')
+                <span class="invalid-feedback ml-1 mt-1" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
+          <button type="submit" class="btn btn-success mr-2">Import</button>
+        </form>
+      </div>
+        @if(Session::has('error_final'))
+        <div class="card-footer">
+            <p><span>Success. <strong class="text-success">{{ Session::get('newEntry') }}</strong> emails were imported.<span> We found {{ Session::get('count') }} duplicate emails. Click <a href="{{ Session::get('error_final') }}"><strong class="text-danger">download</strong></a> to download duplicate emails.</p>
+        </div>
+        @endif
+    </div>
+  </div>
 </div>

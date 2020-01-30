@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Imports\ProjectImport;
 use App\Imports\AddressImport;
-use App\Exports\SingleProjectDetailExport;
+use App\Imports\FinalImport;
 use App\Imports\EmailImport;
+use App\Exports\SingleProjectDetailExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-use App\Http\Requests\ProjectImportRequest;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -39,7 +39,7 @@ class ProjectController extends Controller
     public function importEmails(Request $request)
     {
         $message = [];
-        $rules   = ['email_file' => 'required'];
+        $rules   = ['email_file' => 'required|mimes:xlsx,csv'];
 
         $request->validate($rules);
         $import = new EmailImport($request->project_id);
@@ -66,7 +66,7 @@ class ProjectController extends Controller
     public function importAddress(Request $request)
     {
         $message = [];
-        $rules   = ['address_file' => 'required'];
+        $rules   = ['address_file' => 'required|mimes:xlsx,csv'];
 
         $request->validate($rules);
 
@@ -86,6 +86,35 @@ class ProjectController extends Controller
             $message['count']         = Session()->get('address_mail.count');
             $message['newEntry']      = Session()->get('address_mail.newEntry');
             unset($message['success_address_import' ?? '']);
+            Session()->forget('address_mail');
+        }
+
+        return redirect()->route('project-setup', [$request->project_id])->with($message);
+    }
+
+    public function importFinalEdit(Request $request)
+    {
+        $message = [];
+        $rules   = ['final_edit_file' => 'required|mimes:xlsx,csv'];
+
+        $request->validate($rules);
+
+        $import = new FinalImport($request->project_id);
+        Excel::import($import, request()->file('final_edit_file'));
+
+
+        if(Session()->has('success')) {
+          $message = ['success_final_import' => " Success. Your all Verified Emails imported"];
+          Session()->forget('success');
+        } else {
+          $message    = ['error_import' => "Data Already Existed"];
+        }
+
+        if(Session()->has('final_error_mail.link')) {
+            $message['error_final']   = Session()->get('final_error_mail.link');
+            $message['count']         = Session()->get('final_error_mail.count');
+            $message['newEntry']      = Session()->get('final_error_mail.newEntry');
+            unset($message['success_final_import' ?? '']);
             Session()->forget('address_mail');
         }
 
@@ -184,8 +213,7 @@ class ProjectController extends Controller
     public function updateProjectDetail(Request $request)
     {
         $projectDetail  = ProjectDetail::findOrFail($request->id);
-
-        $validColumns = ['recovery_mail','password','first_name','last_name','street_address','city','zip', 'state','state_abrevation', 'status', 'payment_status', 'bussiness_id', 'category_id'];
+        $validColumns   = $projectDetail->getFields();
 
          if (in_array($request->column, $validColumns)) {
 
@@ -287,6 +315,13 @@ class ProjectController extends Controller
         $file= public_path(). "/sampleFiles/Address_Sample.xlsx";
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'address.xlsx', $headers);
+    }
+
+    public function downloadfinalSample(Request $request)
+    {
+        $file= public_path(). "/sampleFiles/final_edit_sample.xlsx";
+        $headers = array('Content-Type: application/xlsx');
+        return Response::download($file, 'final.xlsx', $headers);
     }
 
     public function export($id)

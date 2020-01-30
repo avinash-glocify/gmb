@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function() {
     Route::post('/store', 'ProjectController@store')->name('store-project');
     Route::post('/store/emails', 'ProjectController@importEmails')->name('store-project-emails');
     Route::post('/store/address', 'ProjectController@importAddress')->name('store-project-address');
+    Route::post('/store/final/edit', 'ProjectController@importFinalEdit')->name('store-project-final-edit');
     Route::get('/delete/{id}', 'ProjectController@delete')->name('delete-project');
     Route::post('/name', 'ProjectController@storeName')->name('create-project-name');
     Route::get('/setup/{id}', 'ProjectController@show')->name('project-setup');
@@ -44,6 +45,7 @@ Route::middleware('auth')->group(function() {
     Route::prefix('download')->group(function () {
       Route::get('/email', 'ProjectController@downloadEmailSample')->name('project-download-email');
       Route::get('/address', 'ProjectController@downloadAddressSample')->name('project-download-address');
+      Route::get('/final', 'ProjectController@downloadfinalSample')->name('project-download-final');
     });
   });
 

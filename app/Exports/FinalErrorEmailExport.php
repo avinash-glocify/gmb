@@ -6,21 +6,18 @@ use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-use Carbon\Carbon;
-
-class SingleProjectDetailExport implements FromArray, WithHeadings, ShouldAutoSize
+class FinalErrorEmailExport implements FromArray, WithHeadings, ShouldAutoSize
 {
-    protected $project;
+    protected $errorMails;
 
-    public function __construct($project)
+    public function __construct($detail)
     {
-        $project       = $project->getFinalMappedData();
-        $this->project = [$project];
+        $this->errorMails = $detail;
     }
 
     public function array():array
     {
-        return $this->project;
+        return $this->errorMails;
     }
 
     public function headings(): array
@@ -29,4 +26,5 @@ class SingleProjectDetailExport implements FromArray, WithHeadings, ShouldAutoSi
         unset($columns[1]);
         return $columns;
     }
+
 }
