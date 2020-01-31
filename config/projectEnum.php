@@ -110,5 +110,12 @@ return [
     'Last Name',
     'Verified Emails',
     'Final Payment Status',
+  ],
+
+  'permissions' => [
+    'Create',
+    'Edit',
+    'Final',
+    'Pay',
   ]
 ];

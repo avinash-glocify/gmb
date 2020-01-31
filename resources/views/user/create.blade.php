@@ -48,10 +48,63 @@
               <label for="exampleInputConfirmPassword1">Confirm Password</label>
               <input type="password" class="form-control" id="exampleInputConfirmPassword1" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Confirm Password">
             </div>
-            <button type="submit" class="btn btn-success mr-2">
-                {{ __('Register') }}
-            </button>
+            <div class="form-group">
+                <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin"> Admin <i class="input-helper"></i>
+                   </label>
+                 </div>
+            </div>
+            <div id="project_permissions">
+            <div class="row" id="permissions">
+              <div class="col-md-12">
+                <hr>
+                <label for="exampleInputPassword1">Permissions</label>
+              </div>
+              @foreach($permissions as $key => $permission)
+                <div class="col-md-2">
+                  <div class="form-group">
+                     <div class="form-check">
+                        <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="permissions[{{$permission->id}}]">{{ $permission->name }}<i class="input-helper"></i></label>
+                     </div>
+                  </div>
+               </div>
+               @endforeach
+               @error('permissions')
+                   <span class="invalid-feedback ml-1 mt-1" role="alert">
+                       <strong>{{ $message }}</strong>
+                   </span>
+               @enderror
+            </div>
+            <div class="row" id="projects">
+              <div class="col-md-12">
+                <hr>
+                <label for="exampleInputConfirmPassword1">Projects</label>
+              </div>
+              @foreach($projects as $key => $project)
+                <div class="col-md-2">
+                   <div class="form-group">
+                      <div class="form-check">
+                         <label class="form-check-label">
+                         <input type="checkbox" class="form-check-input" name="projects[{{$project->id}}]">{{ $project->name }}<i class="input-helper"></i></label>
+                      </div>
+                   </div>
+                </div>
+              @endforeach
+              @error('projects')
+                  <span class="invalid-feedback ml-1 mt-1" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
+            </div>
+           </div>
+           <div class="mt-2">
+              <button type="submit" class="btn btn-success mr-2">
+                  {{ __('Register') }}
+              </button>
               <a  href="{{ route('users-list') }}"class="btn btn-danger">Cancel</a>
+            </div>
             </form>
           </div>
         </div>

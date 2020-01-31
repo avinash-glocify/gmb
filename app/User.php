@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password','first_name', 'last_name'
+        'email', 'password','first_name', 'last_name', 'role_id'
     ];
 
     /**
@@ -40,5 +40,20 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return ucfirst($this->first_name).' '.ucfirst($this->last_name);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(\App\Models\Role::class);
+    }
+
+    public function isAdmin() :bool
+    {
+        return $this->role->name == 'Admin' ? true : false;
+    }
+
+    public function isUser() :bool
+    {
+        return $this->role->name == 'user' ? true : false;
     }
 }

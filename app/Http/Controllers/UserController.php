@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateUserRequest;
 use App\User;
+use App\Models\Permission;
+use App\Models\Project;
+use App\Models\UserPermission;
 use Auth;
 
 class UserController extends Controller
@@ -18,7 +21,9 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        return view('user.create');
+        $permissions = Permission::get();
+        $projects    = Project::get();
+        return view('user.create', compact('permissions', 'projects'));
     }
 
     public function store(CreateUserRequest $request)
@@ -27,8 +32,26 @@ class UserController extends Controller
           'email'      => $request->email,
           'first_name' => $request->first_name,
           'last_name'  => $request->last_name,
-          'password'   => \Hash::make($request->password)
+          'password'   => \Hash::make($request->password),
+          'role_id'    => $request->is_admin ? 2 : 1
         ]);
+
+        $permissions = array_keys($request->permissions);
+        $projects    = array_keys($request->projects);
+
+        if($user->isUser()){
+            UserPermission::create([
+              'user_id'             => $user->id,
+              'data'                => json_encode($permissions),
+              'permissions_type'    => 'permission',
+            ]);
+            UserPermission::create([
+              'user_id'             => $user->id,
+              'data'                => json_encode($projects),
+              'permissions_type'    => 'projects',
+            ]);
+        }
+
         return redirect()->route('users-list')->with(['success' => 'User SuccessFully Added']);
     }
 
