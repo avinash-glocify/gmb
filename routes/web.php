@@ -41,7 +41,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/final/{id}', 'ProjectController@finalEditSetup')->name('project-setup-final-edit');
     Route::get('/pay/{id}', 'ProjectController@paySetup')->name('project-setup-pay');
     Route::get('/update', 'ProjectController@updateProjectDetail')->name('update-project-detail');
-    Route::get('/export/{id}', 'ProjectController@export')->name('project-export');
+    Route::get('/final/export/{id}', 'ProjectController@exportFinal')->name('project-final-export');
+    Route::get('/edit/export/{id}', 'ProjectController@exportEdit')->name('project-edit-export');
     Route::post('/assign/email', 'ProjectController@assignEmails')->name('project-assign-email');
     Route::prefix('download')->group(function () {
       Route::get('/email', 'ProjectController@downloadEmailSample')->name('project-download-email');

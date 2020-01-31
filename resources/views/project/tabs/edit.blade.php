@@ -8,6 +8,7 @@
               @foreach(config('projectEnum.tableColumns') as $column)
                 <th>{{ $column }}</th>
               @endforeach
+              <th>Action</th>
             </tr>
               @foreach($projectWithNumbers as $phoneKey => $projectDetail)
                   @php $phoneCount = \App\Models\ProjectDetail::where('phone_number', $phoneKey)->count(); @endphp
@@ -37,14 +38,11 @@
                       </div>
                     </td>
                   <td>{{ $project->phone_number }}</td>
-                  <td>
-                    <div style="width: 100px">
-                      {{ $project->project_creation_date }}
-                    </div>
-                  </td>
                   <td>{{ $project->email }}</td>
-                  <td class="editMe" data-id="{{ $project->id }}" data-name="password">{{ $project->password }}</td>
-                  <td class="editMe" data-id="{{ $project->id }}" data-name="recovery_mail">{{ $project->recovery_mail }}</td>
+                  <td>{{ $project->password }}</td>
+                  <td>{{ $project->recovery_mail }}</td>
+                  <td class="editMe" data-id="{{ $project->id }}" data-name="first_name" >{{ $project->first_name }}</td>
+                  <td class="editMe" data-id="{{ $project->id }}" data-name="last_name" >{{ $project->last_name }}</td>
                   <td data-id="{{ $project->id }}">
                     <div data-name="gmb_listing_name_{{ $project->id }}" style="width: 170px">
                       {{ $project->gmb_listing_name }}
@@ -70,13 +68,17 @@
                       </select>
                     </div>
                   </td>
-                  <td class="editMe" data-id="{{ $project->id }}" data-name="first_name" >{{ $project->first_name }}</td>
-                  <td class="editMe" data-id="{{ $project->id }}" data-name="last_name" >{{ $project->last_name }}</td>
                   <td class="editMe" data-id="{{ $project->id }}" data-name="street_address">{{ $project->street_address }}</td>
                   <td class="editMe" data-id="{{ $project->id }}" data-name="city">{{ $project->city }}</td>
                   <td class="editMe" data-id="{{ $project->id }}" data-name="state">{{ $project->state }}</td>
                   <td class="editMe" data-id="{{ $project->id }}" data-name="zip">{{ $project->zip }}</td>
                   <td class="editMe" data-id="{{ $project->id }}" data-name="state_abrevation">{{ $project->state_abrevation }}</td>
+                  <td>
+                    <div style="width: 100px">
+                      {{ $project->project_creation_date }}
+                    </div>
+                  </td>
+                  <td><a href="{{ route('project-edit-export', [$project->id])}}" class="btn btn-success" title="Export">Export</a></td>
                 </tr>
                 @endforeach
               @endforeach

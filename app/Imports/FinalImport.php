@@ -25,9 +25,10 @@ class FinalImport implements ToCollection, WithHeadingRow
     {
         $project = Project::findOrFail($this->projectId);
 
-        $existsMails = [];
-        $newEntry    = 0;
-        $errorMails  = 0;
+        $existsMails    = [];
+        $notExistsMails = [];
+        $newEntry       = 0;
+        $errorMails     = 0;
 
         foreach ($rows as $key => $row) {
           if(isset($row['gmail'])) {
@@ -50,7 +51,7 @@ class FinalImport implements ToCollection, WithHeadingRow
                 array_push($existsMails, $row->toArray());
               }
             } else {
-              $errorMails++;
+              array_push($notExistsMails, $row->toArray());
             }
 
             if($projectDetail) {
@@ -66,7 +67,7 @@ class FinalImport implements ToCollection, WithHeadingRow
             $path    = storage_path('app/public/exportFiles/').$folder;
             $file    = 'email'.Carbon::now()->format('d-m-Y-h-i-s').'.csv';
 
-            if(!file_exists($path)) {
+            if (!file_exists($path)) {
               mkdir($path);
             }
 

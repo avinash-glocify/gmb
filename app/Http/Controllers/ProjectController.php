@@ -9,6 +9,7 @@ use App\Imports\AddressImport;
 use App\Imports\FinalImport;
 use App\Imports\EmailImport;
 use App\Exports\SingleProjectDetailExport;
+use App\Exports\EditProjectDetailExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Support\Facades\Response;
@@ -214,9 +215,11 @@ class ProjectController extends Controller
                                       ->where('status', 'Verified')
                                       ->paginate(100);
 
-        $projectWithActiveStatus    = $project->projectDetails()
-                                      ->where('payment_status', 'Active Needs Payment')
-                                      ->paginate(100);
+        $projectWithActiveStatus    =   \DB::table('project_details')
+                                        ->where(['payment_status' => 'Active Needs Payment', 'status' => 'Verified' , 'project_id' => $project->id])
+                                        ->groupBy('project_details.phone_number')
+                                        ->select('*', \DB::raw('count(*) as phone_count'))
+                                        ->paginate(100);
 
         $data =  [
           'project'                    => $project,
@@ -309,6 +312,7 @@ class ProjectController extends Controller
                 'phone_number'     => $request->phone_number,
                 'payment_status'   => 'In Progress',
                 'gmb_listing_name' => $request->first_name,
+                'final_status'     => 'Need Payment',
                 'creation_date'    => Carbon::now()
               ]);
           }
@@ -354,10 +358,17 @@ class ProjectController extends Controller
         return Response::download($file, 'final.xlsx', $headers);
     }
 
-    public function export($id)
+    public function exportFinal($id)
     {
         $projectDetail  = ProjectDetail::findOrFail($id);
         $export         = new SingleProjectDetailExport($projectDetail);
+        return Excel::download($export, 'project.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
+
+    public function exportEdit($id)
+    {
+        $projectDetail  = ProjectDetail::findOrFail($id);
+        $export         = new EditProjectDetailExport($projectDetail);
         return Excel::download($export, 'project.csv', \Maatwebsite\Excel\Excel::CSV);
     }
 }

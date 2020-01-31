@@ -5,20 +5,20 @@ return [
       'Payment Status',
       'Status',
       'Phone Number',
-      'Creation Date',
       'Email',
       'Password',
       'Recovery Mail',
+      'First Name',
+      'Last Name',
       'Gmb Listing Name',
       'Bussiness Type',
       'Category',
-      'First Name',
-      'Last Name',
       'Street',
       'City',
       'State',
       'Zip',
-      'State Code'
+      'State Code',
+      'Creation Date',
   ],
   'finalColumns' => [
       'Email',
@@ -63,6 +63,25 @@ return [
       'Payments: Credit cards Visa Card',
       'Place page URLs: Menu link (url_menu)'
   ],
+  'editColumns' => [
+      'Payment Status',
+      'Status',
+      'Email',
+      'Phone Number',
+      'Recovery Email',
+      'Password',
+      'GMB Listing Name',
+      'Bussiness Type',
+      'GMB Category',
+      'First Name',
+      'Last Name',
+      'Steet Address',
+      'City',
+      'Zip',
+      'State',
+      'State Abbrev.',
+      'Creation Date',
+  ],
 
   'status' => [
     'Verified',
@@ -79,11 +98,18 @@ return [
     'Rejected'
   ],
 
+  'finalPaymentStatus' => [
+    'Need Payment',
+    'Reject',
+    'Done',
+  ],
+
   'paymentTable' => [
     'Email',
     'Phone Number',
-    'Payment Status',
     'First Name',
     'Last Name',
+    'Verified Emails',
+    'Status',
   ]
 ];

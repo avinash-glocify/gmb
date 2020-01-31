@@ -74,6 +74,7 @@ class CreateProjectDetailsTable extends Migration
             $table->string('credit_card_visa')->nullable();
             $table->string('place_page_urls_menu_link_url_menu')->nullable();
             $table->string('opening_date')->nullable();
+            $table->string('final_status')->nullable();
             $table->timestamp('creation_date')->nullable();
             $table->timestamps();
         });

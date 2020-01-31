@@ -14,10 +14,19 @@
                 <td>{{ ++$key }}</td>
                 <td>{{ $project->email }}</td>
                 <td>{{ $project->phone_number }}</td>
-                <td>{{ $project->payment_status }}</td>
                 <td>{{ $project->first_name }}</td>
                 <td>{{ $project->last_name }}</td>
-
+                <td>{{ $project->phone_count }}</td>
+                <td>
+                  <div class="form-group" style="width:170px">
+                    <select class="form-control" id="gmb_name" data-id="{{ $project->id }}" data-name="final_status" onchange="updatePayementStatus(event)">
+                      <option value="">Select Status</option>
+                        @foreach(config('projectEnum.finalPaymentStatus') as $type)
+                          <option value="{{ $type }}" @if($project->final_status == $type) Selected @endif >{{ $type }}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                </td>
               </tr>
               @endforeach
             </table>
