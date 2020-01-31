@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/profile', 'UserController@profile')->name('user-profile');
     Route::post('/profile', 'UserController@updateProfile')->name('update-profile');
     Route::get('/create', 'UserController@create')->name('create-user');
+    Route::get('/edit/{id}', 'UserController@edit')->name('edit-user');
     Route::post('/store', 'UserController@store')->name('store-user');
     Route::get('/delete/{id}', 'UserController@destroy')->name('delete-user');
   });

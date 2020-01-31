@@ -26,6 +26,21 @@ class UserController extends Controller
         return view('user.create', compact('permissions', 'projects'));
     }
 
+    public function edit($id)
+    {
+        $user           = User::findOrFail($id);
+        $permissions    = Permission::get();
+        $projects       = Project::get();
+
+        // $userPermission = $user->userPermissions->data;
+        // $userPermission = json_decode($userPermission, true);
+        //
+        // $userProjectPermission = $user->userProjectPermissions->data;
+        // $userProjectPermission = json_decode($userProjectPermission, true);
+
+        return view('user.create', compact('permissions', 'projects','user', 'userPermission', 'userProjectPermission'));
+    }
+
     public function store(CreateUserRequest $request)
     {
         $user = User::create([

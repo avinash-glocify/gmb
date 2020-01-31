@@ -10,7 +10,7 @@
             @csrf
             <div class="form-group">
               <label for="exampleInputUsername1">First Name</label>
-              <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="exampleInputUsername1" value="{{ old('first_name') }}"  name="first_name" placeholder="First Name">
+              <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="exampleInputUsername1" value="{{ old('first_name', $user->first_name ?? '' ) }}"  name="first_name" placeholder="First Name">
               @error('first_name')
                   <span class="invalid-feedback ml-1 mt-1" role="alert">
                       <strong>{{ $message }}</strong>
@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputUsername1">Last Name</label>
-              <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="exampleInputUsername2" value="{{ old('last_name') }}" name="last_name" placeholder="Last Name">
+              <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="exampleInputUsername2" value="{{ old('last_name', $user->last_name ?? '') }}" name="last_name" placeholder="Last Name">
               @error('last_name')
                   <span class="invalid-feedback ml-1 mt-1" role="alert">
                       <strong>{{ $message }}</strong>
@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1" value="{{ old('email') }}" name="email" placeholder="Email">
+              <input type="email" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1" value="{{ old('email', $user->email ?? '') }}" name="email" placeholder="Email">
               @error('email')
                   <span class="invalid-feedback ml-1 mt-1" role="alert">
                       <strong>{{ $message }}</strong>
@@ -51,7 +51,7 @@
             <div class="form-group">
                 <div class="form-check">
                     <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin"> Admin <i class="input-helper"></i>
+                      <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin" @isset($user) && @if($user->is_admin) checked @endif @endisset> Admin <i class="input-helper"></i>
                    </label>
                  </div>
             </div>
@@ -66,7 +66,7 @@
                   <div class="form-group">
                      <div class="form-check">
                         <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" name="permissions[{{$permission->id}}]">{{ $permission->name }}<i class="input-helper"></i></label>
+                        <input type="checkbox" class="form-check-input" name="permissions[{{$permission->id}}]" @isset($user) && @if($user->is_admin) disabled @endif @endisset>{{ $permission->name }}<i class="input-helper"></i></label>
                      </div>
                   </div>
                </div>
@@ -87,7 +87,7 @@
                    <div class="form-group">
                       <div class="form-check">
                          <label class="form-check-label">
-                         <input type="checkbox" class="form-check-input" name="projects[{{$project->id}}]">{{ $project->name }}<i class="input-helper"></i></label>
+                         <input type="checkbox" class="form-check-input" name="projects[{{$project->id}}]" @isset($user) && @if($user->is_admin) disabled @endif @endisset>{{ $project->name }}<i class="input-helper"></i></label>
                       </div>
                    </div>
                 </div>

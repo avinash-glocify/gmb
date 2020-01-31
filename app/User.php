@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\Permission;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -42,6 +44,11 @@ class User extends Authenticatable
         return ucfirst($this->first_name).' '.ucfirst($this->last_name);
     }
 
+    public function getIsAdminAttribute()
+    {
+        return $this->isAdmin();
+    }
+
     public function role()
     {
         return $this->belongsTo(\App\Models\Role::class);
@@ -55,5 +62,79 @@ class User extends Authenticatable
     public function isUser() :bool
     {
         return $this->role->name == 'user' ? true : false;
+    }
+
+    public function userPermissions()
+    {
+        return $this->hasOne(\App\Models\UserPermission::class)->where('permissions_type', 'permission');
+    }
+
+    public function userProjectPermissions()
+    {
+        return $this->hasOne(\App\Models\UserPermission::class)->where('permissions_type', 'projects');
+    }
+
+    public function hasCreatePermission()
+    {
+      if($this->isAdmin()) {
+        return true;
+      }
+
+      $permissions      = json_decode($this->userPermissions->data, true);
+      $createPermission = Permission::where('name', 'create')->first();
+
+      if(in_array($createPermission->id, $permissions)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function hasEditPermission()
+    {
+      if($this->isAdmin()) {
+        return true;
+      }
+
+      $permissions      = json_decode($this->userPermissions->data, true);
+      $createPermission = Permission::where('name', 'edit')->first();
+
+      if(in_array($createPermission->id, $permissions)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function hasFinalPermission()
+    {
+      if($this->isAdmin()) {
+        return true;
+      }
+
+      $permissions      = json_decode($this->userPermissions->data, true);
+      $createPermission = Permission::where('name', 'final')->first();
+
+      if(in_array($createPermission->id, $permissions)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function hasPayPermission()
+    {
+      if($this->isAdmin()) {
+        return true;
+      }
+
+      $permissions      = json_decode($this->userPermissions->data, true);
+      $createPermission = Permission::where('name', 'pay')->first();
+
+      if(in_array($createPermission->id, $permissions)) {
+        return true;
+      }
+
+      return false;
     }
 }
