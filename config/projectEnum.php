@@ -99,9 +99,8 @@ return [
   ],
 
   'finalPaymentStatus' => [
-    'Need Payment',
-    'Reject',
-    'Done',
+    'Need Payments',
+    'Paid',
   ],
 
   'paymentTable' => [
@@ -110,6 +109,6 @@ return [
     'First Name',
     'Last Name',
     'Verified Emails',
-    'Status',
+    'Final Payment Status',
   ]
 ];

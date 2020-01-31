@@ -312,7 +312,7 @@ class ProjectController extends Controller
                 'phone_number'     => $request->phone_number,
                 'payment_status'   => 'In Progress',
                 'gmb_listing_name' => $request->first_name,
-                'final_status'     => 'Need Payment',
+                'final_status'     => 'Need Payments',
                 'creation_date'    => Carbon::now()
               ]);
           }
