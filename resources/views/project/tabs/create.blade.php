@@ -47,8 +47,8 @@
               @enderror
           </div>
           @if(!$projectWithoutNumbers->count())
-            <div class="bg-danger p-3 rounded text-center text-white mb-2" role="alert">
-              <strong>Please import more emails to assign Phone Number.</strong>
+            <div class="bg-danger rounded text-center text-white mb-2" role="alert">
+              <p>Please import more emails to assign Phone Number.</p>
             </div>
           @endif
           <button type="submit" class="btn btn-primary mr-2" @if(!$projectWithoutNumbers->count()) disabled @endif>Submit</button>
