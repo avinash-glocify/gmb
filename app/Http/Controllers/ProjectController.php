@@ -307,6 +307,7 @@ class ProjectController extends Controller
                 'first_name'       => $request->first_name,
                 'last_name'        => $request->last_name,
                 'phone_number'     => $request->phone_number,
+                'payment_status'   => 'In Progress',
                 'gmb_listing_name' => $request->first_name,
                 'creation_date'    => Carbon::now()
               ]);
