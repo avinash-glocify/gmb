@@ -244,8 +244,14 @@ class ProjectController extends Controller
 
            if($request->column == 'bussiness_id') {
              $bussinessType            = BussinessType::findOrFail($request->value);
-             $name                     = $projectDetail->first_name.' '.$projectDetail->last_name.' '.$bussinessType->name;
+             $name                     = $projectDetail->first_name.' '.$bussinessType->name;
              $data['gmb_listing_name'] = $name;
+           }
+
+           if($request->column == 'first_name') {
+              $bussinessType            = BussinessType::findOrFail($projectDetail->bussiness_id);
+              $name                     = $request->value.' '.$bussinessType->name;
+              $data['gmb_listing_name'] = $name;
            }
 
            if($request->column == 'payment_status') {
@@ -301,7 +307,7 @@ class ProjectController extends Controller
                 'first_name'       => $request->first_name,
                 'last_name'        => $request->last_name,
                 'phone_number'     => $request->phone_number,
-                'gmb_listing_name' => $request->first_name. ' '. $request->last_name,
+                'gmb_listing_name' => $request->first_name,
                 'creation_date'    => Carbon::now()
               ]);
           }

@@ -51,7 +51,7 @@ $(document).ready(function() {
           column: column
         },
         success: function (data) {
-          if(column == 'bussiness_id') {
+          if(column == 'bussiness_id' || column == 'first_name') {
             const projectDetails = data.data;
             const elementValue = `gmb_listing_name_${project_id}`
             const element = document.querySelectorAll(`[data-name="${elementValue}"]`)[0];
