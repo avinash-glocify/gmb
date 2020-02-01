@@ -104,13 +104,15 @@ return [
   ],
 
   'paymentTable' => [
+    'Date Stamp',
     'Email',
     'Phone Number',
     'First Name',
     'Last Name',
     'Verified Emails',
-    'Date Stamp',
     'Payment Type',
+    'Payment Id',
+    'Referred By',
     'Final Payment Status',
   ],
 

@@ -12,22 +12,15 @@
               @foreach($projectWithActiveStatus as $key => $project)
               <tr>
                 <td>{{ ++$key }}</td>
+                <td>{{ \Carbon\Carbon::parse($project->creation_date)->format('d-m-Y') }}</td>
                 <td>{{ $project->email }}</td>
                 <td>{{ $project->phone_number }}</td>
                 <td>{{ $project->first_name }}</td>
                 <td>{{ $project->last_name }}</td>
                 <td>{{ $project->phone_count }}</td>
-                <td>{{ \Carbon\Carbon::parse($project->creation_date)->format('d-m-Y') }}</td>
-                <td>
-                  <div class="form-group" style="width:170px">
-                    <select class="form-control" id="gmb_name" data-id="{{ $project->id }}" data-name="payment_type" onchange="updatePayementStatus(event)">
-                      <option value="">Select Status</option>
-                        @foreach(config('projectEnum.paymentType') as $type)
-                          <option value="{{ $type }}" @if($project->payment_type == $type) Selected @endif >{{ $type }}</option>
-                        @endforeach
-                    </select>
-                  </div>
-                </td>
+                <td>{{ $project->payment_type }}</td>
+                <td>{{ $project->payment_id }}</td>
+                <td>{{ $project->referred_by }}</td>
                 <td>
                   <div class="form-group" style="width:170px">
                     <select class="form-control" id="gmb_name" data-id="{{ $project->id }}" data-name="final_status" onchange="updatePayementStatus(event)">
