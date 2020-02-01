@@ -17,6 +17,17 @@
                 <td>{{ $project->first_name }}</td>
                 <td>{{ $project->last_name }}</td>
                 <td>{{ $project->phone_count }}</td>
+                <td>{{ \Carbon\Carbon::parse($project->creation_date)->format('d-m-Y') }}</td>
+                <td>
+                  <div class="form-group" style="width:170px">
+                    <select class="form-control" id="gmb_name" data-id="{{ $project->id }}" data-name="payment_type" onchange="updatePayementStatus(event)">
+                      <option value="">Select Status</option>
+                        @foreach(config('projectEnum.paymentType') as $type)
+                          <option value="{{ $type }}" @if($project->payment_type == $type) Selected @endif >{{ $type }}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                </td>
                 <td>
                   <div class="form-group" style="width:170px">
                     <select class="form-control" id="gmb_name" data-id="{{ $project->id }}" data-name="final_status" onchange="updatePayementStatus(event)">

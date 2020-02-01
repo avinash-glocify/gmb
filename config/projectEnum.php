@@ -109,6 +109,8 @@ return [
     'First Name',
     'Last Name',
     'Verified Emails',
+    'Date Stamp',
+    'Payment Type',
     'Final Payment Status',
   ],
 
@@ -122,5 +124,10 @@ return [
     'email',
     'address',
     'final',
+  ],
+  'paymentType' => [
+    'Paypal',
+    'CashApp',
+    'Venmo',
   ]
 ];

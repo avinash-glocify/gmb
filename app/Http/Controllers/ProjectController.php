@@ -304,9 +304,10 @@ class ProjectController extends Controller
     public function assignEmails(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name'   => ['required'],
-            'last_name'    => ['required'],
-            'emails'       => [
+            'first_name'      => ['required'],
+            'last_name'       => ['required'],
+            'payment_type'    => ['required'],
+            'emails'          => [
                 'required',
                 'max:5',
                   function ($attribute, $value, $fail) {
@@ -345,6 +346,9 @@ class ProjectController extends Controller
                 'payment_status'   => 'In Progress',
                 'gmb_listing_name' => $request->first_name,
                 'final_status'     => 'Need Payments',
+                'payment_type'     => $request->payment_type,
+                'referred_by'      => $request->referred_by ?? '',
+                'payment_id'       => $request->payment_id ?? '',
                 'creation_date'    => Carbon::now()
               ]);
           }

@@ -51,6 +51,38 @@
               <p>Please import more emails to assign Phone Number.</p>
             </div>
           @endif
+          <div class="form-group">
+            <label for="exampleInputEmail">Payment Type</label>
+            <select class="form-control @error('payment_type') is-invalid @enderror" name="payment_type">
+              <option value="">Select Payment Type</option>
+              @foreach((config('projectEnum.paymentType')) as  $type)
+                <option value="{{ $type }}">{{ $type }}</option>
+              @endforeach
+            </select>
+            @error('payment_type')
+            <span class="invalid-feedback ml-1 mt-1" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail">Payment Id</label>
+            <input type="text" class="form-control @error('payment_id') is-invalid @enderror" name="payment_id" value="{{old('payment_id')}}" placeholder="Payment Id">
+            @error('payment_id')
+                <span class="invalid-feedback ml-1 mt-1" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail">Referred By</label>
+            <input type="text" class="form-control @error('referred_by') is-invalid @enderror" name="referred_by" value="{{old('referred_by')}}" placeholder="Referred By">
+            @error('referred_by')
+                <span class="invalid-feedback ml-1 mt-1" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
           <button type="submit" class="btn btn-primary mr-2" @if(!$projectWithoutNumbers->count()) disabled @endif>Submit</button>
         </form>
       </div>
