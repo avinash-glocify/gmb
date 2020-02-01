@@ -1,5 +1,7 @@
+@php $user = Auth::user(); @endphp
 <div class="row">
-  <div class="col-md-5 offset-1 grid-margin stretch-card">
+  @if($user->hasEmailImportPermission())
+    <div class="col-md-5 offset-1 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
         <div class="">
@@ -37,7 +39,9 @@
       @endif
     </div>
   </div>
-  <div class="col-md-5  grid-margin stretch-card">
+  @endif
+  @if($user->hasAddressImportPermission())
+    <div class="col-md-5  grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
         <div class="">
@@ -75,7 +79,9 @@
         @endif
     </div>
   </div>
-  <div class="col-md-5 offset-1  grid-margin stretch-card">
+  @endif
+  @if($user->hasFinalImportPermission())
+    <div class="col-md-5 grid-margin stretch-card @if($user->hasAddressImportPermission()) offset-1 @endif">
     <div class="card">
       <div class="card-body">
         <div class="">
@@ -110,4 +116,5 @@
         @endif
     </div>
   </div>
+  @endif
 </div>

@@ -17,7 +17,9 @@
       <div class="card">
         <div class="card-body">
             <div class="">
+              @if(Auth::user()->isAdmin())
                   <a href="{{route('project-create')}}" class="btn btn-success mb-3 float-right btn-rounded">Create New Project</a>
+              @endif
             </div>
             @if(Session::has('success'))
               <div class="d-flex justify-content-between align-items-end flex-wrap">
@@ -42,7 +44,9 @@
                         <td>{{$project->name}}</td>
                         <td>
                           <a  href="{{ route('project-setup', [$project->id]) }}" type="button" class="btn btn-md btn-success btn-rounded btn-fw">View</a>
-                          <a  href="javascript:void(0);" data-url="{{ route('delete-project', [$project->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn">Delete</a>
+                          @if(Auth::user()->isAdmin())
+                            <a  href="javascript:void(0);" data-url="{{ route('delete-project', [$project->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn">Delete</a>
+                          @endif
                         </td>
                       </tr>
                       @empty
@@ -54,7 +58,6 @@
                 </table>
           </div>
           <div class="float-right">
-            {{ $projects-> links() }}
           </div>
         </div>
       </div>

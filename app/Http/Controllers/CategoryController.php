@@ -4,18 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Auth;
 
 class CategoryController extends Controller
 {
 
   public function index()
   {
+      $user  = Auth::user();
+
+      if(!$user->isAdmin()) {
+        return redirect()->route('dashboard');
+      }
       $categories = Category::orderBy('id', 'desc')->paginate(20);
       return view('category.index', compact('categories'));
   }
 
   public function create()
   {
+      $user  = Auth::user();
+
+      if(!$user->isAdmin()) {
+        return redirect()->route('dashboard');
+      }
       return view('category.create');
   }
 
@@ -34,6 +45,11 @@ class CategoryController extends Controller
 
   public function delete(Request $request, $id)
   {
+      $user  = Auth::user();
+
+      if(!$user->isAdmin()) {
+        return redirect()->route('dashboard');
+      }
       $category = Category::findOrFail($id);
       $category->delete();
 

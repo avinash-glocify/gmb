@@ -117,5 +117,10 @@ return [
     'Edit',
     'Final',
     'Pay',
+  ],
+  'setup_permissions' => [
+    'email',
+    'address',
+    'final',
   ]
 ];

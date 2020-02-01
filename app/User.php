@@ -75,6 +75,11 @@ class User extends Authenticatable
         return $this->hasOne(\App\Models\UserPermission::class)->where('permissions_type', 'projects');
     }
 
+    public function userSetupPermissions()
+    {
+        return $this->hasOne(\App\Models\UserPermission::class)->where('permissions_type', 'setup');
+    }
+
     public function hasCreatePermission()
     {
       if($this->isAdmin()) {
@@ -139,13 +144,58 @@ class User extends Authenticatable
       return false;
     }
 
+    public function hasEmailImportPermission()
+    {
+      if($this->isAdmin()) {
+        return true;
+      }
+
+      $permissions      = json_decode($this->userSetupPermissions->data ?? '', true) ?? [];
+
+      if(in_array('email', $permissions)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function hasAddressImportPermission()
+    {
+      if($this->isAdmin()) {
+        return true;
+      }
+
+      $permissions      = json_decode($this->userSetupPermissions->data ?? '', true) ?? [];
+
+      if(in_array('address', $permissions)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function hasFinalImportPermission()
+    {
+      if($this->isAdmin()) {
+        return true;
+      }
+
+      $permissions      = json_decode($this->userSetupPermissions->data ?? '', true) ?? [];
+
+      if(in_array('final', $permissions)) {
+        return true;
+      }
+
+      return false;
+    }
+
     public function userProjects()
     {
       if($this->isAdmin()) {
           return $projects = Project::get();
       }
       $projectPermissions = $this->userProjectPermissions->data ?? '';
-      $projectIds         = json_decode($projectPermissions, true);
+      $projectIds         = json_decode($projectPermissions, true) ?? [];
       $projects           = Project::whereIn('id', $projectIds)->get();
       return $projects;
     }

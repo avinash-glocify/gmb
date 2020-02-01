@@ -29,7 +29,8 @@ class CreateUserRequest extends FormRequest
             'email'       => 'required|string|email|max:255|unique:users,email,'.$this->user_id,
             'password'    => 'required_with:password_confirmation|confirmed',
             'permissions' => 'required_without:is_admin',
-            'projects'    => 'required_without:is_admin'
+            'projects'    => 'required_without:is_admin',
+            'setup'       => 'required_without:is_admin'
         ];
     }
 }

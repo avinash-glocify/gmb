@@ -28,12 +28,17 @@ class ProjectController extends Controller
 
     public function index(Request $request)
     {
-        $projects = Project::paginate(20);
+        $user     = Auth::user();
+        $projects = $user->userProjects();
         return view('project.index', compact('projects'));
     }
 
     public function create(Request $request)
     {
+        $user = Auth::user();
+        if(!$user->isAdmin()) {
+          return redirect()->route('dashboard');
+        }
         return view('project.create');
     }
 
@@ -132,6 +137,12 @@ class ProjectController extends Controller
 
     public function delete($id)
     {
+        $user = Auth::user();
+
+        if(!$user->isAdmin()) {
+          return redirect()->route('dashboard');
+        }
+
         $project = Project::with('projectDetails')->findOrFail($id);
         $project->delete();
 

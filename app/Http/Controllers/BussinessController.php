@@ -4,18 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BussinessType;
-
+use Auth;
 class BussinessController extends Controller
 {
 
   public function index()
   {
+      $user  = Auth::user();
+
+      if(!$user->isAdmin()) {
+        return redirect()->route('dashboard');
+      }
       $categories = BussinessType::orderBy('id', 'desc')->paginate(20);
       return view('bussiness.index', compact('categories'));
   }
 
   public function create()
   {
+      $user  = Auth::user();
+
+      if(!$user->isAdmin()) {
+        return redirect()->route('dashboard');
+      }
       return view('bussiness.create');
   }
 
@@ -33,6 +43,11 @@ class BussinessController extends Controller
 
   public function delete($id)
   {
+      $user  = Auth::user();
+
+      if(!$user->isAdmin()) {
+        return redirect()->route('dashboard');
+      }
       $bussinesType = BussinessType::findOrFail($id);
 
       $bussinesType->delete();

@@ -103,6 +103,27 @@
                   </span>
               @enderror
             </div>
+            <div class="row" id="imports">
+              <div class="col-md-12">
+                <hr>
+                <label for="exampleInputConfirmPassword1">Setup</label>
+              </div>
+              @foreach(config('projectEnum.setup_permissions') as  $permission)
+                <div class="col-md-2">
+                   <div class="form-group">
+                      <div class="form-check">
+                         <label class="form-check-label">
+                         <input type="checkbox" class="form-check-input" name="setup[{{ $permission }}]" @isset($userSetupPermissions) && @if(in_array($permission, $userSetupPermissions)) checked @endif @endisset @isset($user) && @if($user->is_admin) disabled @endif @endisset>{{ $permission }}<i class="input-helper"></i></label>
+                      </div>
+                   </div>
+                </div>
+              @endforeach
+              @error('setup')
+                  <span class="invalid-feedback ml-1 mt-1" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
+            </div>
            </div>
            <div class="mt-2">
               <button type="submit" class="btn btn-success mr-2">
