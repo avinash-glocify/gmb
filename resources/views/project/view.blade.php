@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 @section('content')
-@php $tab = Request::segment(2);  @endphp
+@php $tab = Request::segment(2); $user = Auth::user();  @endphp
 <div class="content-wrapper">
   <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
@@ -10,18 +10,26 @@
             <li class="nav-item">
               <a class="nav-link  @if($tab == 'setup') active @endif" id="overview-tab"  href="{{ route('project-setup', $project->id) }}"role="tab" aria-controls="overview" aria-selected="true">SET UP</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link @if($tab == 'create') active @endif" id="create-tab" @if($projectWithEmail->count()) href="{{ route('project-setup-create', $project->id) }}" @else href="#create"  @endif  role="tab" aria-controls="create" aria-selected="false">CREATE</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link @if($tab == 'edit') active @endif" @if($projectWithNumbers->count()) href="{{ route('project-setup-edit', $project->id) }}" @else href="#edit" @endif id="edit-tab" role="tab" aria-controls="edit" aria-selected="false">EDIT</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link @if($tab == 'final') active @endif" @if($projectWithVerifyStatus->count()) href="{{ route('project-setup-final-edit', $project->id) }}" @else href="#final" @endif id="final-tab" role="tab" aria-controls="final" aria-selected="false">FINAL</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link @if($tab == 'pay') active @endif" @if($projectWithActiveStatus->count()) href="{{ route('project-setup-pay', $project->id) }}" @else href="#pay" @endif id="pay-tab" role="tab" aria-controls="pay" aria-selected="false">PAY</a>
-            </li>
+            @if($user->hasCreatePermission())
+              <li class="nav-item">
+                <a class="nav-link @if($tab == 'create') active @endif" id="create-tab" @if($projectWithEmail->count()) href="{{ route('project-setup-create', $project->id) }}" @else href="#create"  @endif  role="tab" aria-controls="create" aria-selected="false">CREATE</a>
+              </li>
+            @endif
+            @if($user->hasEditPermission())
+              <li class="nav-item">
+                <a class="nav-link @if($tab == 'edit') active @endif" @if($projectWithNumbers->count()) href="{{ route('project-setup-edit', $project->id) }}" @else href="#edit" @endif id="edit-tab" role="tab" aria-controls="edit" aria-selected="false">EDIT</a>
+              </li>
+            @endif
+            @if($user->hasFinalPermission())
+              <li class="nav-item">
+                <a class="nav-link @if($tab == 'final') active @endif" @if($projectWithVerifyStatus->count()) href="{{ route('project-setup-final-edit', $project->id) }}" @else href="#final" @endif id="final-tab" role="tab" aria-controls="final" aria-selected="false">FINAL</a>
+              </li>
+            @endif
+            @if($user->hasPayPermission())
+              <li class="nav-item">
+                <a class="nav-link @if($tab == 'pay') active @endif" @if($projectWithActiveStatus->count()) href="{{ route('project-setup-pay', $project->id) }}" @else href="#pay" @endif id="pay-tab" role="tab" aria-controls="pay" aria-selected="false">PAY</a>
+              </li>
+            @endif
           </ul>
         </div>
       </div>

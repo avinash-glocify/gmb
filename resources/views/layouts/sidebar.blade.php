@@ -25,12 +25,14 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+    @if(Auth::user()->isAdmin())
     <li class="nav-item">
       <a class="nav-link" href="/users">
         <i class="mdi mdi-account-multiple menu-icon"></i>
         <span class="menu-title">Users</span>
       </a>
     </li>
+    @endif
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
         <i class="mdi mdi-file-document-box-outline menu-icon"></i>

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use App\Models\Permission;
+use App\Models\Project;
 
 class User extends Authenticatable
 {
@@ -136,5 +137,16 @@ class User extends Authenticatable
       }
 
       return false;
+    }
+
+    public function userProjects()
+    {
+      if($this->isAdmin()) {
+          return $projects = Project::get();
+      }
+      $projectPermissions = $this->userProjectPermissions->data ?? '';
+      $projectIds         = json_decode($projectPermissions, true);
+      $projects           = Project::whereIn('id', $projectIds)->get();
+      return $projects;
     }
 }

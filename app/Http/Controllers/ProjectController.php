@@ -140,6 +140,10 @@ class ProjectController extends Controller
 
     public function ceateSetup(Request $request, $id)
     {
+        $user   = Auth::user();
+        if(!$user->hasCreatePermission()) {
+          return redirect()->route('dashboard');
+        }
         $project = Project::findOrFail($id);
         $data    = $this->getProjectDetailData($id);
 
@@ -152,6 +156,11 @@ class ProjectController extends Controller
 
     public function editSetup(Request $request, $id)
     {
+        $user   = Auth::user();
+
+        if(!$user->hasEditPermission()) {
+          return redirect()->route('dashboard');
+        }
         $project = Project::findOrFail($id);
         $data    = $this->getProjectDetailData($id);
 
@@ -164,6 +173,12 @@ class ProjectController extends Controller
 
     public function finalEditSetup(Request $request, $id)
     {
+        $user   = Auth::user();
+
+        if(!$user->hasFinalPermission()) {
+          return redirect()->route('dashboard');
+        }
+
         $project = Project::findOrFail($id);
         $data    = $this->getProjectDetailData($id);
 
@@ -176,6 +191,12 @@ class ProjectController extends Controller
 
     public function paySetup(Request $request, $id)
     {
+        $user   = Auth::user();
+
+        if(!$user->hasPayPermission()) {
+          return redirect()->route('dashboard');
+        }
+
         $project = Project::findOrFail($id);
         $data    = $this->getProjectDetailData($id);
 

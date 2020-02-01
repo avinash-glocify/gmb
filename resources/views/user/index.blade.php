@@ -45,7 +45,8 @@
                         <td>{{$user->last_name}}</td>
                         <td>{{$user->email}}</td>
                         <td>
-                          <a  href="javascript:void(0);" data-url="{{ route('delete-user', [$user->id]) }}" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn">Delete</a>
+                          <a  href="javascript:void(0);" data-url="{{ route('delete-user', [$user->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn">Delete</a>
+                          <a  href="{{ route('edit-user', [$user->id]) }}" type="button" class="btn btn-md btn-info btn-rounded btn-fw">Edit</a>
                         </td>
                       </tr>
                       @empty

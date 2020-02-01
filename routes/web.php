@@ -15,7 +15,7 @@
 Auth::routes();
 
 Route::middleware('auth')->group(function() {
-  Route::get('/', 'DashboardController@index');
+  Route::get('/', 'DashboardController@index')->name('dashboard');
   Route::get('/dashboard', 'DashboardController@index');
   Route::prefix('users')->group(function () {
     Route::get('/', 'UserController@index')->name('users-list');
@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function() {
     Route::post('/profile', 'UserController@updateProfile')->name('update-profile');
     Route::get('/create', 'UserController@create')->name('create-user');
     Route::get('/edit/{id}', 'UserController@edit')->name('edit-user');
+    Route::post('/update-user', 'UserController@update')->name('update-user');
     Route::post('/store', 'UserController@store')->name('store-user');
     Route::get('/delete/{id}', 'UserController@destroy')->name('delete-user');
   });

@@ -6,7 +6,12 @@
       <div class="card">
         <div class="card-body">
           <h2 class="card-title">Add User</h2>
-          <form class="forms-sample" method="post" action="{{ route('store-user') }}">
+            @if(isset($user))
+              <form class="forms-sample" method="post"  action="{{ route('update-user') }}">
+                <input type="hidden" name="user_id" value="{{ $user->id }}">
+            @else
+            <form class="forms-sample" method="post"  action="{{ route('store-user') }}">
+            @endif
             @csrf
             <div class="form-group">
               <label for="exampleInputUsername1">First Name</label>
@@ -66,7 +71,7 @@
                   <div class="form-group">
                      <div class="form-check">
                         <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" name="permissions[{{$permission->id}}]" @isset($user) && @if($user->is_admin) disabled @endif @endisset>{{ $permission->name }}<i class="input-helper"></i></label>
+                        <input type="checkbox" class="form-check-input" name="permissions[{{$permission->id}}]" @isset($userPermission) && @if(in_array($permission->id, $userPermission)) checked @endif @endisset  @isset($user) && @if($user->is_admin) disabled @endif @endisset>{{ $permission->name }}<i class="input-helper"></i></label>
                      </div>
                   </div>
                </div>
@@ -87,7 +92,7 @@
                    <div class="form-group">
                       <div class="form-check">
                          <label class="form-check-label">
-                         <input type="checkbox" class="form-check-input" name="projects[{{$project->id}}]" @isset($user) && @if($user->is_admin) disabled @endif @endisset>{{ $project->name }}<i class="input-helper"></i></label>
+                         <input type="checkbox" class="form-check-input" name="projects[{{$project->id}}]" @isset($userProjectPermission) && @if(in_array($project->id, $userProjectPermission)) checked @endif @endisset @isset($user) && @if($user->is_admin) disabled @endif @endisset>{{ $project->name }}<i class="input-helper"></i></label>
                       </div>
                    </div>
                 </div>
@@ -101,7 +106,7 @@
            </div>
            <div class="mt-2">
               <button type="submit" class="btn btn-success mr-2">
-                  {{ __('Register') }}
+                @if(isset($user)) Update @else  {{ __('Register') }} @endif
               </button>
               <a  href="{{ route('users-list') }}"class="btn btn-danger">Cancel</a>
             </div>

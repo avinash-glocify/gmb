@@ -24,12 +24,12 @@ class CreateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|string|max:255',
-            'last_name'  => 'required|string|max:255',
-            'email'      => 'required|string|email|max:255|unique:users,email',
-            'password'   => 'required|string|min:8|confirmed',
-            'permissions'  => 'required_without:is_admin',
-            'projects'     => 'required_without:is_admin'
+            'first_name'  => 'required|string|max:255',
+            'last_name'   => 'required|string|max:255',
+            'email'       => 'required|string|email|max:255|unique:users,email,'.$this->user_id,
+            'password'    => 'required_with:password_confirmation|confirmed',
+            'permissions' => 'required_without:is_admin',
+            'projects'    => 'required_without:is_admin'
         ];
     }
 }

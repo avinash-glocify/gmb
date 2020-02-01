@@ -15,6 +15,9 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $user  = Auth::user();
+        if(!$user->isAdmin()) {
+          return redirect()->route('dashboard');
+        }
         $users = User::where('id', '!=', $user->id)->get();
         return view('user.index', compact('users'));
     }
@@ -28,15 +31,21 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $authUser       = Auth::user();
+
+        if(!$authUser->isAdmin()) {
+          return redirect()->route('dashboard');
+        }
+
         $user           = User::findOrFail($id);
         $permissions    = Permission::get();
         $projects       = Project::get();
 
-        // $userPermission = $user->userPermissions->data;
-        // $userPermission = json_decode($userPermission, true);
-        //
-        // $userProjectPermission = $user->userProjectPermissions->data;
-        // $userProjectPermission = json_decode($userProjectPermission, true);
+        $userPermission = $user->userPermissions->data ?? '';
+        $userPermission = json_decode($userPermission, true);
+
+        $userProjectPermission = $user->userProjectPermissions->data ?? '';
+        $userProjectPermission = json_decode($userProjectPermission, true);
 
         return view('user.create', compact('permissions', 'projects','user', 'userPermission', 'userProjectPermission'));
     }
@@ -68,6 +77,44 @@ class UserController extends Controller
         }
 
         return redirect()->route('users-list')->with(['success' => 'User SuccessFully Added']);
+    }
+
+    public function update(CreateUserRequest $request)
+    {
+        $user = User::findOrFail($request->user_id);
+        $data = [
+          'email'      => $request->email,
+          'first_name' => $request->first_name,
+          'last_name'  => $request->last_name,
+          'role_id'    => $request->is_admin ? 2 : 1
+        ];
+
+        if($request->has('password')) {
+          $data['password']   = \Hash::make($request->password);
+        }
+
+         $user->update($data);
+
+        if($user->isUser()){
+          $permissions = array_keys($request->permissions);
+          $projects    = array_keys($request->projects);
+
+            UserPermission::updateOrCreate([
+              'user_id'          => $user->id,
+              'permissions_type' => 'permission',
+            ], [
+              'data' => json_encode($permissions)
+            ]);
+
+            UserPermission::updateOrCreate([
+              'user_id'          => $user->id,
+              'permissions_type' => 'projects',
+            ], [
+              'data' => json_encode($projects)
+            ]);
+        }
+
+        return redirect()->route('users-list')->with(['success' => 'User Udpdated SuccessFully']);
     }
 
     public function destroy($id)
