@@ -53,7 +53,7 @@
           @endif
           <div class="form-group">
             <label for="exampleInputEmail">Payment Type</label>
-            <select class="form-control @error('payment_type') is-invalid @enderror" name="payment_type">
+            <select class="form-control @error('payment_type') is-invalid @enderror" name="payment_type" style="outline:none !important">
               <option value="">Select Payment Type</option>
               @foreach((config('projectEnum.paymentType')) as  $type)
                 <option value="{{ $type }}">{{ $type }}</option>
