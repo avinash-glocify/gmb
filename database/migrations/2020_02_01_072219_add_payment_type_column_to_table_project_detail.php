@@ -13,7 +13,7 @@ class AddPaymentTypeColumnToTableProjectDetail extends Migration
      */
     public function up()
     {
-        Schema::table('Project_details', function (Blueprint $table) {
+        Schema::table('project_details', function (Blueprint $table) {
             $table->string('payment_type')->after('final_status')->nullable();
             $table->string('referred_by')->after('payment_type')->nullable();
             $table->string('payment_id')->after('referred_by')->nullable();
@@ -27,7 +27,7 @@ class AddPaymentTypeColumnToTableProjectDetail extends Migration
      */
     public function down()
     {
-        Schema::table('Project_details', function (Blueprint $table) {
+        Schema::table('project_details', function (Blueprint $table) {
           $table->dropColumn('payment_type');
           $table->dropColumn('referred_by');
           $table->dropColumn('payment_id');
