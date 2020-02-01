@@ -60,10 +60,10 @@ class UserController extends Controller
           'role_id'    => $request->is_admin ? 2 : 1
         ]);
 
-        $permissions = array_keys($request->permissions);
-        $projects    = array_keys($request->projects);
 
         if($user->isUser()){
+          $permissions = array_keys($request->permissions);
+          $projects    = array_keys($request->projects);
             UserPermission::create([
               'user_id'             => $user->id,
               'data'                => json_encode($permissions),
