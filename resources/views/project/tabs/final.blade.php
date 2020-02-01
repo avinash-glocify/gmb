@@ -42,10 +42,10 @@
                 <td class="editMe" data-id="{{ $project->id }}" data-name="friday_hours">{{ $project->friday_hours }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="saturday_hours">{{ $project->saturday_hours }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="special_hours">{{ $project->special_hours }}</td>
-                <td><div style="width:450px;" data-id="{{ $project->id }}" data-name="from_the_business">{{ $project->from_the_business }}</div></td>
-                <td>{{ $project->logo_photo }}</td>
-                <td>{{ $project->cover_photo }}</td>
-                <td>{{ $project->other_photos }}</td>
+                <td><div class="editMe" style="width:450px;" data-id="{{ $project->id }}" data-name="from_the_business">{{ $project->from_the_business }}</div></td>
+                <td class="editMe" data-id="{{ $project->id }}" data-name="logo_photo">{{ $project->logo_photo }}</td>
+                <td class="editMe" data-id="{{ $project->id }}" data-name="cover_photo">{{ $project->cover_photo }}</td>
+                <td class="editMe" data-id="{{ $project->id }}" data-name="other_photos">{{ $project->other_photos }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="labels">{{ $project->labels }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="adwords_location_extensions_phone">{{ $project->adwords_location_extensions_phone }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="amenities_wi_fi_wi_fi">{{ $project->amenities_wi_fi_wi_fi }}</td>
