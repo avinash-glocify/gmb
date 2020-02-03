@@ -114,8 +114,8 @@ class UserController extends Controller
 
           UserPermission::updateOrCreate([
             'user_id'          => $user->id,
-            'permissions_type' => 'permissions',
           ], [
+            'permissions_type' => 'permissions',
             'data' => json_encode($permissionsDatadata)
           ]);
         }
