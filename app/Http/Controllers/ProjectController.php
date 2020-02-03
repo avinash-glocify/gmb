@@ -228,7 +228,7 @@ class ProjectController extends Controller
         $projectWithNumbers     = $projectWithNumbers
                                       ->whereNotNull('phone_number')
                                       ->orderBy('phone_number', 'desc')
-                                      ->paginate(100)
+                                      ->get()
                                       ->groupBy('phone_number');
 
         $projectWithoutNumbers      = $project->projectDetails()
@@ -245,13 +245,13 @@ class ProjectController extends Controller
 
         $projectWithVerifyStatus    = $project->projectDetails()
                                       ->where('status', 'Verified')
-                                      ->paginate(100);
+                                      ->paginate(50);
 
         $projectWithActiveStatus    =   \DB::table('project_details')
                                         ->where(['payment_status' => 'Active Needs Payment', 'status' => 'Verified' , 'project_id' => $project->id])
                                         ->groupBy('project_details.phone_number')
                                         ->select('*', \DB::raw('count(*) as phone_count'))
-                                        ->paginate(100);
+                                        ->paginate(50);
 
         $data =  [
           'project'                    => $project,
