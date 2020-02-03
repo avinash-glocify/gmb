@@ -88,6 +88,9 @@
           @if(Session::has('success_final_import'))
             <p class="alert-success p-3">{{ Session::get('success_final_import') }}</p>
           @endif
+          @if(Session::has('error_import'))
+            <p class="alert-danger p-3 text-center">{{ Session::get('error_import') }}</p>
+          @endif
           <div class="card-header mb-3">
             <h5 class="text-center">Final Edit</h5>
           </div>

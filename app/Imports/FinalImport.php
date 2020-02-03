@@ -29,7 +29,6 @@ class FinalImport implements ToCollection, WithHeadingRow
         $notExistsMails = [];
         $newEntry       = 0;
         $errorMails     = 0;
-
         foreach ($rows as $key => $row) {
           if(isset($row['gmail'])) {
 
@@ -80,6 +79,10 @@ class FinalImport implements ToCollection, WithHeadingRow
                'final_error_mail.count'    => count($existsMails),
                'final_error_mail.newEntry' => $newEntry,
               ]);
+        }
+
+        if(count($notExistsMails)) {
+            Session()->put('error', true);
         }
     }
 

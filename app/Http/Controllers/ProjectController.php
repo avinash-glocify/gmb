@@ -102,7 +102,6 @@ class ProjectController extends Controller
     {
         $message = [];
         $rules   = ['final_edit_file' => 'required|mimes:xlsx,csv'];
-
         $request->validate($rules);
 
         $import = new FinalImport($request->project_id);
@@ -112,8 +111,11 @@ class ProjectController extends Controller
         if(Session()->has('success')) {
           $message = ['success_final_import' => " Success. Your all Verified Emails imported"];
           Session()->forget('success');
-        } else {
-          $message    = ['error_import' => "Data Already Existed"];
+        }
+
+        if(Session()->has('error')) {
+          $message    = ['error_import' => "No Verified Email found to import"];
+          Session::forget('error');
         }
 
         if(Session()->has('final_error_mail.link')) {
