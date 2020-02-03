@@ -47,8 +47,6 @@ class AddressImport implements ToCollection, WithHeadingRow
               'bussiness_id'      => $bussinessType->id ?? Null,
               'category_id'       => $bussinessCate->id ?? Null,
               'gmb_listing_name'  => $row['gmb_listing_name'] ?? Null,
-              'payment_status'    => $row['payment_status'] ?? Null,
-              'status'            => $row['status'] ?? Null,
               'first_name'        => $row['first_name'] ?? Null,
               'last_name'         => $row['last_name'] ?? Null,
             ];

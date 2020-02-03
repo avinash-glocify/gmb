@@ -99,13 +99,13 @@ class UserController extends Controller
           'role_id'    => $request->is_admin ? 2 : 1
         ];
 
-        if($request->has('password')) {
+        if($request->filled('password')) {
           $data['password']   = \Hash::make($request->password);
         }
 
          $user->update($data);
 
-        if($user->isUser()){
+        if ($user->isUser()) {
           $permissionsDatadata = [
             'permission' => array_keys($request->permissions),
             'projects'   => array_keys($request->projects),
