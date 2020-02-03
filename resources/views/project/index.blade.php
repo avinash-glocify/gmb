@@ -58,6 +58,7 @@
                 </table>
           </div>
           <div class="float-right">
+            {{ $projects->links() }}
           </div>
         </div>
       </div>

@@ -29,7 +29,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $user     = Auth::user();
-        $projects = $user->userProjects();
+        $projects = $user->userProjects()->paginate(5);
         return view('project.index', compact('projects'));
     }
 

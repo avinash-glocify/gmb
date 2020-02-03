@@ -45,7 +45,7 @@
           @if(Auth::user()->isAdmin())
             <li class="nav-item"> <a class="nav-link" href="{{ route('project-create') }}" id="createProject">Create New</a></li>
           @endif
-            @foreach(Auth::user()->userProjects() as $key => $project)
+            @foreach(Auth::user()->userProjects()->get() as $key => $project)
                 <li class="nav-item"> <a class="nav-link" href="{{ route('project-setup', [$project->id])}}">{{ $project->name }}</a></li>
             @endforeach
         </ul>

@@ -20,7 +20,7 @@ class UserController extends Controller
           return redirect()->route('dashboard');
         }
 
-        $users = User::where('id', '!=', $user->id)->get();
+        $users = User::where('id', '!=', $user->id)->paginate(20);
         return view('user.index', compact('users'));
     }
 
@@ -39,31 +39,30 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $authUser       = Auth::user();
+        $authUser    = Auth::user();
 
         if(!$authUser->isAdmin()) {
           return redirect()->route('dashboard');
         }
 
-        $user           = User::findOrFail($id);
-        $permissions    = Permission::get();
-        $projects       = Project::get();
+        $user             = User::findOrFail($id);
+        $userPermission   = $user->permissions;
+        $permissionsData  = json_decode($userPermission->data ?? '', true);
 
-        $userPermission = $user->userPermissions->data ?? '';
-        $userPermission = json_decode($userPermission, true) ?? [];
+        $data = [
+          'user'                   => $user,
+          'projects'               => Project::get(),
+          'permissions'            => Permission::get(),
+          'userPermission'         => $permissionsData['permission'] ?? [],
+          'userSetupPermissions'   => $permissionsData['setup'] ?? [],
+          'userProjectPermission'  => $permissionsData['projects'] ?? [],
+        ];
 
-        $userProjectPermission = $user->userProjectPermissions->data ?? '';
-        $userProjectPermission = json_decode($userProjectPermission, true) ?? [];
-
-        $userSetupPermissions = $user->userSetupPermissions->data ?? '';
-        $userSetupPermissions = json_decode($userSetupPermissions, true) ?? [];
-
-        return view('user.create', compact('permissions', 'projects','user', 'userPermission', 'userSetupPermissions', 'userProjectPermission'));
+        return view('user.create', $data);
     }
 
     public function store(CreateUserRequest $request)
     {
-
         $user = User::create([
           'email'      => $request->email,
           'first_name' => $request->first_name,
@@ -73,28 +72,17 @@ class UserController extends Controller
         ]);
 
         if($user->isUser()){
-            $payloads = [
-                [
-                  'permission' => 'permission',
-                  'data'       => array_keys($request->permissions)
-                ],
-                [
-                  'permission' => 'projects',
-                  'data'       => array_keys($request->projects)
-                ],
-                [
-                  'permission' => 'setup',
-                  'data'       => array_keys($request->setup)
-                ],
+            $data = [
+              'permission' => array_keys($request->permissions),
+              'projects'   => array_keys($request->projects),
+              'setup'      => array_keys($request->setup),
             ];
 
-            foreach ($payloads as $key => $payload) {
-              UserPermission::create([
-                'user_id'             => $user->id,
-                'data'                => json_encode($payload['data']),
-                'permissions_type'    => $payload['permission'],
-              ]);
-            }
+            UserPermission::create([
+              'user_id'             => $user->id,
+              'data'                => json_encode($data),
+              'permissions_type'    => 'permissions',
+            ]);
         }
 
         return redirect()->route('users-list')->with(['success' => 'User SuccessFully Added']);
@@ -103,6 +91,7 @@ class UserController extends Controller
     public function update(CreateUserRequest $request)
     {
         $user = User::findOrFail($request->user_id);
+
         $data = [
           'email'      => $request->email,
           'first_name' => $request->first_name,
@@ -117,28 +106,18 @@ class UserController extends Controller
          $user->update($data);
 
         if($user->isUser()){
-          $payloads = [
-              [
-                'permission' => 'permission',
-                'data'       => array_keys($request->permissions)
-              ],
-              [
-                'permission' => 'projects',
-                'data'       => array_keys($request->projects)
-              ],
-              [
-                'permission' => 'setup',
-                'data'       => array_keys($request->setup)
-              ],
+          $permissionsDatadata = [
+            'permission' => array_keys($request->permissions),
+            'projects'   => array_keys($request->projects),
+            'setup'      => array_keys($request->setup),
           ];
-          foreach ($payloads as $key => $payload) {
-            UserPermission::updateOrCreate([
-              'user_id'          => $user->id,
-              'permissions_type' => $payload['permission'],
-            ], [
-              'data' => json_encode($payload['data'])
-            ]);
-          }
+
+          UserPermission::updateOrCreate([
+            'user_id'          => $user->id,
+            'permissions_type' => 'permissions',
+          ], [
+            'data' => json_encode($permissionsDatadata)
+          ]);
         }
 
         return redirect()->route('users-list')->with(['success' => 'User Udpdated SuccessFully']);

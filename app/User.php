@@ -40,6 +40,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($user) {
+             $user->permissions()->delete();
+        });
+    }
+
     public function getFullNameAttribute()
     {
         return ucfirst($this->first_name).' '.ucfirst($this->last_name);
@@ -65,19 +73,35 @@ class User extends Authenticatable
         return $this->role->name == 'user' ? true : false;
     }
 
-    public function userPermissions()
+    public function permissions()
     {
-        return $this->hasOne(\App\Models\UserPermission::class)->where('permissions_type', 'permission');
+        return $this->hasOne(\App\Models\UserPermission::class);
+    }
+
+    public function permissionsData()
+    {
+        return json_decode($this->permissions->data ?? '', true) ?? [];
     }
 
     public function userProjectPermissions()
     {
-        return $this->hasOne(\App\Models\UserPermission::class)->where('permissions_type', 'projects');
+        $permissions      = $this->permissionsData();
+        $permissions      = $permissions['projects'] ?? [];
+        return $permissions;
+    }
+
+    public function userPermissions()
+    {
+        $permissions      = $this->permissionsData();
+        $permissions      = $permissions['permission'] ?? [];
+        return $permissions;
     }
 
     public function userSetupPermissions()
     {
-        return $this->hasOne(\App\Models\UserPermission::class)->where('permissions_type', 'setup');
+        $permissions      = $this->permissionsData();
+        $permissions      = $permissions['setup'] ?? [];
+        return $permissions;
     }
 
     public function hasCreatePermission()
@@ -86,7 +110,7 @@ class User extends Authenticatable
         return true;
       }
 
-      $permissions      = json_decode($this->userPermissions->data, true);
+      $permissions      = $this->userPermissions();
       $createPermission = Permission::where('name', 'create')->first();
 
       if(in_array($createPermission->id, $permissions)) {
@@ -102,7 +126,7 @@ class User extends Authenticatable
         return true;
       }
 
-      $permissions      = json_decode($this->userPermissions->data, true);
+      $permissions      = $this->userPermissions();
       $createPermission = Permission::where('name', 'edit')->first();
 
       if(in_array($createPermission->id, $permissions)) {
@@ -118,7 +142,7 @@ class User extends Authenticatable
         return true;
       }
 
-      $permissions      = json_decode($this->userPermissions->data, true);
+      $permissions      = $this->userPermissions();
       $createPermission = Permission::where('name', 'final')->first();
 
       if(in_array($createPermission->id, $permissions)) {
@@ -134,7 +158,7 @@ class User extends Authenticatable
         return true;
       }
 
-      $permissions      = json_decode($this->userPermissions->data, true);
+      $permissions      = $this->userPermissions();
       $createPermission = Permission::where('name', 'pay')->first();
 
       if(in_array($createPermission->id, $permissions)) {
@@ -150,7 +174,7 @@ class User extends Authenticatable
         return true;
       }
 
-      $permissions      = json_decode($this->userSetupPermissions->data ?? '', true) ?? [];
+      $permissions      = $this->userSetupPermissions();
 
       if(in_array('email', $permissions)) {
         return true;
@@ -165,7 +189,7 @@ class User extends Authenticatable
         return true;
       }
 
-      $permissions      = json_decode($this->userSetupPermissions->data ?? '', true) ?? [];
+      $permissions      = $this->userSetupPermissions();
 
       if(in_array('address', $permissions)) {
         return true;
@@ -180,7 +204,8 @@ class User extends Authenticatable
         return true;
       }
 
-      $permissions      = json_decode($this->userSetupPermissions->data ?? '', true) ?? [];
+      $permissions      = $this->permissionsData();
+      $permissions      = $permissions['setup'] ?? [];
 
       if(in_array('final', $permissions)) {
         return true;
@@ -192,11 +217,12 @@ class User extends Authenticatable
     public function userProjects()
     {
       if($this->isAdmin()) {
-          return $projects = Project::get();
+          return $projects = Project::whereNotNull('user_id');
       }
-      $projectPermissions = $this->userProjectPermissions->data ?? '';
-      $projectIds         = json_decode($projectPermissions, true) ?? [];
-      $projects           = Project::whereIn('id', $projectIds)->get();
+
+      $projectPermissions = $this->userProjectPermissions();
+      $projects           = Project::whereIn('id', $projectPermissions);
+
       return $projects;
     }
 }
