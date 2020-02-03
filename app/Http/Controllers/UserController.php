@@ -8,7 +8,8 @@ use App\User;
 use App\Models\Permission;
 use App\Models\Project;
 use App\Models\UserPermission;
-use Auth;
+use App\Mail\UserCreated;
+use Auth, Mail;
 
 class UserController extends Controller
 {
@@ -27,13 +28,13 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $user  = Auth::user();
-
         if(!$user->isAdmin()) {
           return redirect()->route('dashboard');
         }
 
         $permissions = Permission::get();
         $projects    = Project::get();
+
         return view('user.create', compact('permissions', 'projects'));
     }
 
@@ -84,6 +85,8 @@ class UserController extends Controller
               'permissions_type'    => 'permissions',
             ]);
         }
+
+        Mail::to($user->email)->send(new UserCreated($user, $request->password));
 
         return redirect()->route('users-list')->with(['success' => 'User SuccessFully Added']);
     }
