@@ -9,6 +9,7 @@ use App\Models\Permission;
 use App\Models\Project;
 use App\Models\UserPermission;
 use App\Mail\UserCreated;
+use App\Mail\UpdatePassword;
 use Auth, Mail;
 
 class UserController extends Controller
@@ -121,6 +122,9 @@ class UserController extends Controller
             'permissions_type' => 'permissions',
             'data' => json_encode($permissionsDatadata)
           ]);
+        }
+        if($request->filled('password')) {
+          Mail::to($user->email)->send(new UpdatePassword($user, $request->password));
         }
 
         return redirect()->route('users-list')->with(['success' => 'User Udpdated SuccessFully']);
