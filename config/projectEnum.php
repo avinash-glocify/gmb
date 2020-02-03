@@ -61,7 +61,8 @@ return [
       'Payments: Credit cards American Express',
       'Payments: Credit cards Master Card',
       'Payments: Credit cards Visa Card',
-      'Place page URLs: Menu link (url_menu)'
+      'Place page URLs: Menu link (url_menu)',
+      'Status'
   ],
   'editColumns' => [
       'Payment Status',
@@ -131,5 +132,9 @@ return [
     'Paypal',
     'CashApp',
     'Venmo',
+  ],
+  'publishedStatus' => [
+    'Pending',
+    'Published',
   ]
 ];

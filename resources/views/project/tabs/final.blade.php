@@ -54,6 +54,16 @@
                 <td class="editMe" data-id="{{ $project->id }}" data-name="credit_card_master_card">{{ $project->credit_card_master_card }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="credit_card_visa">{{ $project->credit_card_visa }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="place_page_urls_menu_link_url_menu">{{ $project->place_page_urls_menu_link_url_menu }}</td>
+                <td >
+                  <div class="form-group" style="width:170px">
+                    <select class="form-control" id="published" data-name="published" data-id="{{ $project->id }}" onchange="updatePayementStatus(event)">
+                      <option value="">Select Status</option>
+                      @foreach(config('projectEnum.publishedStatus') as $status)
+                      <option @if($project->published === $status) Selected @endif value="{{ $status }}">{{ $status }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </td>
                 <td><a href="{{ route('project-final-export', [$project->id])}}" class="btn btn-success" title="Export">Export</a></td>
               </tr>
               @endforeach

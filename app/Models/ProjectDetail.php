@@ -15,7 +15,7 @@ class ProjectDetail extends Model
       'additional_categories','sunday_hours','monday_hours','tuesday_hours','wednesday_hours','thursday_hours','friday_hours','saturday_hours','special_hours',
       'from_the_business','logo_photo','cover_photo','other_photos','labels','adwords_location_extensions_phone','amenities_wi_fi_wi_fi','highlights_women_led_is_owned_by_women',
       'credit_card_american_express','credit_card_master_card','credit_card_visa','place_page_urls_menu_link_url_menu','opening_date','creation_date', 'final_status',
-      'payment_type','referred_by','payment_id'
+      'payment_type','referred_by','payment_id', 'published'
     ];
 
     public function getFields()
