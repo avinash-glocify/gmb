@@ -28,6 +28,7 @@ class SingleProjectDetailExport implements FromArray, WithHeadings, ShouldAutoSi
         $columns = config('projectEnum.finalColumns');
         unset($columns[0]);
         unset($columns[1]);
+        unset($columns[41]);
         return $columns;
     }
 }
