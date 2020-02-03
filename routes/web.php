@@ -12,7 +12,7 @@
 */
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::middleware('auth')->group(function() {
   Route::get('/', 'DashboardController@index')->name('dashboard');
