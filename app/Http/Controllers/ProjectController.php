@@ -382,7 +382,7 @@ class ProjectController extends Controller
 
     public function downloadAddressSample(Request $request)
     {
-        $file    = public_path(). "/sampleFiles/Address_Sample.xlsx";
+        $file    = public_path(). "/sampleFiles/Address_Phone_number_Sample.xlsx";
         $headers = array('Content-Type: application/xlsx');
         return Response::download($file, 'address.xlsx', $headers);
     }

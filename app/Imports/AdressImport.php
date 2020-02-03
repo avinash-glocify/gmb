@@ -4,6 +4,8 @@ namespace App\Imports;
 
 use App\Models\Project;
 use App\Models\ProjectDetail;
+use App\Models\BussinessType;
+use App\Models\Category;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -28,8 +30,12 @@ class AddressImport implements ToCollection, WithHeadingRow
         $newEntry    = 0;
 
         foreach ($rows as $key => $row) {
+
           if(isset($row['gmail'])) {
+
             $projectDetail = ProjectDetail::where('email', $row['gmail'])->first();
+            $bussinessType = BussinessType::where('name', $row['gmb_name'] ?? '')->first();
+            $bussinessCate = Category::where('name', $row['gmb_verification_category'] ?? '')->first();
 
             $data          = [
               'zip'               => $row['zip'] ?? Null,
@@ -38,7 +44,21 @@ class AddressImport implements ToCollection, WithHeadingRow
               'state_abrevation'  => $row['abrev_st'] ?? Null,
               'street_address'    => $row['address'] ?? Null,
               'country'           => $row['country'] ?? Null,
+              'bussiness_id'      => $bussinessType->id ?? Null,
+              'category_id'       => $bussinessCate->id ?? Null,
+              'gmb_listing_name'  => $row['gmb_listing_name'] ?? Null,
+              'payment_status'    => $row['payment_status'] ?? Null,
+              'status'            => $row['status'] ?? Null,
+              'first_name'        => $row['first_name'] ?? Null,
+              'last_name'         => $row['last_name'] ?? Null,
             ];
+
+            $projectPhoneDetail = ProjectDetail::where('phone_number', $row['phone_numbers'] ?? '')->count();
+
+            if($projectPhoneDetail < 5) {
+              $data['phone_number'] = $row['phone_numbers'] ?? Null;
+            }
+
             if($projectDetail) {
               if($projectDetail->project_id == $project->id) {
                 $projectDetail->update($data);
