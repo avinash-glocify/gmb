@@ -41,8 +41,8 @@
                   <td>{{ $project->email }}</td>
                   <td>{{ $project->password }}</td>
                   <td>{{ $project->recovery_mail }}</td>
-                  <td class="editMe" data-id="{{ $project->id }}" data-name="first_name" >{{ $project->first_name }}</td>
-                  <td class="editMe" data-id="{{ $project->id }}" data-name="last_name" >{{ $project->last_name }}</td>
+                  <td >{{ $project->first_name }}</td>
+                  <td>{{ $project->last_name }}</td>
                   <td data-id="{{ $project->id }}">
                     <div data-name="gmb_listing_name_{{ $project->id }}" style="width: 170px">
                       {{ $project->gmb_listing_name }}

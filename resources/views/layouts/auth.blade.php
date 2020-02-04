@@ -19,7 +19,8 @@
     display: block;
   }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> -->
 </head>
 <body>
   <div id="app">
@@ -43,6 +44,8 @@
         title: "Something Went Wrong",
         text: text,
         icon: "warning",
+        buttons: true,
+        dangerMode: true,
       });
       </script>
     @endif

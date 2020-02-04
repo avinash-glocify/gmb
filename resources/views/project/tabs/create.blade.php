@@ -3,6 +3,7 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Create User</h4>
+
         <form class="forms-sample" method="post" action="{{ route('project-assign-email') }}">
           @csrf
           <input type="hidden" name="project_id" value="{{ $project->id }}">
@@ -33,7 +34,7 @@
                 </span>
             @enderror
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="exampleInputEmail">Emails</label>
               <select class="mdb-select form-control md-form selectpicker @error('emails') is-invalid @enderror" id="exampleInputEmail" multiple data-live-search="true" name="emails[]">
                 @foreach($projectWithoutNumbers as $key => $projectDetail)
@@ -45,15 +46,15 @@
                       <strong>{{ $message }}</strong>
                   </span>
               @enderror
-          </div>
-          @if(!$projectWithoutNumbers->count())
+          </div> -->
+          <!-- @if(!$projectWithoutNumbers->count())
             <div class="bg-danger rounded text-center text-white mb-2" role="alert">
               <p>Please import more emails to assign Phone Number.</p>
             </div>
-          @endif
+          @endif -->
           <div class="form-group">
             <label for="exampleInputEmail">Payment Type</label>
-            <select class="form-control @error('payment_type') is-invalid @enderror" name="payment_type" style="outline:none !important">
+            <select class="form-control @error('payment_type') is-invalid @enderror"  name="payment_type" style="outline:none !important">
               <option value="">Select Payment Type</option>
               @foreach((config('projectEnum.paymentType')) as  $type)
                 <option value="{{ $type }}">{{ $type }}</option>
@@ -83,7 +84,7 @@
                 </span>
             @enderror
           </div>
-          <button type="submit" class="btn btn-primary mr-2" @if(!$projectWithoutNumbers->count()) disabled @endif>Submit</button>
+          <button type="submit" class="btn btn-primary mr-2">Submit</button>
         </form>
       </div>
     </div>

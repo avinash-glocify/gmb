@@ -62,7 +62,7 @@ $(document).ready(function() {
           column: column
         },
         success: function (data) {
-          if(column == 'bussiness_id' || column == 'first_name') {
+          if(column == 'bussiness_id') {
             const projectDetails = data.data;
             const elementValue = `gmb_listing_name_${project_id}`
             const element = document.querySelectorAll(`[data-name="${elementValue}"]`)[0];
@@ -79,7 +79,7 @@ $(document).ready(function() {
             swal({
               title: "Email Error",
               text: text,
-              icon: "warning",
+              icon: 'error',
             });
           }
         }

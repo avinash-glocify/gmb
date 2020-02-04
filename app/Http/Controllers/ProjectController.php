@@ -281,14 +281,8 @@ class ProjectController extends Controller
 
            if($request->column == 'bussiness_id') {
              $bussinessType            = BussinessType::findOrFail($request->value);
-             $name                     = $projectDetail->first_name.' '.$bussinessType->name;
+             $name                     = $projectDetail->first_name.' '.$projectDetail->last_name.' '. $bussinessType->name;
              $data['gmb_listing_name'] = $name;
-           }
-
-           if($request->column == 'first_name') {
-              $bussinessType            = BussinessType::findOrFail($projectDetail->bussiness_id);
-              $name                     = $request->value.' '.$bussinessType->name;
-              $data['gmb_listing_name'] = $name;
            }
 
            if($request->column == 'payment_status') {
@@ -309,16 +303,6 @@ class ProjectController extends Controller
             'first_name'      => ['required'],
             'last_name'       => ['required'],
             'payment_type'    => ['required'],
-            'emails'          => [
-                'required',
-                'max:5',
-                  function ($attribute, $value, $fail) {
-                    $emailCount = ProjectDetail::whereNotNull('phone_number')->pluck('email')->toArray();
-                    if(array_intersect($value, $emailCount)) {
-                      $fail('phone number Already associated With these e-mails');
-                    }
-                  }
-                ],
             'phone_number'  => [
                 'required',
                 'numeric',
@@ -331,13 +315,24 @@ class ProjectController extends Controller
             ],
         ]);
 
+        $project = Project::findOrFail($request->project_id);
+        $mails   = ProjectDetail::where('project_id', $request->project_id)
+                      ->whereNull('phone_number')
+                      ->limit(5)
+                      ->pluck('email');
+
+
         if($validator->fails()) {
           return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        $project = Project::findOrFail($request->project_id);
+        if(count($mails) < 5) {
+          $message = "There are ". count($mails) ." E-mails to assign Phone Number.";
+          return redirect()->back()->withErrors($validator->errors())->withInput()->with(['error' => $message]);
+        }
 
-        foreach ($request->emails as $key => $email) {
+
+        foreach ($mails as $key => $email) {
           $projectDetail =  ProjectDetail::where('email', $email)->first();
 
           if($projectDetail) {
