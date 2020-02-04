@@ -341,7 +341,7 @@ class ProjectController extends Controller
                 'last_name'        => $request->last_name,
                 'phone_number'     => $request->phone_number,
                 'payment_status'   => 'In Progress',
-                'gmb_listing_name' => $request->first_name,
+                'gmb_listing_name' => $request->first_name.' '.$request->last_name,
                 'final_status'     => 'Need Payments',
                 'payment_type'     => $request->payment_type,
                 'referred_by'      => $request->referred_by ?? '',
