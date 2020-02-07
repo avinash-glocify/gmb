@@ -38,7 +38,7 @@ class BussinessController extends Controller
       $request->validate($rules);
 
       BussinessType::create(['name' => $request->name]);
-      return redirect()->route('bussiness-index')->with(['success' => 'Bussiness Type Added Successfully']);
+      return redirect()->route('bussiness.index')->with(['success' => 'Bussiness Type Added Successfully']);
   }
 
   public function delete($id)

@@ -17,7 +17,7 @@
       <div class="card">
         <div class="card-body">
             <div class="">
-                  <a href="{{route('create-category')}}" class="btn btn-success mb-3 float-right btn-rounded">Add Category</a>
+                  <a href="{{route('category.create')}}" class="btn btn-success mb-3 float-right btn-rounded">Add Category</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered">

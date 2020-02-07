@@ -39,7 +39,7 @@ class CategoryController extends Controller
       $request->validate($rules);
       Category::create(['name' => $request->name]);
 
-      return redirect()->route('category-index')->with(['success' => 'Category Added Successfully']);
+      return redirect()->route('category.index')->with(['success' => 'Category Added Successfully']);
 
   }
 

@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-body">
         <h4 class="text-center">Add Category</h4>
-          <form class="forms-sample" method="post" action="{{ route('store-category') }}">
+          <form class="forms-sample" method="post" action="{{ route('category.store') }}">
             @csrf
             <div class="form-group">
               <label for="categoryName">Category Name</label>

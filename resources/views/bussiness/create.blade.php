@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-body">
           <h4 class="text-center">Add Bussiness Type</h4>
-          <form class="forms-sample" method="post" action="{{ route('store-bussiness') }}">
+          <form class="forms-sample" method="post" action="{{ route('bussiness.store') }}">
             @csrf
             <div class="form-group">
               <label for="exampleInputUsername1">Bussiness Name</label>

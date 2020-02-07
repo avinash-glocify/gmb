@@ -53,19 +53,12 @@ Route::middleware('auth')->group(function() {
     });
   });
 
-  Route::prefix('bussiness')->group(function () {
-    Route::get('/', 'BussinessController@index')->name('bussiness-index');
-    Route::get('/create', 'BussinessController@create')->name('create-bussiness');
-    Route::post('/store', 'BussinessController@store')->name('store-bussiness');
-    Route::get('/delete/{id}', 'BussinessController@delete')->name('delete-bussiness-type');
-  });
 
-  Route::prefix('category')->group(function () {
-    Route::get('/', 'CategoryController@index')->name('category-index');
-    Route::get('/create', 'CategoryController@create')->name('create-category');
-    Route::post('/store', 'CategoryController@store')->name('store-category');
-    Route::get('/delete/{id}', 'CategoryController@delete')->name('delete-category');
-  });
+  Route::resource('bussiness', 'BussinessController');
+  Route::get('/bussiness/delete/{id}', 'BussinessController@delete')->name('delete-bussiness-type');
+
+  Route::resource('category', 'CategoryController');
+  Route::get('/category/delete/{id}', 'CategoryController@delete')->name('delete-category');
 
   Route::resource('formulas', 'FormulaController');
   Route::get('formulas/delete/{id}', 'FormulaController@destroy')->name('formulas.delete');
