@@ -17,7 +17,7 @@
       <div class="card">
         <div class="card-body">
             <div class="">
-                  <a href="{{route('create-user')}}" class="btn btn-rounded btn-success mb-3 float-right">Create User</a>
+                  <a href="{{route('users.create')}}" class="btn btn-rounded btn-success mb-3 float-right">Create User</a>
             </div>
             @if(Session::has('success'))
               <div class="d-flex justify-content-between align-items-end flex-wrap">
@@ -46,7 +46,7 @@
                         <td>{{$user->email}}</td>
                         <td>
                           <a  href="javascript:void(0);" data-url="{{ route('delete-user', [$user->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn">Delete</a>
-                          <a  href="{{ route('edit-user', [$user->id]) }}" type="button" class="btn btn-md btn-info btn-rounded btn-fw">Edit</a>
+                          <a  href="{{ route('users.edit', [$user->id]) }}" type="button" class="btn btn-md btn-info btn-rounded btn-fw">Edit</a>
                         </td>
                       </tr>
                       @empty

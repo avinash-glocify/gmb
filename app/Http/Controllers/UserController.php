@@ -39,7 +39,7 @@ class UserController extends Controller
         return view('user.create', compact('permissions', 'projects'));
     }
 
-    public function edit($id)
+    public function edit(User $user)
     {
         $authUser    = Auth::user();
 
@@ -47,7 +47,6 @@ class UserController extends Controller
           return redirect()->route('dashboard');
         }
 
-        $user             = User::findOrFail($id);
         $userPermission   = $user->permissions;
         $permissionsData  = json_decode($userPermission->data ?? '', true);
 
@@ -89,13 +88,11 @@ class UserController extends Controller
 
         Mail::to($user->email)->send(new UserCreated($user, $request->password));
 
-        return redirect()->route('users-list')->with(['success' => 'User SuccessFully Added']);
+        return redirect()->route('users.index')->with(['success' => 'User SuccessFully Added']);
     }
 
-    public function update(CreateUserRequest $request)
+    public function update(CreateUserRequest $request, User $user)
     {
-        $user = User::findOrFail($request->user_id);
-
         $data = [
           'email'      => $request->email,
           'first_name' => $request->first_name,
@@ -127,7 +124,7 @@ class UserController extends Controller
           Mail::to($user->email)->send(new UpdatePassword($user, $request->password));
         }
 
-        return redirect()->route('users-list')->with(['success' => 'User Udpdated SuccessFully']);
+        return redirect()->route('users.index')->with(['success' => 'User Udpdated SuccessFully']);
     }
 
     public function destroy($id)

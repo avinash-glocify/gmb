@@ -7,10 +7,11 @@
         <div class="card-body">
           <h2 class="card-title">Add User</h2>
             @if(isset($user))
-              <form class="forms-sample" method="post"  action="{{ route('update-user') }}">
+              <form class="forms-sample" method="post"  action="{{ route('users.update', [$user->id]) }}">
+                @method('PUT')
                 <input type="hidden" name="user_id" value="{{ $user->id }}">
             @else
-            <form class="forms-sample" method="post"  action="{{ route('store-user') }}">
+            <form class="forms-sample" method="post"  action="{{ route('users.store') }}">
             @endif
             @csrf
             <div class="form-group">
@@ -129,7 +130,7 @@
               <button type="submit" class="btn btn-success mr-2">
                 @if(isset($user)) Update @else  {{ __('Register') }} @endif
               </button>
-              <a  href="{{ route('users-list') }}"class="btn btn-danger">Cancel</a>
+              <a  href="{{ route('users.index') }}"class="btn btn-danger">Cancel</a>
             </div>
             </form>
           </div>
