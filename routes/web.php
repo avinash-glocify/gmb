@@ -66,4 +66,13 @@ Route::middleware('auth')->group(function() {
     Route::post('/store', 'CategoryController@store')->name('store-category');
     Route::get('/delete/{id}', 'CategoryController@delete')->name('delete-category');
   });
+
+  Route::resource('formulas', 'FormulaController');
+  Route::get('formulas/delete/{id}', 'FormulaController@destroy')->name('formulas.delete');
+
+  Route::resource('client', 'ClientController');
+  Route::get('client/delete/{id}', 'ClientController@destroy')->name('client.delete');
+
+  Route::resource('todo', 'TodoController');
+  Route::get('todo/delete/{id}', 'TodoController@destroy')->name('todo.delete');
 });

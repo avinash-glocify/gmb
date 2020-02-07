@@ -53,6 +53,24 @@
     </li>
     @if(Auth::user()->isAdmin())
       <li class="nav-item">
+        <a class="nav-link" href="{{ route('formulas.index')}}">
+          <i class="mdi menu-icon mdi-auto-fix"></i>
+          <span class="menu-title">Formulas</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('client.index')}}">
+          <i class="mdi menu-icon mdi-account-convert"></i>
+          <span class="menu-title">Clients</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('todo.index')}}">
+          <i class="mdi menu-icon mdi-book-open-page-variant"></i>
+          <span class="menu-title">ToDo</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#setting" aria-expanded="false" aria-controls="setting">
           <i class="mdi mdi-settings menu-icon"></i>
           <span class="menu-title">Settings</span>
