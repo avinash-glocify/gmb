@@ -42,14 +42,14 @@
                       @forelse($todos as $key => $todo)
                       <tr>
                         <td>{{++$key}}</td>
-                        <td><a  href="{{ route('todo.show', [$todo->id]) }}" >{{ $todo->name }}</a></td>
+                        <td><a  href="{{ route('todo.showtodo', [$todo->id]) }}" >{{ $todo->name }}</a></td>
                         <td>{{$todo->description}}</td>
                         <td>{{ \Carbon\Carbon::parse($todo->created_at)->format('d-M-Y h:i:A')}}</td>
                         <td>{{ \Carbon\Carbon::parse($todo->updated_at)->format('d-M-Y h:i:A')}}</td>
                         <td>
                           <a  href="javascript:void(0);" data-url="{{ route('todo.delete', [$todo->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn mt-2">Delete</a>
                           <a  href="{{ route('todo.edit', [$todo->id]) }}" type="button" class="btn btn-md btn-info btn-rounded btn-fw mt-2">Edit</a>
-                          <a  href="{{ route('todo.show', [$todo->id]) }}" type="button" class="btn btn-md btn-success btn-rounded btn-fw mt-2">View</a>
+                          <a  href="{{ route('todo.showtodo', [$todo->id]) }}" type="button" class="btn btn-md btn-success btn-rounded btn-fw mt-2">View</a>
                         </td>
                       </tr>
                       @empty

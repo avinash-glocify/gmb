@@ -41,11 +41,12 @@ class TodoController extends Controller
 
     }
 
-    public function show(ToDo $todo)
+    public function show($id)
     {
         $users      = new User;
         $users      = $users->getAllUsers();
         $timespends = Timespend::get();
+        $todo       = ToDo::findOrFail($id);
 
         $data = [
           'todo'       => $todo,
