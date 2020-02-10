@@ -58,7 +58,9 @@ class TodoController extends Controller
 
     public function edit(ToDo $todo)
     {
-      return view('todo.edit', compact('todo'));
+      $users      = new User;
+      $users      = $users->getAllUsers();
+      return view('todo.edit', compact('todo', 'users'));
     }
 
     public function update(Request $request, ToDo $todo)
