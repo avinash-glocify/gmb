@@ -67,7 +67,7 @@
                         <td> {{ $timespend->description }}</td>
                         <td>{{ \Carbon\Carbon::parse($timespend->start_time)->format('H:i') }}</td>
                         <td>{{ \Carbon\Carbon::parse($timespend->end_time)->format('H:i') }}</td>
-                        <td @if($timespend->billable)<i class="mdi mdi-check-circle btn-icon-append text-success"></i> @endif</td>
+                        <td @if($timespend->billable)<i class="mdi mdi-check-circle btn-icon-append text-success" style="font-size:20px;"></i> @endif</td>
                         <td>@if($timespend->hours > 0) {{ $timespend->hours }} hours @endif {{ $timespend->minuts }} mins</td>
                         <td>{{ $timespend->hours }}.{{ $timespend->minuts}}</td>
                       </tr>
