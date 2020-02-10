@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\ToDo;
-use App\Models\TimeSpend;
+use App\Models\Timespend;
 use App\Models\Files;
 use App\User;
 
@@ -45,7 +45,7 @@ class TodoController extends Controller
     {
         $users      = new User;
         $users      = $users->getAllUsers();
-        $timespends = TimeSpend::get();
+        $timespends = Timespend::get();
 
         $data = [
           'todo'       => $todo,
@@ -135,7 +135,7 @@ class TodoController extends Controller
       {
         $data['billable'] = 1;
       }
-        TimeSpend::create($data);
+        Timespend::create($data);
         return redirect()->back()->with(['success' => 'Time Added SuccessFully']);
     }
 }
