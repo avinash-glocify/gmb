@@ -59,7 +59,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($timespends as $key => $timespend)
+                      @forelse($timespends as $key => $timespend)
                       <tr>
                         <td>{{ ++$timespend->id }}</td>
                         <td> {{ $timespend->start_date }}</td>
@@ -71,7 +71,11 @@
                         <td>@if($timespend->hours > 0) {{ $timespend->hours }} hours @endif {{ $timespend->minuts }} mins</td>
                         <td>{{ $timespend->hours }}.{{ $timespend->minuts}}</td>
                       </tr>
-                      @endforeach
+                      @empty
+                      <tr>
+                        <td colspan="9" class="text-center"><strong>No Data Found</strong></td>
+                      </tr>
+                      @endforelse
                     </tbody>
                 </table>
           </div>
