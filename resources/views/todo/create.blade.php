@@ -26,6 +26,20 @@
                   </span>
               @enderror
             </div>
+            <div class="form-group">
+              <label for="exampleInputEmail">Assign User</label>
+              <select class="form-control @error('user') is-invalid @enderror"  name="user" style="outline:none !important">
+                <option value="">Select User</option>
+                @foreach($users as  $user)
+                  <option value="{{ $user->id }}">{{ $user->full_name }}</option>
+                @endforeach
+              </select>
+              @error('user')
+              <span class="invalid-feedback ml-1 mt-1" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
              <div class="mt-2">
                 <button type="submit" class="btn btn-success mr-2">
                   Save

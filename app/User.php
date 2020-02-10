@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 
 use App\Models\Permission;
 use App\Models\Project;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -81,6 +82,11 @@ class User extends Authenticatable
     public function permissionsData()
     {
         return json_decode($this->permissions->data ?? '', true) ?? [];
+    }
+
+    public function getAllUsers()
+    {
+        return $this->where('id', '!=', Auth::user()->id)->get();
     }
 
     public function userProjectPermissions()

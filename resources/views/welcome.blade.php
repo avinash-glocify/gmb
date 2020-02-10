@@ -64,37 +64,43 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/dashboard') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
+      <div class="container">
+<div class="row styling">
+    <h3><strong>Bootstrap Datepicker</strong></h3><br>
+    <div class='col-sm-offset-4 col-sm-4'>
+      <div class="form-group">
+        <div class='input-group date' id='datetimepicker1'>
+          <input type='text' class="form-control input-lg" />
+          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
+      </div>
+      <p class="help-block"><strong>Date format:</strong> yyyy-mm-dd</p>
+    </div>
+  </div><br>
+
+  <div class="row">
+    <pre>
+      <ul>
+        <h4><strong>Add External CSS</strong></h4>
+        <li>//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css</li>
+        <li>https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/css/bootstrap-datetimepicker.min.css</li>
+        <li>//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css</li>
+      </ul>
+    </pre>
+  </div><br>
+
+  <div class="row">
+    <pre>
+      <ul>
+        <h4><strong>Add External JavaScript</strong></h4>
+        <li>//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js</li>
+        <li>//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js</li>
+        <li>//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js</li>
+        <li>//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/js/bootstrap-datetimepicker.min.js</li>
+      </ul>
+    </pre>
+  </div>
+
+</div>
     </body>
 </html>

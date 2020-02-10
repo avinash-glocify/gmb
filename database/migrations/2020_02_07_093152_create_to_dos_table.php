@@ -17,6 +17,7 @@ class CreateToDosTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->longText('description');
+            $table->longText('user_id');
             $table->timestamps();
         });
     }

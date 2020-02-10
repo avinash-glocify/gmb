@@ -40,7 +40,7 @@ class FormulaController extends Controller
          $formula = Formula::create($data);
 
          if($request->has('file')) {
-           $path = $this->storeFile($request);
+           $path = $this->storeFile($request->file);
            $file = Files::create(['path' => $path, 'type' => 'formulas', 'refrence_id' => $formula->id]);
          }
 
@@ -71,7 +71,7 @@ class FormulaController extends Controller
         $formula->update($data);
 
         if($request->has('file')) {
-          $path = $this->storeFile($request);
+          $path = $this->storeFile($request->file);
           $file = Files::create(['path' => $path, 'type' => 'formulas', 'refrence_id' => $formula->id]);
         }
 
@@ -83,20 +83,5 @@ class FormulaController extends Controller
         $formula = Formula::findOrFail($id);
         $formula->delete();
         return response(['success' => 'Formula deleted successfully']);
-    }
-
-    public function storeFile(Request $request)
-    {
-        $imagename = $request->file->getClientOriginalname();
-        $folder    = Carbon::now()->format('d-m-Y');
-        $path      = storage_path('app/public/formulaFiles/').$folder;
-
-         if(!file_exists($path)) {
-           mkdir($path);
-         }
-
-         $request->file->move($path, $imagename);
-         $filePath = '/storage/formulaFiles/'.$folder.'/'.$imagename;
-         return $filePath;
     }
 }

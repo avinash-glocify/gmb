@@ -65,4 +65,6 @@ Route::middleware('auth')->group(function() {
 
   Route::resource('todo', 'TodoController');
   Route::get('todo/delete/{id}', 'TodoController@destroy')->name('todo.delete');
+  Route::post('todo/file/{id}', 'TodoController@fileupload')->name('todo.fileupload');
+  Route::post('todo/timespend/{id}', 'TodoController@timespend')->name('todo.timespend');
 });

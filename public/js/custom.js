@@ -1,4 +1,33 @@
 $(document).ready(function() {
+  var d = new Date();
+
+  var month = d.getMonth()+1;
+  var day = d.getDate();
+
+  var output = d.getFullYear() + '/' +
+  (month<10 ? '0' : '') + month + '/' +
+  (day<10 ? '0' : '') + day;
+
+  $('#datetimepicker1').datetimepicker({
+      format: 'YYYY-MM-DD',
+      icons: {
+          up: "fa fa-angle-up",
+          down: "fa fa-angle-down",
+          next: 'fa fa-angle-right',
+          previous: 'fa fa-angle-left'
+      }
+  });
+  $("#datetimepicker1").val(output);
+
+  $('#datetimepicker2').datetimepicker({
+      format: 'HH:ss',
+  });
+    $("#datetimepicker2").val('12:00');
+
+  $('#datetimepicker3').datetimepicker({
+      format: 'HH:ss',
+  });
+    $("#datetimepicker3").val('12:00');
 
   $(document).on('click', '.del-btn', function (e) {
     e.preventDefault();
