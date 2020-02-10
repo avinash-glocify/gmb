@@ -67,5 +67,5 @@ Route::middleware('auth')->group(function() {
   Route::get('todo/delete/{id}', 'TodoController@destroy')->name('todo.delete');
   Route::post('todo/file/{id}', 'TodoController@fileupload')->name('todo.fileupload');
   Route::post('todo/timespend/{id}', 'TodoController@timespend')->name('todo.timespend');
-  Route::get('todo/show/{id}', 'TodoController@show')->name('todo.showtodo');
+  Route::get('todo/{id}/show', 'TodoController@show')->name('todo.showtodo');
 });
