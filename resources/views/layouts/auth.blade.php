@@ -79,5 +79,6 @@
 
 <script src="{{ asset('js/theme/template.js') }}"></script>
 
+<script src="{{ asset('js/summernote.js') }}" defer></script>
 <script src="{{ asset('js/custom.js') }}" defer></script>
 </html>

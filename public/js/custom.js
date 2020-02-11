@@ -1,14 +1,4 @@
 $(document).ready(function() {
-  $('#summernote').summernote({
-    height: 200,
-    toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['view', ['fullscreen', 'codeview']]
-        ]
-  });
   var d = new Date();
 
   var month = d.getMonth()+1;

@@ -5,7 +5,7 @@
     <div class="col-md-12  grid-margin stretch-card">
       <div class="card">
         <div class="card-header">Todo Detail</div>
-          <div class="card-body">
+          <div class="card-body todo-details">
             <p class="card-title d-inline-block card-description">{{ $todo->name }}</p>
             <div class="float-right">
               <button type="button" class="btn btn-success btn-sm  btn-icon-text" data-toggle="modal" data-target="#myModal">Edit<i class="mdi mdi-file-check btn-icon-append"></i></button>
@@ -43,44 +43,21 @@
             <div class="float-right">
               <button type="button" class="btn btn-success btn-sm  btn-icon-text" data-toggle="modal" data-target="#timeSpendModal">Log More Time<i class="mdi mdi-av-timer btn-icon-append"></i></button>
             </div>
-            <div class="table-responsive mt-5">
-                <table class="table table-bordered table-hover table-striped">
-                    <thead>
-                      <tr>
-                          <th>#</th>
-                          <th>Date</th>
-                          <th>Who</th>
-                          <th>Description</th>
-                          <th>Start</th>
-                          <th>End</th>
-                          <th>Billable</th>
-                          <th>Time</th>
-                          <th>Hours</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @forelse($timespends as $key => $timespend)
-                      <tr>
-                        <td>{{ ++$timespend->id }}</td>
-                        <td> {{ $timespend->start_date }}</td>
-                        <td>{{ $timespend->user->full_name }}</td>
-                        <td> {{ $timespend->description }}</td>
-                        <td>{{ \Carbon\Carbon::parse($timespend->start_time)->format('H:i') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($timespend->end_time)->format('H:i') }}</td>
-                        <td @if($timespend->billable)<i class="mdi mdi-check-circle btn-icon-append text-success" style="font-size:20px;"></i> @endif</td>
-                        <td>@if($timespend->hours > 0) {{ $timespend->hours }} hours @endif {{ $timespend->minuts }} mins</td>
-                        <td>{{ $timespend->hours }}.{{ $timespend->minuts}}</td>
-                      </tr>
-                      @empty
-                      <tr>
-                        <td colspan="9" class="text-center"><strong>No Data Found</strong></td>
-                      </tr>
-                      @endforelse
-                    </tbody>
-                </table>
+              @include('todo.timespend')
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12  grid-margin stretch-card">
+      <div class="card">
+        <div class="card-header">Comments</div>
+          <div class="card-body">
+            @include('todo.comment')
+          </div>
+        </div>
+    </div>
   </div>
 </div>
   @include('todo.editModel')
@@ -88,25 +65,12 @@
   @include('todo.timeSpendModal')
 @endsection
 @section('extra_script')
-@if(Session::has('update_error'))
-  <script>
-  $(window).on('load',function(){
-    $('#myModal').modal('show');
-    });
-  </script>
-@endif
-@if(Session::has('file_error'))
-  <script>
-  $(window).on('load',function(){
-    $('#fileUploadModal').modal('show');
-    });
-  </script>
-@endif
-@if(Session::has('timestamp_error'))
-  <script>
-  $(window).on('load',function(){
-    $('#timeSpendModal').modal('show');
-  });
-  </script>
-@endif
+  @if(Session::has('form_error'))
+    <script>
+    const text = "{{ Session::get('form_error') }}";
+    $(window).on('load',function(){
+      $(`#${text}`).modal('show');
+      });
+    </script>
+  @endif
 @endsection

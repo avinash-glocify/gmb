@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\ToDo;
 use App\Models\Timespend;
 use App\Models\Files;
+use App\Models\Comment;
 use App\User;
+use Auth;
 
 class TodoController extends Controller
 {
@@ -70,7 +72,7 @@ class TodoController extends Controller
         $validator = Validator::make($request->all(),$rules);
 
         if($validator->fails()) {
-          return redirect()->back()->with(['update_error' => true ])->withErrors($validator->errors())->withInput();
+          return redirect()->back()->with(['form_error' => 'myModal'])->withErrors($validator->errors());
         }
 
         $data = [
@@ -97,7 +99,7 @@ class TodoController extends Controller
         $validator = Validator::make($request->all(),$rules);
 
         if($validator->fails()) {
-          return redirect()->back()->with(['file_error' => true ])->withErrors($validator->errors())->withInput();
+          return redirect()->back()->with(['form_error' => 'fileUploadModal' ])->withErrors($validator->errors())->withInput();
         }
 
         foreach ($request->file('files') as $key => $file) {
@@ -121,7 +123,7 @@ class TodoController extends Controller
       $validator = Validator::make($request->all(),$rules);
 
       if($validator->fails()) {
-        return redirect()->back()->with(['timestamp_error' => true ])->withErrors($validator->errors())->withInput();
+        return redirect()->back()->with(['form_error' => 'timeSpendModal'])->withErrors($validator->errors())->withInput();
       }
 
       $data = [
@@ -141,4 +143,27 @@ class TodoController extends Controller
         Timespend::create($data);
         return redirect()->back()->with(['success' => 'Time Added SuccessFully']);
     }
+
+    public function comment(Request $request, $id)
+    {
+        $user  = Auth::user();
+        $rules = [
+          'content' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(),$rules);
+
+        if($validator->fails()) {
+          return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $data = [
+          'content'      => $request->content,
+          'user_id'      => $user->id,
+          'type_id'      => $id,
+          'type'         => 'todo',
+        ];
+          Comment::create($data);
+          return redirect()->back();
+      }
 }
