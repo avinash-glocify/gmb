@@ -11,7 +11,7 @@
               <button type="button" class="btn btn-success btn-sm  btn-icon-text" data-toggle="modal" data-target="#myModal">Edit<i class="mdi mdi-file-check btn-icon-append"></i></button>
               <a type="button" class="btn btn-info btn-sm btn-icon-text " href="{{ route('todo.index') }}">Back<i class="mdi mdi-arrow-left-bold"></i></a>
             </div>
-            <div class="col-md-8"><p class="card-description"> {{ $todo->description }} </p></div>
+            <div class="col-md-8"><p class="card-description"> {!! $todo->description !!} </p></div>
           </div>
         </div>
       </div>

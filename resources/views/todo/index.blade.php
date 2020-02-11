@@ -32,7 +32,6 @@
                       <tr>
                           <th>#</th>
                           <th>Name</th>
-                          <th>Description</th>
                           <th>Created</th>
                           <th>Last Updated</th>
                           <th>Actions</th>
@@ -43,7 +42,6 @@
                       <tr>
                         <td>{{++$key}}</td>
                         <td><a  href="{{ route('todo.showtodo', [$todo->id]) }}" >{{ $todo->name }}</a></td>
-                        <td>{{$todo->description}}</td>
                         <td>{{ \Carbon\Carbon::parse($todo->created_at)->format('d-M-Y h:i:A')}}</td>
                         <td>{{ \Carbon\Carbon::parse($todo->updated_at)->format('d-M-Y h:i:A')}}</td>
                         <td>

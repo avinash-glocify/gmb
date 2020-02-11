@@ -28,6 +28,7 @@
   <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
 </head>
 <body>
   <div id="app">
@@ -74,6 +75,7 @@
 <script src="{{ asset('js/SimpleTableCellEditor.js')}}"></script>
 <script src="{{ asset('js/moment.min.js')}}"></script>
 <script src="{{ asset('js/datepicker.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.js"></script
 
 <script src="{{ asset('js/theme/template.js') }}"></script>
 

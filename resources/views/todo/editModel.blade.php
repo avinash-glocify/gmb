@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputUsername1">Description</label>
-              <textarea class="form-control @error('description') is-invalid @enderror"  value="{{ old('description', $todo->description) }}" name="description" placeholder="Todo Description" rows="4">{{ $todo->description }}</textarea>
+              <textarea id="summernote" class="form-control @error('description') is-invalid @enderror"  value="{{ old('description', $todo->description) }}" name="description" placeholder="Todo Description" rows="4">{{ $todo->description }}</textarea>
               @error('description')
                   <span class="invalid-feedback ml-1 mt-1" role="alert">
                       <strong>{{ $message }}</strong>
