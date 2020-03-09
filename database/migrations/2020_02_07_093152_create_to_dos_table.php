@@ -18,6 +18,8 @@ class CreateToDosTable extends Migration
             $table->string('name');
             $table->longText('description');
             $table->longText('user_id');
+            $table->integer('formula_id');
+            $table->integer('client_id');
             $table->timestamps();
         });
     }

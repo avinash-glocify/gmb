@@ -27,6 +27,20 @@
               @enderror
             </div>
             <div class="form-group">
+              <label for="exampleInputEmail">Assign Formula</label>
+              <select class="form-control @error('formula') is-invalid @enderror"  name="formula" style="outline:none !important">
+                <option value="">Select Formula</option>
+                @foreach($formulas as  $formula)
+                  <option value="{{ $formula->id }}">{{ $formula->name }}</option>
+                @endforeach
+              </select>
+              @error('formula')
+              <span class="invalid-feedback ml-1 mt-1" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+            <div class="form-group">
               <label for="exampleInputEmail">Assign User</label>
               <select class="form-control @error('user') is-invalid @enderror"  name="user" style="outline:none !important">
                 <option value="">Select User</option>
@@ -35,6 +49,20 @@
                 @endforeach
               </select>
               @error('user')
+              <span class="invalid-feedback ml-1 mt-1" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail">Assign Client</label>
+              <select class="form-control @error('client') is-invalid @enderror"  name="client" style="outline:none !important">
+                <option value="">Select Client</option>
+                @foreach($clients as  $client)
+                  <option value="{{ $client->id }}">{{ $client->name }}</option>
+                @endforeach
+              </select>
+              @error('client')
               <span class="invalid-feedback ml-1 mt-1" role="alert">
                 <strong>{{ $message }}</strong>
               </span>

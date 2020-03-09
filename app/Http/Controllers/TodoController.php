@@ -8,6 +8,8 @@ use App\Models\ToDo;
 use App\Models\Timespend;
 use App\Models\Files;
 use App\Models\Comment;
+use App\Models\Formula;
+use App\Models\Client;
 use App\User;
 use Auth;
 
@@ -22,20 +24,24 @@ class TodoController extends Controller
 
     public function create()
     {
-        $users = new User;
-        $users = $users->getAllUsers();
-        return view('todo.create',compact('users'));
+        $users    = new User;
+        $users    = $users->getAllUsers();
+        $formulas = Formula::all();
+        $clients  = Client::all();
+        return view('todo.create',compact('users', 'formulas', 'clients'));
     }
 
     public function store(Request $request)
     {
-        $rules = ['name' => 'required', 'user' => 'required'];
+        $rules = ['name' => 'required', 'user' => 'required', 'client' => 'required', 'formula' => 'required'];
         $request->validate($rules);
 
         $data = [
           'name'        => $request->name,
           'description' => $request->description,
           'user_id'     => $request->user,
+          'formula_id'  => $request->formula,
+          'client_id'   => $request->client,
         ];
 
         $todo = ToDo::create($data);
@@ -61,14 +67,16 @@ class TodoController extends Controller
 
     public function edit(ToDo $todo)
     {
-      $users      = new User;
-      $users      = $users->getAllUsers();
-      return view('todo.edit', compact('todo', 'users'));
+      $users    = new User;
+      $users    = $users->getAllUsers();
+      $formulas = Formula::all();
+      $clients  = Client::all();
+      return view('todo.edit', compact('todo', 'users', 'formulas', 'clients'));
     }
 
     public function update(Request $request, ToDo $todo)
     {
-        $rules = ['name' => 'required', 'user' => 'required'];
+        $rules = ['name' => 'required', 'user' => 'required', 'client' => 'required', 'formula' => 'required'];
         $validator = Validator::make($request->all(),$rules);
 
         if($validator->fails()) {
@@ -79,6 +87,8 @@ class TodoController extends Controller
           'name'        => $request->name,
           'description' => $request->description,
           'user_id'     => $request->user,
+          'formula_id'  => $request->formula,
+          'client_id'   => $request->client,
         ];
 
         $todo->update($data);
