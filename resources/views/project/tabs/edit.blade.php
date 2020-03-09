@@ -2,7 +2,7 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body dashboard-tabs p-0">
-          <table id="simpleEditableTable" class="table table-bordered table-responsive">
+          <table id="simpleEditableTable dataTable" class="table table-bordered table-responsive">
             <tr>
               <th>#</th>
               @foreach(config('projectEnum.tableColumns') as $column)
