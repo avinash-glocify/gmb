@@ -49,6 +49,7 @@
                         <td>
                           <a  href="javascript:void(0);" data-url="{{ route('formulas.delete', [$formula->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn p-2">Delete</a>
                           <a  href="{{ route('formulas.edit', [$formula->id]) }}" type="button" class="btn btn-md btn-info btn-rounded btn-fw p-2">Edit</a>
+                          <a  href="{{ route('formulas.show', [$formula->id]) }}" type="button" class="btn btn-md btn-success btn-rounded btn-fw p-2">View</a>
                         </td>
                       </tr>
                       @empty

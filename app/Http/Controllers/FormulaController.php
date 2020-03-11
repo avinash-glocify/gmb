@@ -47,9 +47,9 @@ class FormulaController extends Controller
          return redirect()->route('formulas.index')->with(['success' => 'Formula Added SuccessFully']);
     }
 
-    public function show($id)
+    public function show(Formula $formula)
     {
-        //
+        return view('formulas.show', compact('formula'));
     }
 
     public function edit(Formula $formula)

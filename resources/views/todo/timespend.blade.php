@@ -1,5 +1,5 @@
 <div class="table-responsive mt-5">
-    <table class="table table-bordered table-hover table-striped">
+    <table class="table table-bordered table-hover table-striped" id="DataTable">
         <thead>
           <tr>
               <th>#</th>
@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody>
-          @forelse($timespends as $key => $timespend)
+          @foreach($timespends as $key => $timespend)
           <tr>
             <td>{{ ++$timespend->id }}</td>
             <td> {{ $timespend->start_date }}</td>
@@ -26,10 +26,6 @@
             <td>@if($timespend->hours > 0) {{ $timespend->hours }} hours @endif {{ $timespend->minuts }} mins</td>
             <td>{{ $timespend->hours }}.{{ $timespend->minuts}}</td>
           </tr>
-          @empty
-          <tr>
-            <td colspan="9" class="text-center"><strong>No Data Found</strong></td>
-          </tr>
-          @endforelse
+          @endforeach
         </tbody>
     </table>

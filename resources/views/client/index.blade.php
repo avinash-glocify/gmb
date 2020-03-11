@@ -49,6 +49,7 @@
                         <td>
                           <a  href="javascript:void(0);" data-url="{{ route('client.delete', [$client->id]) }}" data-destroy="true" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn p-2">Delete</a>
                           <a  href="{{ route('client.edit', [$client->id]) }}" type="button" class="btn btn-md btn-info btn-rounded btn-fw p-2">Edit</a>
+                          <a  href="{{ route('client.show', [$client->id]) }}" type="button" class="btn btn-md btn-success btn-rounded btn-fw p-2">View</a>
                         </td>
                       </tr>
                       @empty
