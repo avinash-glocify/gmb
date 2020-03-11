@@ -55,11 +55,15 @@ class TodoController extends Controller
         $users      = $users->getAllUsers();
         $timespends = Timespend::get();
         $todo       = ToDo::findOrFail($id);
+        $formulas   = Formula::all();
+        $clients    = Client::all();
 
         $data = [
           'todo'       => $todo,
           'users'      => $users,
           'timespends' => $timespends,
+          'clients'    => $clients,
+          'formulas'   => $formulas,
         ];
 
         return view('todo.show', $data);
@@ -88,7 +92,7 @@ class TodoController extends Controller
           'description' => $request->description,
           'user_id'     => $request->user,
           'formula_id'  => $request->formula,
-          'client_id'   => $request->client,
+          'client_id'   => $request->client ,
         ];
 
         $todo->update($data);
