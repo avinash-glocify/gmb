@@ -9963,10 +9963,10 @@ pre code {
 
 .table th,
 .table td {
-  padding: 1.25rem 0.9375rem;
+  padding: .5rem 0.9375rem;
   vertical-align: top;
   border-top: 1px solid #f3f3f3;
-  min-width: 150px !important;
+  /* min-width: 150px !important; */
 }
 
 .table thead th {
@@ -10307,10 +10307,9 @@ pre code {
 .form-control, .dataTables_wrapper select {
   display: block;
   width: 100%;
-  height: 2rem;
   padding: 0.875rem 1.375rem;
   font-size: 0.875rem;
-  font-weight: 400;
+  font-weight: 400;g995
   line-height: 1;
   color: #495057;
   background-color: #ffffff;
@@ -10318,6 +10317,9 @@ pre code {
   border: 1px solid #ced4da;
   border-radius: 2px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.dataTables_wrapper select {
+  height: 2.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

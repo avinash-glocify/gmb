@@ -21,7 +21,7 @@
                   <td>{{ ++$key }}</td>
                   @if($key == 1)
                   <td  data-id="{{ $phoneKey }}" data-name="payment_status" rowspan="{{ $phoneCount }}" >
-                    <div class="form-group" style="width:170px">
+                    <div class="form-group mb-0" style="width:170px">
                       <select class="form-control" id="statusProject" data-name="payment_status" data-id="{{ $project->id }}" onchange="updatePayementStatus(event)">
                         <option value="">Select Status</option>
                         @foreach(config('projectEnum.paymentStatus') as $status)
@@ -32,7 +32,7 @@
                   </td>
                   @endif
                     <td data-id="{{ $project->id }}" data-name="status">
-                      <div class="form-group" style="width:170px">
+                      <div class="form-group mb-0" style="width:170px">
                         <select class="form-control" id="statusProject" data-id="{{ $project->id }}" data-name="status" onchange="updatePayementStatus(event)">
                           <option value="">Select Status</option>
                           @foreach(config('projectEnum.status') as $status)
@@ -53,7 +53,7 @@
                     </div>
                   </td>
                   <td>
-                    <div class="form-group" style="width:170px">
+                    <div class="form-group  mb-0" style="width:170px">
                       <select class="form-control" id="gmb_name" data-id="{{ $project->id }}" data-name="bussiness_id" onchange="updatePayementStatus(event)">
                         <option value="">Select Status</option>
                         @foreach(\App\Models\BussinessType::get() as $type)
@@ -63,7 +63,7 @@
                     </div>
                   </td>
                   <td>
-                    <div class="form-group" style="width:170px">
+                    <div class="form-group mb-0" style="width:170px">
                       <select class="form-control" id="gmb_name" data-id="{{ $project->id }}" data-name="category_id" onchange="updatePayementStatus(event)">
                         <option value="">Select Status</option>
                         @foreach(\App\Models\Category::get() as $type)
