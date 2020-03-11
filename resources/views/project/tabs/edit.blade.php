@@ -2,14 +2,18 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body dashboard-tabs p-0">
-          <table id="simpleEditableTable dataTable" class="table table-bordered table-responsive">
-            <tr>
-              <th>#</th>
-              @foreach(config('projectEnum.tableColumns') as $column)
-                <th>{{ $column }}</th>
-              @endforeach
-              <th>Action</th>
-            </tr>
+        <div class="table-responsive">
+          <table  class="table table-bordered" id="simpleEditableTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                @foreach(config('projectEnum.tableColumns') as $column)
+                  <th>{{ $column }}</th>
+                @endforeach
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
               @foreach($projectWithNumbers as $phoneKey => $projectDetail)
                   @php $phoneCount = \App\Models\ProjectDetail::where('phone_number', $phoneKey)->count(); @endphp
                 @foreach($projectDetail as $key => $project)
@@ -78,11 +82,13 @@
                       {{ $project->project_creation_date }}
                     </div>
                   </td>
-                  <td><a href="{{ route('project-edit-export', [$project->id])}}" class="btn btn-success" title="Export">Export</a></td>
+                  <td><a href="{{ route('project-edit-export', [$project->id])}}" class="btn btn-success p-2" title="Export">Export</a></td>
                 </tr>
                 @endforeach
               @endforeach
-            </table>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

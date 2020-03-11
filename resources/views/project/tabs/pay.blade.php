@@ -3,12 +3,15 @@
     <div class="card">
       <div class="card-body dashboard-tabs p-0">
           <table id="simpleEditableTable" class="table table-bordered table-responsive ">
-            <tr>
-              <th>#</th>
-              @foreach(config('projectEnum.paymentTable') as $column)
-                <th>{{ $column }}</th>
-              @endforeach
-            </tr>
+            <thead>
+              <tr>
+                <th>#</th>
+                @foreach(config('projectEnum.paymentTable') as $column)
+                  <th>{{ $column }}</th>
+                @endforeach
+              </tr>
+           </thead>
+           <tbody>
               @foreach($projectWithActiveStatus as $key => $project)
               <tr>
                 <td>{{ ++$key }}</td>
@@ -22,7 +25,7 @@
                 <td>{{ $project->payment_id }}</td>
                 <td>{{ $project->referred_by }}</td>
                 <td>
-                  <div class="form-group" style="width:170px">
+                  <div class="form-group mb-0" style="width:170px">
                     <select class="form-control" id="gmb_name" data-id="{{ $project->id }}" data-name="final_status" onchange="updatePayementStatus(event)">
                       <option value="">Select Status</option>
                         @foreach(config('projectEnum.finalPaymentStatus') as $type)
@@ -33,6 +36,7 @@
                 </td>
               </tr>
               @endforeach
+            </tbody>
             </table>
           <div class="mt-5 float-right">
             {{ $projectWithVerifyStatus->links() }}

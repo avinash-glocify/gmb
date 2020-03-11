@@ -27,7 +27,7 @@
               </div>
             @endif
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="DataTable">
                     <thead>
                       <tr>
                           <th>#</th>
@@ -47,8 +47,8 @@
                         <td>{{ \Carbon\Carbon::parse($client->created_at)->format('d-M-Y h:i:A')}}</td>
                         <td>{{ \Carbon\Carbon::parse($client->updated_at)->format('d-M-Y h:i:A')}}</td>
                         <td>
-                          <a  href="javascript:void(0);" data-url="{{ route('client.delete', [$client->id]) }}" data-destroy="true" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn mt-2">Delete</a>
-                          <a  href="{{ route('client.edit', [$client->id]) }}" type="button" class="btn btn-md btn-info btn-rounded btn-fw mt-2">Edit</a>
+                          <a  href="javascript:void(0);" data-url="{{ route('client.delete', [$client->id]) }}" data-destroy="true" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn p-2">Delete</a>
+                          <a  href="{{ route('client.edit', [$client->id]) }}" type="button" class="btn btn-md btn-info btn-rounded btn-fw p-2">Edit</a>
                         </td>
                       </tr>
                       @empty

@@ -14,6 +14,7 @@
   <link href="{{ asset('css/datepicker.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/select.css') }}" rel="stylesheet">
   <link href="{{ asset('css/sweet-alert.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/data-table.min.css') }}" rel="stylesheet">
   <style>
   .invalid-feedback {
     display: block;
@@ -70,6 +71,8 @@
 </body>
 
 <script src="{{ asset('js/bootstrap-bundle.min.js')}}"></script>
+<script src="{{ asset('js/jquery-data-table.min.js')}} "></script>
+<script src="{{ asset('js/data-table-bootstrap.min.js')}} "></script>
 <script src="{{ asset('js/SimpleTableCellEditor.js')}}"></script>
 <script src="{{ asset('js/select.min.js')}}"></script>
 <script src="{{ asset('js/moment.min.js')}}"></script>

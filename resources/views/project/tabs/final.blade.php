@@ -3,13 +3,16 @@
     <div class="card">
       <div class="card-body dashboard-tabs p-0">
           <table id="simpleEditableTable" class="table table-bordered table-responsive ">
-            <tr>
-              <th>#</th>
-              @foreach(config('projectEnum.finalColumns') as $column)
-                <th>{{ $column }}</th>
-              @endforeach
-              <th>Action </th>
-            </tr>
+            <thead>
+              <tr>
+                <th>#</th>
+                @foreach(config('projectEnum.finalColumns') as $column)
+                  <th>{{ $column }}</th>
+                @endforeach
+                <th>Action </th>
+              </tr>
+            </thead>
+            <tbody>
               @foreach($projectWithVerifyStatus as $key => $project)
               <tr>
                 <td>{{ ++$key }}</td>
@@ -42,20 +45,20 @@
                 <td class="editMe" data-id="{{ $project->id }}" data-name="friday_hours">{{ $project->friday_hours }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="saturday_hours">{{ $project->saturday_hours }}</td>
                 <td class="editMe" data-id="{{ $project->id }}" data-name="special_hours">{{ $project->special_hours }}</td>
-                <td><div class="editMe" style="width:450px;" data-id="{{ $project->id }}" data-name="from_the_business">{{ $project->from_the_business }}</div></td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="logo_photo">{{ $project->logo_photo }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="cover_photo">{{ $project->cover_photo }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="other_photos">{{ $project->other_photos }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="labels">{{ $project->labels }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="adwords_location_extensions_phone">{{ $project->adwords_location_extensions_phone }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="amenities_wi_fi_wi_fi">{{ $project->amenities_wi_fi_wi_fi }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="highlights_women_led_is_owned_by_women">{{ $project->highlights_women_led_is_owned_by_women }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="credit_card_american_express">{{ $project->credit_card_american_express }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="credit_card_master_card">{{ $project->credit_card_master_card }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="credit_card_visa">{{ $project->credit_card_visa }}</td>
-                <td class="editMe" data-id="{{ $project->id }}" data-name="place_page_urls_menu_link_url_menu">{{ $project->place_page_urls_menu_link_url_menu }}</td>
-                <td >
-                  <div class="form-group" style="width:170px">
+                <td><div class="editMe overflow-hidden" style="width:450px;" data-id="{{ $project->id }}" data-name="from_the_business">{{ $project->from_the_business }}</div></td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="logo_photo">{{ $project->logo_photo }}</td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="cover_photo">{{ $project->cover_photo }}</td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="other_photos">{{ $project->other_photos }}</td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="labels">{{ $project->labels }}</td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="adwords_location_extensions_phone">{{ $project->adwords_location_extensions_phone }}</td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="amenities_wi_fi_wi_fi">{{ $project->amenities_wi_fi_wi_fi }}</td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="highlights_women_led_is_owned_by_women">{{ $project->highlights_women_led_is_owned_by_women }}</td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="credit_card_american_express">{{ $project->credit_card_american_express }}</td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="credit_card_master_card">{{ $project->credit_card_master_card }}</td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="credit_card_visa">{{ $project->credit_card_visa }}</td>
+                <td class="editMe overflow-hidden" data-id="{{ $project->id }}" data-name="place_page_urls_menu_link_url_menu">{{ $project->place_page_urls_menu_link_url_menu }}</td>
+                <td>
+                  <div class="form-group mb-0" style="width:170px">
                     <select class="form-control" id="published" data-name="published" data-id="{{ $project->id }}" onchange="updatePayementStatus(event)">
                       <option value="">Select Status</option>
                       @foreach(config('projectEnum.publishedStatus') as $status)
@@ -64,10 +67,11 @@
                     </select>
                   </div>
                 </td>
-                <td><a href="{{ route('project-final-export', [$project->id])}}" class="btn btn-success" title="Export">Export</a></td>
+                <td><a href="{{ route('project-final-export', [$project->id])}}" class="btn btn-success p-2" title="Export">Export</a></td>
               </tr>
               @endforeach
-            </table>
+            </tbody>
+          </table>
           <div class="mt-5 float-right">
             {{ $projectWithVerifyStatus->links() }}
           </div>

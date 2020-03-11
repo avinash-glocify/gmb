@@ -20,7 +20,7 @@
                   <a href="{{route('bussiness.create')}}" class="btn btn-md btn-success mb-3 float-right btn-rounded">Add Bussiness Type</a>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="DataTable">
                     <thead>
                       <tr>
                           <th>#</th>
@@ -34,7 +34,7 @@
                         <td>{{++$key}}</td>
                         <td>{{$category->name}}</td>
                         <td>
-                          <a  href="javascript:void(0);" data-url="{{ route('delete-bussiness-type', [$category->id]) }}" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn">Delete</a>
+                          <a  href="javascript:void(0);" data-url="{{ route('delete-bussiness-type', [$category->id]) }}" type="button" class="btn btn-sm btn-danger btn-rounded btn-fw del-btn p-2">Delete</a>
                         </td>
                       </tr>
                       @empty

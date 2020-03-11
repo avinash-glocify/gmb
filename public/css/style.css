@@ -10307,7 +10307,7 @@ pre code {
 .form-control, .dataTables_wrapper select {
   display: block;
   width: 100%;
-  height: 2.875rem;
+  height: 2rem;
   padding: 0.875rem 1.375rem;
   font-size: 0.875rem;
   font-weight: 400;
@@ -20905,7 +20905,7 @@ dl li {
 }
 
 .dataTables_wrapper select {
-  padding: .4rem;
+  padding: .5rem;
   outline-offset: -2px;
 }
 
@@ -20926,7 +20926,7 @@ dl li {
 .dataTables_wrapper .dataTable thead th {
   border-bottom-width: 0;
   border: 1px solid rgba(151, 151, 151, 0.18);
-  padding: 1.7rem 0.9375rem;
+  padding: .9rem 0.9375rem;
   white-space: nowrap;
 }
 
@@ -20951,7 +20951,7 @@ dl li {
 .dataTables_wrapper .dataTable thead .sorting_desc_disabled:before {
   content: "\F05D";
   right: 2.4em;
-  bottom: 1.5rem;
+  bottom: .5rem;
 }
 
 .dataTables_wrapper .dataTable thead .sorting:after,
@@ -20960,8 +20960,8 @@ dl li {
 .dataTables_wrapper .dataTable thead .sorting_asc_disabled:after,
 .dataTables_wrapper .dataTable thead .sorting_desc_disabled:after {
   content: "\F045";
-  right: 2em;
-  bottom: 1.1rem;
+  right: 1.5em;
+  bottom: .5rem;
 }
 
 .dataTables_wrapper .dataTable tbody tr td {
@@ -20969,7 +20969,7 @@ dl li {
   color: #08113b;
   white-space: nowrap;
   font-weight: 300;
-  padding: 1.1rem 0.9375rem;
+  padding: .5rem 0.9375rem;
 }
 
 .dataTables_wrapper .dataTable tbody tr:nth-child(odd) {

@@ -29,7 +29,7 @@
               </div>
             @endif
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="DataTable">
                     <thead>
                       <tr>
                           <th>#</th>
@@ -43,9 +43,9 @@
                         <td>{{++$key}}</td>
                         <td>{{$project->name}}</td>
                         <td>
-                          <a  href="{{ route('project-setup', [$project->id]) }}" type="button" class="btn btn-md btn-success btn-rounded btn-fw">View</a>
+                          <a  href="{{ route('project-setup', [$project->id]) }}" type="button" class="btn btn-md btn-success btn-rounded btn-fw p-2">View</a>
                           @if(Auth::user()->isAdmin())
-                            <a  href="javascript:void(0);" data-url="{{ route('delete-project', [$project->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn">Delete</a>
+                            <a  href="javascript:void(0);" data-url="{{ route('delete-project', [$project->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn p-2">Delete</a>
                           @endif
                         </td>
                       </tr>

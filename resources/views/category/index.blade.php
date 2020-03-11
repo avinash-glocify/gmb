@@ -20,7 +20,7 @@
                   <a href="{{route('category.create')}}" class="btn btn-success mb-3 float-right btn-rounded">Add Category</a>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="DataTable">
                     <thead>
                       <tr>
                           <th>#</th>
@@ -34,7 +34,7 @@
                         <td>{{++$key}}</td>
                         <td>{{$category->name}}</td>
                         <td>
-                          <a  href="javascript:void(0);" data-url="{{ route('delete-category', [$category->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn">Delete</a>
+                          <a  href="javascript:void(0);" data-url="{{ route('delete-category', [$category->id]) }}" type="button" class="btn btn-md btn-danger btn-rounded btn-fw del-btn p-2">Delete</a>
                         </td>
                       </tr>
                       @empty

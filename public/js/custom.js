@@ -1,4 +1,20 @@
 $(document).ready(function() {
+
+  $('#DataTable').DataTable({
+    "paging":   false,
+    "ordering": false,
+    "info":     false,
+    "searching": false
+  });
+
+  $('#simpleEditableTable').DataTable({
+    "autoWidth": false,
+    "paging":   false,
+    "ordering": false,
+    "info":     false,
+    "searching": false,
+  });
+
   var d = new Date();
 
   var month = d.getMonth()+1;
