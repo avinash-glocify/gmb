@@ -39,7 +39,14 @@
     <div class="col-md-12  grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-           <div class="col-md-12 grid-margin stretch-card">
+          
+         
+          
+          </div>
+
+        <div class="card-header">Time Logs</div>
+          <div class="card-body">
+             <div class="col-md-12 grid-margin stretch-card">
             <div class="col-md-3">
                    <h1 class="timeChk"><time>00:00:00</time></h1> 
             </div>
@@ -55,16 +62,11 @@
              <div class="col-md-2" style="display: none">
                  <a href="javascript:void(0)" class="btn btn-rounded btn-success mb-3 float-right" id="clear">Clear Time</a>
             </div>
-          </div>
-         
-          
-          </div>
-
-        <div class="card-header">Time Logs</div>
-          <div class="card-body">
             <div class="float-right">
-              <button type="button" class="btn btn-success btn-sm  btn-icon-text" data-toggle="modal" data-target="#timeSpendModal">Log More Time<i class="mdi mdi-av-timer btn-icon-append"></i></button>
+              <button type="button" class="btn btn-success btn-sm  btn-icon-text" data-toggle="modal" data-target="#timeSpendModal">Log Manual Time<i class="mdi mdi-av-timer btn-icon-append"></i></button>
             </div>
+          </div>
+            
              <div id= "tableDatatUpdate"></div>
               @include('todo.timespend')
           </div>
