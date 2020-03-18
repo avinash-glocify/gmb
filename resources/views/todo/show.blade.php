@@ -52,9 +52,9 @@
             <div class="col-md-2">
                  <a href="javascript:void(0)" class="btn btn-rounded btn-success mb-3 float-right" id="stop">Stop Time</a>
             </div>
-             <div class="col-md-2">
+             <!-- <div class="col-md-2">
                  <a href="javascript:void(0)" class="btn btn-rounded btn-success mb-3 float-right" id="clear">Clear Time</a>
-            </div>
+            </div> -->
           </div>
          
           
