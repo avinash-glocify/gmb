@@ -12,7 +12,7 @@
 */
 
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 
 Route::middleware('auth')->group(function() {
   Route::get('/', 'DashboardController@index')->name('dashboard');
@@ -69,4 +69,10 @@ Route::middleware('auth')->group(function() {
   Route::post('todo/timespend/{id}', 'TodoController@timespend')->name('todo.timespend');
   Route::get('todo/{id}/show', 'TodoController@show')->name('todo.showtodo');
   Route::post('todo/{id}/comment', 'TodoController@comment')->name('todo.comment');
+
+
+  //route to track the time spend on the particular project
+  Route::post('todo/toDoTrackerStartProject', 'TodoController@toDoTrackerStartProject')->name('todo.toDoTrackerStartProject');
+
+  Route::post('todo/toDoTrackerEndProject', 'TodoController@toDoTrackerEndProject')->name('todo.toDoTrackerEndProject');
 });

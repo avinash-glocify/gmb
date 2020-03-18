@@ -1,4 +1,4 @@
-<div class="table-responsive mt-5">
+<div class="table-responsive mt-5" id="hidewhen">
     <table class="table table-bordered table-hover table-striped" id="DataTable">
         <thead>
           <tr>

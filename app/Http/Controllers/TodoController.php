@@ -12,14 +12,23 @@ use App\Models\Formula;
 use App\Models\Client;
 use App\User;
 use Auth;
+use Carbon\Carbon;
 
+use App\Models\ToDoTracker;
+use DB;
 class TodoController extends Controller
 {
 
     public function index()
     {
         $todos = ToDo::paginate(20);
-        return view('todo.index', compact('todos'));
+        $tracker = DB::table("to_do_trackers")
+                  ->select('to_do_trackers.*','users.first_name','users.last_name','to_dos.name')
+                  ->join('users','users.id','=','to_do_trackers.user_id')
+                  ->join('to_dos','to_dos.id','=','to_do_trackers.todo_id')
+                  ->paginate(10);
+        //echo "<pre>";print_r($tracker);die;
+        return view('todo.index', compact('todos','tracker'));
     }
 
     public function create()
@@ -179,5 +188,64 @@ class TodoController extends Controller
         ];
           Comment::create($data);
           return redirect()->back();
+      }
+
+      public function toDoTrackerStartProject(Request $request)
+      {
+         $data=$request->all(); 
+         //echo "<pre>";print_r($data);die;       
+         if($data['toDoId']!='')
+         {
+            $date =date('Y:m:d');           
+            $todos = ToDo::where('id',$data['toDoId'])->first();
+              
+            $dataTimeSpend = [
+                          'user_id'      => $todos->user_id,
+                          'todo_id'      => $data['toDoId'],
+                          'start_date'   => $date,
+                          'start_time'   => $data['timeStart'],
+                          
+                        ];
+            Timespend::create($dataTimeSpend);
+            
+            echo "1";die;          
+         } 
+      }
+
+      public function toDoTrackerEndProject(Request $request)
+      {
+         $data=$request->all();
+         //echo "<pre>";print_r($data);        
+         if($data['toDoId']!='')
+         {
+                $date =date('Y:m:d');           
+                $todos = ToDo::where('id',$data['toDoId'])->first();
+                $time=explode(":",$data['gValue']);
+                $hour=$time[0];
+                $min =$time[1];
+                $sec =$time[2];
+                 
+                $Timespend=Timespend::where('todo_id',$data['toDoId'])->orderBy('id','desc')->first();
+                $Timespend->end_time =$data['timeEnd'];
+                $Timespend->hours    =$hour;
+                $Timespend->minuts   =$min;
+                $Timespend->sec      =$sec;
+                $Timespend->id       =$Timespend->id;
+                $Timespend->save(); 
+
+                if($request->ajax())
+                {
+                  $track = DB::table("timespends")
+                            ->select('timespends.*','users.first_name','users.last_name','to_dos.name')
+                            ->join('users','users.id','=','timespends.user_id')
+                            ->join('to_dos','to_dos.id','=','timespends.todo_id')
+                            ->get();
+                  //echo "<pre>";print_r($track);die;    
+                  return view('todo.toDoTimeSpend',compact('track'))->render();
+                }               
+
+            
+                        
+         } 
       }
 }
